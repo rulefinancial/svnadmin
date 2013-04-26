@@ -1,0 +1,16 @@
+ScriptAlias /svn-admin /path/to/admin.cgi
+<Location /svn-admin>
+        Options +ExecCGI
+        Order allow,deny
+        Allow from all
+
+        Satisfy All
+        Require valid-user
+
+        AuthName "Subversion Repository ADMIN INTERFACE"
+        AuthType Basic
+        AuthBasicProvider ldap
+        AuthLDAPURL "ldap://SERVERNAME:PORT/DC=companyname,DC=com<?sAMAccountName?sub?(objectClass=*)"
+        AuthLDAPBindDN "CN=SVN_SERVICE_USER,OU=Admin,OU=Services,OU=Users,OU=Resources,DC=companyname,DC=com"
+        AuthLDAPBindPassword SVN_SERVICE_PASSWORD
+</Location>

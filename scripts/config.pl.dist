@@ -1,0 +1,35 @@
+# Config variables used for admin.cgi.
+###################################################################
+# Do not commit to version control with confidential information! #
+###################################################################
+{
+  #path to repository
+  baseurl => 'https://SUBVERSION_SERVER',
+  svnroot => '/local/path/to/svn/repos',
+  websvn => 0,
+  viewcvspath => "/viewvc",
+  svnpath => "/svn",
+  # Set htpasswd_users to 0 to disable or 1 to enable .htpassword user authentication
+  htpasswd_users => 1,
+  htpasswd_file => "/path/to/htpasswd",
+  # Set ldap_users to 0 to disable or 1 to enable LDAP user authentication
+  ldap_users => 1,
+  ldap_server => "LDAP_SERVER_HOSTNAME_OR_IP_ADDRESS",
+  ldap_base_dn => "OU=Users,OU=Resources,DC=company,DC=com",
+  ldap_bind_dn => "CN=SVN_SERVICE_USER,OU=Admin,OU=Services,OU=Users,OU=Resources,DC=company,DC=com",
+  ldap_bind_password => "SVN_SERVICE_PASSWORD",
+  ldap_filter => "(!(sAMAccountName=#*))",
+  svnaccess_conf => "/path/to/svn/access/file",
+  svnaccess_conf_perm => 0640,
+  enable_backup => 0,
+  gpgkeys => "/path/to/.htgpgkeys",
+  gpghome => "/path/to/.gnupg",
+
+  # path to binaries
+  gzip     => '/usr/bin/gzip',
+  gpg      => '/usr/bin/gpg',
+  svn      => '/usr/bin/svn',
+  svnlook  => '/usr/bin/svnlook',
+  svnadmin => '/usr/bin/svnadmin',
+  htpasswd => '/usr/bin/htpasswd',
+}
