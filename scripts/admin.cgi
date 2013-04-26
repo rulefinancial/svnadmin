@@ -9,11 +9,20 @@ use Net::LDAP;
 use Net::LDAP::Control::Paged;
 use Net::LDAP::Constant qw( LDAP_CONTROL_PAGED ); 
 use File::Basename;
+use HTML::Template;
 use Carp;
 use lib dirname $0;
 $| = 1;
 
 my $config = require "config.pl";
+my $template_dir = dirname($0) . '/../templates/';
+
+sub populate_template($$) {
+  my ($template_name, $params) = @_;
+  my $template = HTML::Template->new(filename => ${template_dir} . ${template_name});
+  $template->param($params);
+  return $template->output;
+}
 
 sub websvnpath($$) {
   my ($repos, $path) = @_;
@@ -65,10 +74,11 @@ sub read_svn_access($) {
   my $repos;
   my $path;
   if (!open(SVNACCESS, "<$filename")) {
-      print header(-status=>'500 Internal Server Error');
-      print start_html(-title => 'Subversion  eXtended Administration');
-      print p("Internal Error: can't find configuration file $filename.");
-      print end_html;
+      print header(-status=>'500 Internal Server Error'),
+            populate_template('error.html', {
+                ERROR_TITLE => 'Internal Error',
+                ERROR_DETAILS => "Cannot find configuration file [$filename]",
+            });
       exit 255;
   }
   while (<SVNACCESS>) {
@@ -123,10 +133,11 @@ if (path_info() eq "") {
 my $curuser = $ENV{'REMOTE_USER'};
 unless (defined $curuser) {
     print header(-status=>'401 Authorization Required',
-		 -www_authenticate=>'Basic realm: "Subversion repository"');
-    print start_html(-title => 'Authentication required!');
-    print p("This server could not verify that you are authorized to access this URL. You either supplied the wrong password, or your browser doesn't understand how to supply the credentials required.");
-    print end_html;
+		 -www_authenticate=>'Basic realm: "Subversion repository"'),
+          populate_template('error.html', {
+              ERROR_TITLE => 'Authorisation required',
+              ERROR_DETAILS => "This server could not verify that you are authorized to access this URL. You either supplied the wrong password, or your browser doesn't understand how to supply the credentials required.",
+          });
     exit 0;
 }
 
@@ -141,10 +152,11 @@ my %users;
 if ($config->{htpasswd_users}) {
   # Get users from .htpasswd file
   if (!open(HTPASSWD, "<$config->{htpasswd_file}")) {
-      print header(-status=>'500 Internal Server Error');
-      print start_html(-title => 'Subversion  eXtended Administration');
-      print p("Internal Error: can't find configuration file $config->{htpasswd_file}.");
-      print end_html;
+      print header(-status=>'500 Internal Server Error'),
+            populate_template('error.html', {
+                ERROR_TITLE => 'Internal Error',
+                ERROR_DETAILS => "Cannot find configuration file [$config->{htpasswd_file}].",
+            });
       exit 255;
   }
   while (<HTPASSWD>) {
@@ -173,18 +185,20 @@ if ($config->{ldap_users}) {
     inet4 => 1,
     onerror => sub {
       my ($message) = @_;
-      print header(-status=>'500 Internal Server Error');
-      print start_html(-title => 'Subversion  eXtended Administration');
-      print p("Internal Error: LDAP server error: " . $message->error);
-      print end_html;
+      print header(-status=>'500 Internal Server Error'),
+            populate_template('error.html', {
+                ERROR_TITLE => 'Internal Error',
+                ERROR_DETAILS => 'LDAP server error: ' . $message->error,
+            });
       confess "LDAP error code: " . $message->code . ", error: " . $message->error;
     });
   my $page = Net::LDAP::Control::Paged->new( size => 100 );
   if (not defined $ldap) {
-      print header(-status=>'500 Internal Server Error');
-      print start_html(-title => 'Subversion  eXtended Administration');
-      print p("Internal Error: Can't connect to LDAP server '$config->{ldap_server}'.");
-      print end_html;
+      print header(-status=>'500 Internal Server Error'),
+            populate_template('error.html', {
+                ERROR_TITLE => 'Internal Error',
+                ERROR_DETAILS => "Cannot connect to LDAP server '$config->{ldap_server}'.",
+            });
       die "$@";
   }
   my $ldap_mesg;
@@ -298,10 +312,11 @@ sub get_gpg_keyid($) {
     my @keys = ();
 
     if (!open(GPGKEYS, "<$config->{gpgkeys}")) {
-        print header(-status=>'500 Internal Server Error');
-	print start_html(-title => 'Subversion  eXtended Administration');
-	print p("Internal Error: can't find configuration file $config->{gpgkeys}.");
-	print end_html;
+        print header(-status=>'500 Internal Server Error'),
+              populate_template('error.html', {
+                  ERROR_TITLE => 'Internal Error',
+                  ERROR_DETAILS => "Cannot find configuration file '$config->{gpgkeys}'.",
+              });
 	exit 255;
     }
     while (<GPGKEYS>) {
@@ -318,10 +333,11 @@ sub write_gpg_keyid($@) {
     my ($repos, @keys) = @_;
 
     if (!open(GPGKEYS, "<$config->{gpgkeys}")) {
-        print header(-status=>'500 Internal Server Error');
-	print start_html(-title => 'Subversion  eXtended Administration');
-	print p("Internal Error: can't find configuration file $config->{gpgkeys}.");
-	print end_html;
+        print header(-status=>'500 Internal Server Error'),
+              populate_template('error.html', {
+                  ERROR_TITLE => 'Internal Error',
+                  ERROR_DETAILS => "Cannot find configuration file '$config->{gpgkeys}'.",
+              });
 	exit 255;
     }
     if (!open(NEWGPGKEYS, ">$config->{gpgkeys}.new")) {
@@ -352,10 +368,10 @@ sub make_backup($$$$) {
     if (!in_group("$repos-admins")
 	&& ($ext ne ".gpg" || !in_group("$repos-backup"))) {
 	print header(-status=>'403 Forbidden');
-	print start_html(-title => 'Subversion  eXtended Administration');
-	print h1("Sorry $curuser");
-	print p("You're not allowed to dump repository $repos.");
-	print end_html;
+          populate_template('error.html', {
+              ERROR_TITLE => 'Forbidden',
+              ERROR_DETAILS => "Sorry, user [$curuser] is not allowed to dump repository [$repos].",
+          });
 	exit 0;
     }
 
@@ -364,9 +380,10 @@ sub make_backup($$$$) {
 	@gpgkeyids = get_gpg_keyid($repos);
 	if (!@gpgkeyids) {
 	    print header(-status=>'404 Not Found');
-	    print start_html(-title => 'Subversion  eXtended Administration');
-	    print p("Dumping Repository not supported.  You need to setup the GPG keys first.");
-	    print end_html;
+              populate_template('error.html', {
+                  ERROR_TITLE => 'GPG keys missing',
+                  ERROR_DETAILS => "Dumping Repository not supported.  You need to setup the GPG keys first.",
+              });
 	    exit 0;
 	}
     }
@@ -415,17 +432,17 @@ sub make_backup($$$$) {
 if ($config->{enable_backup} and path_info() =~ /^\/([a-zA-Z0-9\-][a-zA-Z0-9\.\-]*)\.rev$/) {
     my $repos = $1;
     if (in_group("$repos-backup") || in_group("$repos-admins")) {
-	print header(-type=>'text/plain');
-	# errors goto stderr, so shunt it to stdout before running svnlook
-	open STDERR, ">&STDOUT";
-	exec ($config->{svnlook}, "youngest", "$config->{svnroot}/$repos");
-	exit 255;
+      print header(-type=>'text/plain');
+      # errors goto stderr, so shunt it to stdout before running svnlook
+      open STDERR, ">&STDOUT";
+      exec ($config->{svnlook}, "youngest", "$config->{svnroot}/$repos");
+      exit 255;
     } else {
 	print header(-status=>'403 Forbidden');
-        print start_html(-title => 'Subversion  eXtended Administration');
-	print h1("Sorry $curuser");
-	print p("You're not allowed to backup repository $repos.");
-	print end_html;
+          populate_template('error.html', {
+              ERROR_TITLE => 'Forbidden',
+              ERROR_DETAILS => "Sorry, user [$curuser] is not allowed to backup repository [$repos].",
+          });
 	exit 0;
     }
 }
