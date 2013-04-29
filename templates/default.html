@@ -1,0 +1,43 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+<title>Subversion  eXtended Administration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body>
+  <h3>Hello <TMPL_VAR NAME="USERNAME">,</h3>
+  <p>You are administrator for
+    <TMPL_LOOP NAME="ADMIN_REPOS">
+    <a href="Abacus">[Abacus]</a>
+    </TMPL_LOOP>
+  </p>
+  <h2>Create a new repository</h2>
+  <form method="post" action="" enctype="multipart/form-data">
+    <input type="hidden" name="action" value="create" />
+    <table>
+      <tr><td><strong>Name of new repository: </strong></td> <td><input type="text" name="repos"  size="20" /></td></tr>
+      <tr><td><strong>Administrator: </strong></td> <td><input type="text" name="reposadmin" value="<TMPL_VAR NAME="USERNAME" ESCAPE="HTML">" size="20" /></td></tr>
+    </table>
+    <input type="submit" name=".submit" value="Create" />
+  </form>
+  <hr />
+  <h2>Your access rights</h2>
+  <p>You have <strong>read-write</strong> access to the following repositories:</p>
+  <ul>
+    <TMPL_LOOP NAME="RW_REPOS"><li><a href="<TMPL_VAR NAME="VIEWVC_URL"ESCAPE="HTML">"><TMPL_VAR NAME="SVN_URL"></a></li>
+    </TMPL_LOOP>
+  </ul>
+  <p>You have <strong>read-only</strong> access to the following repositories:</p>
+  <ul>
+    <TMPL_LOOP NAME="RO_REPOS"><li><a href="<TMPL_VAR NAME="VIEWVC_URL"ESCAPE="HTML">"><TMPL_VAR NAME="SVN_URL"></a></li>
+    </TMPL_LOOP>
+  </ul>
+  <hr />
+
+  <!-- TODO: Add sections for disabled options - change password, backup and dump, etc. -->
+  
+  <p><small>Copyright 2005&ndash;2009 Jochen Hoenicke, Michael M&ouml;ller, Marco L&uuml;bcke; based on code from Theo Van Dinter</small></p>
+</body>
+</html>
