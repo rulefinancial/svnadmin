@@ -1,2 +1,3 @@
 conf/svn_admin_httpd.conf
 scripts/config.pl
+.DS_Store
