@@ -20,12 +20,78 @@
         <h1>Hello <TMPL_VAR NAME="USERNAME">,</h1>
         <p>You are administrator for
           <TMPL_LOOP NAME="ADMIN_REPOS">
-          <a class="label label-info" href="Abacus">Abacus</a>
+            <TMPL_IF NAME="CURRENT">
+              <TMPL_VAR NAME="REPOSITORY">
+            <TMPL_ELSE>
+              <a class="label label-info" href="<TMPL_VAR NAME="REPOSITORY">"><TMPL_VAR NAME="REPOSITORY"></a>
+            </TMPL_IF>
           </TMPL_LOOP>
+          <a href=".">General administration</a>
         </p>
       </div>
     </div>
-    
+
+    <TMPL_IF NAME="IN_REPOSITORY">
+    <h2>Administrate repository <a href="/viewvc/<TMPL_VAR NAME="REPOSITORY">/"><TMPL_VAR NAME="REPOSITORY"></a></h2>
+    <TMPL_IF NAME="CAN_CREATE_USERS">
+    <form method="post" action="/svn-admin/<TMPL_VAR NAME="REPOSITORY">" enctype="multipart/form-data">
+      <input name="action" value="adduser" type="hidden">
+      <h3>Create Users</h3>
+      <table><tbody>
+          <tr><td>User (Login):</td> <td><input name="newUser" size="30" maxlength="30" type="text"></td></tr>
+          <tr><td>Full name:</td> <td><input name="fullname" size="60" maxlength="80" type="text"></td></tr>
+          <tr><td>Email:</td> <td><input name="email" size="60" maxlength="180" type="text"></td></tr>
+          <tr><td>Passphrase:</td> <td><input name="pwd" size="32" maxlength="80" type="password"></td></tr>
+          <tr><td>Verify passphrase:</td> <td><input name="vpwd" size="32" maxlength="80" type="password"></td></tr>
+          <tr><td rowspan="2"><input name="add" value="Add" type="submit"></td></tr>
+      </tbody></table>
+    </form>
+    <TMPL_ELSE>
+      <TMPL_IF NAME="CAN_CHANGE_PASSWORD">
+      <h2>Change Passphrase</h2>
+      <p>Please enter your new choice of passphrase below, and then verify by entering it again.</p>
+      <p>You can either use a passphrase (preferably of decent length, include punctuation, etc,) or a password.  Good passwords have these properties:</p>
+      <ul>
+        <li>is not based upon a dictionary word</li>
+        <li>does not have numbers substituted for common letters (ie. 3 for E 1 for I, 0 for O, etc) or numbers used as a suffix/prefix (ie.  4sale, 2by4, etc.)</li>
+        <li>is at least 8 characters long (length of 6 to 80 is required)</li>
+        <li>is made up of a combination of non-repeating upper/lower case letters, numbers, and punctuation.</li>
+        <li>is hard to guess ;)</li>
+      </ul>
+      <p>Also note that the passphrase is case-sensitive.</p>
+      <hr/>
+      <form method="post">
+        <input name="action" value="changepw"/>
+        <table><tbody>
+            <tr><td>Passphrase: </td> <td><input name="passphrase" size="32" maxlength="80" type="password"></td><td>(6-80 chars)</td></tr>
+            <tr><td>Verify: </td> <td><input name="verify" size="32" maxlength="80" type="password"></td><td>(6-80 chars)</td></tr>
+        </tbody></table>
+        <input value="Change Passphrase" type="submit"/>
+      </form>
+      </TMPL_IF>
+    </TMPL_IF>
+    <form method="post" action="/svn-admin/<TMPL_VAR NAME="REPOSITORY">" enctype="multipart/form-data">
+      <input name="repos" value="<TMPL_VAR NAME="REPOSITORY">" type="hidden">
+      <input name="action" value="chgroupacl" type="hidden">
+      <h3>Groups</h3>
+      <table style="border:1pt solid;"><tbody>
+          <tr><th>Group</th> <th>Users</th></tr>
+          <TMPL_LOOP NAME="GROUP_LOOP">
+          <tr>
+            <td><input name="grpname[<TMPL_VAR NAME="INDEX">]" value="<TMPL_VAR NAME="GROUPNAME">" type="hidden"><TMPL_VAR NAME="REPOSITORY">-<TMPL_VAR NAME="GROUPNAME"></td>
+            <td><input name="users[<TMPL_VAR NAME="INDEX">]" value="<TMPL_VAR NAME="GROUPUSERS">" size="50" type="text"></td>
+            <td><TMPL_IF NAME="CAN_BE_DELETED"><label><input name="deleteacl" value="<TMPL_VAR NAME="INDEX">" type="checkbox">Delete</label></TMPL_IF></td>
+          </tr>
+          </TMPL_LOOP>
+          <tr>
+            <td><input name="numgroups" value="<TMPL_VAR NAME="GROUPCOUNT">" type="hidden"><TMPL_VAR NAME="REPOSITORY">-<input name="grpname[<TMPL_VAR NAME="GROUPNEXTINDEX">]" size="15" type="text"></td>
+            <td><select name="l_users[1]" size="5" multiple="multiple">
+              <TMPL_LOOP NAME="AVAILABLE_USERS">
+              <option value="<TMPL_VAR NAME="USERNAME">"><TMPL_VAR NAME="USERNAME"> (<TMPL_VAR NAME="DISPLAYNAME">)</option>
+              </TMPL_LOOP>
+
+    </TMPL_IF>
+
     <div class="row">
       <div class="span6">
         <h2>Create a new repository</h2>

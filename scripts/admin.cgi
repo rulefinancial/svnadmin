@@ -904,30 +904,7 @@ if ($repos ne "" && in_group("$repos-admins")) {
 } elsif ($repos eq "") {
 
   # Only offer to change passphrase if we are an HTPASSWD user - otherwise passwords are managed externally.
-  if ($users{$curuser}->{'source'} eq 'HTPASSWD') {
-    print h2("Change Passphrase"),"\n";
-    print p("please enter your new choice of passphrase below, and then verify it by entering it again."),"\n",
-    start_form,
-    hidden(-name => 'action', -default => "changepw"),
-    table(Tr([
-          td([strong("Passphrase: "),
-              password_field(-name => 'passphrase', -size => 32, -maxlength => 80),
-              "(6-80 chars)"]),
-          td([strong("Verify: "),
-              password_field(-name => 'verify', -size => 32, -maxlength => 80)])
-        ])),
-    submit(-label => 'change passphrase'),
-    end_form,
-    "\n",p("You can either use a passphrase (preferably of decent length, include punctuation, etc,) or a password.  Good passwords have these properties:"),"\n",
-    ul(
-      li('is not based upon a dictionary word'),
-      li('does not have numbers substituted for common letters (ie. 3 for E 1 for I, 0 for O, etc) or numbers used as a suffix/prefix (ie.  4sale, 2by4, etc.)'),
-      li('is at least 8 characters long (length of 6 to 80 is required)'),
-      li('is made up of a combination of non-repeating upper/lower case letters, numbers, and punctuation.'),
-      li('is hard to guess ;)'),
-    ),
-    "\n",p,"Also note that the passphrase is case-sensitive.\n",hr;
-  }
+  $template_params->{CAN_CHANGE_PASSWORD}= ($users{$curuser}->{'source'} eq 'HTPASSWD');
 
   if (in_group("admins")) {
     print h2("Create a new repository");
