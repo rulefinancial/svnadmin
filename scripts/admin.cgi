@@ -457,9 +457,11 @@ if ($config->{enable_backup} and path_info() =~ /^\/([a-zA-Z0-9\-][a-zA-Z0-9\.\-
 # Start building up the parameters for the default template.
 #
 my $template_params = {
-  ACTION => $action,
   USERNAME => $curuser,
   CAN_CREATE_USERS => $config->{htpasswd_users},
+  # Only offer to change passphrase if we are an HTPASSWD user - otherwise passwords are managed externally.
+  CAN_CHANGE_PASSWORD => ($users{$curuser}->{'source'} eq 'HTPASSWD'),
+  CAN_CREATE_REPOSITORY => in_group("admins"),
 };
 
 #
@@ -501,7 +503,7 @@ if (param('repos')) {
   $repos = '';
 }
 $template_params->{REPOSITORY} = $repos;
-$template_params->{IN_REPOSITORY} = $repos eq '';
+$template_params->{IN_REPOSITORY} = $repos ne '';
 
 if ($action eq "create" && in_group("admins")) {
   my $reposadmin = param('reposadmin')||'';
@@ -883,81 +885,47 @@ if ($repos ne "" && in_group("$repos-admins")) {
     print hr;
   }
 
-
-#   print h3("Get/Upload configuration file");
-#   print p("Click here, to download ".
-#       a({href => "$repos/svnserve.conf"}, "svnserve.conf").
-#       " of repository $repos");
-#   print p("Upload a new svnserve.conf into repository $repos:"),
-#   start_form(-method=>"post", -enctype=>"multipart/form-data"), 
-#   hidden(-name => 'action', -default => 'loadconf', -force =>'1'),
-#   hidden(-name => 'repos', -default => "$repos", -force =>'1'),
-#   table(Tr([td([strong("Config File: "),
-#             filefield(-name => 'conffile', -default => '', 
-#               -size => '40')]),
-#         ])),
-#   submit(-label => 'Load'),
-#   end_form;
-
-#   print hr;
-
 } elsif ($repos eq "") {
 
-  # Only offer to change passphrase if we are an HTPASSWD user - otherwise passwords are managed externally.
-  $template_params->{CAN_CHANGE_PASSWORD}= ($users{$curuser}->{'source'} eq 'HTPASSWD');
-
-  if (in_group("admins")) {
-    print h2("Create a new repository");
-    print start_form, 
-    hidden(-name => 'action', -default => 'create', -force =>'1'),
-    table(Tr([td([strong("Name of new repository: "),
-              textfield(-name => 'repos', -default => '', 
-                -size => '20')]),
-          td([strong("Administrator: "),
-              textfield(-name => 'reposadmin', -default => "$curuser", 
-                -size => '20')])
-        ])),
-    submit(-label => 'Create'),
-    end_form,hr;
-  }
-
-  {
-    print h2("Your access rights"),
-    p("You have ", strong("read-write")," access to the following repositories:"),"<ul>";
-    foreach $repos (sort keys %$repositories) {
-      foreach my $path (sort keys %{$repositories->{$repos}}) {
-        foreach my $key (sort keys %{$repositories->{$repos}{$path}}) {
-          next if @{$repositories->{$repos}{$path}{$key}} != 1;
-          next if $repositories->{$repos}{$path}{$key}[0] ne "rw";
-          if ($key eq $curuser
-            || $key eq '*'
-            || ($key =~ /^@(.*)$/ && in_group("$1"))) {
-            print li(a({href => websvnpath($repos,$path)}, 
-                "$config->{baseurl}$config->{svnpath}/$repos$path"));
-          }
+  my @rw_paths;
+  foreach $repos (sort keys %$repositories) {
+    foreach my $path (sort keys %{$repositories->{$repos}}) {
+      foreach my $key (sort keys %{$repositories->{$repos}{$path}}) {
+        next if @{$repositories->{$repos}{$path}{$key}} != 1;
+        next if $repositories->{$repos}{$path}{$key}[0] ne "rw";
+        if ($key eq $curuser
+          || $key eq '*'
+          || ($key =~ /^@(.*)$/ && in_group("$1"))) {
+          my %rw_path;
+          $rw_path{REPOSITORY} = $repos;
+          $rw_path{PATH} = $path;
+          push @rw_paths, \%rw_path;
         }
       }
     }
-    print "</ul>",
-    p("You have ", strong("read-only")," access to the following repositories:"),"<ul>";
-    foreach $repos (sort keys %$repositories) {
-      foreach my $path (sort keys %{$repositories->{$repos}}) {
-        foreach my $key (sort keys %{$repositories->{$repos}{$path}}) {
-          next if @{$repositories->{$repos}{$path}{$key}} != 1;
-          next if $repositories->{$repos}{$path}{$key}[0] ne "r";
-          if ($key eq $curuser || $key eq '*'
-            || ($key =~ /^@(.*)$/ && in_group("$1"))) {
-            print li(a({href => websvnpath($repos,$path)}, 
-                "$config->{baseurl}$config->{svnpath}/$repos$path"));
-          }
+  }
+  $template_params->{RW_PATHS} = \@rw_paths;
+
+  my @ro_paths;
+  foreach $repos (sort keys %$repositories) {
+    foreach my $path (sort keys %{$repositories->{$repos}}) {
+      foreach my $key (sort keys %{$repositories->{$repos}{$path}}) {
+        next if @{$repositories->{$repos}{$path}{$key}} != 1;
+        next if $repositories->{$repos}{$path}{$key}[0] ne "r";
+        if ($key eq $curuser || $key eq '*'
+          || ($key =~ /^@(.*)$/ && in_group("$1"))) {
+          my %ro_path;
+          $ro_path{REPOSITORY} = $repos;
+          $ro_path{PATH} = $path;
+          push @ro_paths, \%ro_path;
         }
       }
     }
-    print "</ul>",hr;
   }
+  $template_params->{RO_PATHS} = \@ro_paths;
 }
-print p("<small>Copyright 2005&ndash;2009 Jochen Hoenicke, Michael M&ouml;ller, Marco L&uuml;bcke; based on code from Theo Van Dinter</small>"),"\n";
-print end_html,"\n";
+print header(),
+  populate_template('default.html', $template_params);
 
 1;
 

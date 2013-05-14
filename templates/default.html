@@ -18,7 +18,7 @@
     <div class="row">
       <div class="span12">
         <h1>Hello <TMPL_VAR NAME="USERNAME">,</h1>
-        <p>You are administrator for
+        <TMPL_IF NAME="ADMIN_REPOS"><p>You are administrator for
           <TMPL_LOOP NAME="ADMIN_REPOS">
             <TMPL_IF NAME="CURRENT">
               <TMPL_VAR NAME="REPOSITORY">
@@ -26,15 +26,16 @@
               <a class="label label-info" href="<TMPL_VAR NAME="REPOSITORY">"><TMPL_VAR NAME="REPOSITORY"></a>
             </TMPL_IF>
           </TMPL_LOOP>
-          <a href=".">General administration</a>
+        </TMPL_IF>
+        <TMPL_IF NAME="IN_REPOSITORY"><a href=".">General administration</a></TMPL_IF>
         </p>
       </div>
     </div>
 
     <TMPL_IF NAME="IN_REPOSITORY">
-    <h2>Administrate repository <a href="/viewvc/<TMPL_VAR NAME="REPOSITORY">/"><TMPL_VAR NAME="REPOSITORY"></a></h2>
+    <h2>Administer repository <a href="/viewvc/<TMPL_VAR NAME="REPOSITORY">/"><TMPL_VAR NAME="REPOSITORY"></a></h2>
     <TMPL_IF NAME="CAN_CREATE_USERS">
-    <form method="post" action="/svn-admin/<TMPL_VAR NAME="REPOSITORY">" enctype="multipart/form-data">
+    <form method="post" action="<TMPL_VAR NAME="REPOSITORY">" enctype="multipart/form-data">
       <input name="action" value="adduser" type="hidden">
       <h3>Create Users</h3>
       <table><tbody>
@@ -61,7 +62,7 @@
       <p>Also note that the passphrase is case-sensitive.</p>
       <hr/>
       <form method="post">
-        <input name="action" value="changepw"/>
+        <input name="action" value="changepw" type="hidden"/>
         <table><tbody>
             <tr><td>Passphrase: </td> <td><input name="passphrase" size="32" maxlength="80" type="password"></td><td>(6-80 chars)</td></tr>
             <tr><td>Verify: </td> <td><input name="verify" size="32" maxlength="80" type="password"></td><td>(6-80 chars)</td></tr>
@@ -69,8 +70,19 @@
         <input value="Change Passphrase" type="submit"/>
       </form>
       </TMPL_IF>
+      <TMPL_IF NAME="CAN_CREATE_REPOSITORY">
+      <h2>Create a new repository</h2>
+      <form method="POST">
+        <input name="action" value="create" type="hidden"/>
+        <table><tbody>
+            <tr><td>Name of new repository: </td> <td><input name="repos" size="20" type="text"></td></td></tr>
+          <tr><td>Administrator: </td> <td><input name="reposadmin" value="<TMPL_VAR NAME="USERNAME">" size="20" type="text"></td></tr>
+        </tbody></table>
+        <input value="Create" type="submit"/>
+      </form>
+      </TMPL_IF>
     </TMPL_IF>
-    <form method="post" action="/svn-admin/<TMPL_VAR NAME="REPOSITORY">" enctype="multipart/form-data">
+    <form method="post" action="<TMPL_VAR NAME="REPOSITORY">" enctype="multipart/form-data">
       <input name="repos" value="<TMPL_VAR NAME="REPOSITORY">" type="hidden">
       <input name="action" value="chgroupacl" type="hidden">
       <h3>Groups</h3>
@@ -113,14 +125,14 @@
         <p>You have <strong>read-write</strong> access to the following repositories:</p>
         <div class="well">
           <ul class="nav nav-list">
-            <TMPL_LOOP NAME="RW_REPOS"><li><a href="<TMPL_VAR NAME="VIEWVC_URL"ESCAPE="HTML">"><TMPL_VAR NAME="SVN_URL"></a></li></TMPL_LOOP>
+            <TMPL_LOOP NAME="RW_PATHS"><li><a href="<TMPL_VAR NAME="VIEWVC_URL" ESCAPE="HTML">/<TMPL_VAR NAME="REPOSITORY"><TMPL_VAR NAME="PATH">"><TMPL_VAR NAME="REPOSITORY"></a></li></TMPL_LOOP>
           </ul>
         </div>
         
         <p>You have <strong>read-only</strong> access to the following repositories:</p>
         <div class="well">
           <ul class="nav nav-list">
-            <TMPL_LOOP NAME="RO_REPOS"><li><a href="<TMPL_VAR NAME="VIEWVC_URL"ESCAPE="HTML">"><TMPL_VAR NAME="SVN_URL"></a></li></TMPL_LOOP>
+            <TMPL_LOOP NAME="RO_PATHS"><li><a href="<TMPL_VAR NAME="VIEWVC_URL" ESCAPE="HTML">/<TMPL_VAR NAME="REPOSITORY"><TMPL_VAR NAME="PATH">"><TMPL_VAR NAME="REPOSITORY"></a></li></TMPL_LOOP>
           </ul>
         </div>
       </div>
@@ -132,7 +144,7 @@
       </div>
     </div>
 
-  <!-- TODO: Add sections for disabled options - change password, backup and dump, etc. -->
+  <!-- TODO: Add sections for disabled options - backup and dump, etc. -->
 
   </div>
 </body>
