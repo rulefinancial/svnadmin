@@ -33,6 +33,7 @@
     </div>
 
     <TMPL_IF NAME="IN_REPOSITORY">
+    <div class="container">
     <h2>Administer repository <a href="/viewvc/<TMPL_VAR NAME="REPOSITORY">/"><TMPL_VAR NAME="REPOSITORY"></a></h2>
     <TMPL_IF NAME="CAN_CREATE_USERS">
     <form method="post" action="<TMPL_VAR NAME="REPOSITORY">" enctype="multipart/form-data">
@@ -47,7 +48,9 @@
           <tr><td rowspan="2"><input name="add" value="Add" type="submit"></td></tr>
       </tbody></table>
     </form>
+    </div>
     <TMPL_ELSE>
+    <div class="container">
       <TMPL_IF NAME="CAN_CHANGE_PASSWORD">
       <h2>Change Passphrase</h2>
       <p>Please enter your new choice of passphrase below, and then verify by entering it again.</p>
@@ -81,7 +84,9 @@
         <input value="Create" type="submit"/>
       </form>
       </TMPL_IF>
+    </div>
     </TMPL_IF>
+    <div class="container">
     <form method="post" action="<TMPL_VAR NAME="REPOSITORY">" enctype="multipart/form-data">
       <input name="repos" value="<TMPL_VAR NAME="REPOSITORY">" type="hidden">
       <input name="action" value="chgroupacl" type="hidden">
@@ -96,12 +101,61 @@
           </tr>
           </TMPL_LOOP>
           <tr>
-            <td><input name="numgroups" value="<TMPL_VAR NAME="GROUPCOUNT">" type="hidden"><TMPL_VAR NAME="REPOSITORY">-<input name="grpname[<TMPL_VAR NAME="GROUPNEXTINDEX">]" size="15" type="text"></td>
+            <td>
+              <input name="numgroups" value="<TMPL_VAR NAME="GROUPCOUNT">" type="hidden">
+              <TMPL_VAR NAME="REPOSITORY">-<input name="grpname[<TMPL_VAR NAME="GROUPCOUNT">]" size="15" type="text">
+            </td>
             <td><select name="l_users[1]" size="5" multiple="multiple">
               <TMPL_LOOP NAME="AVAILABLE_USERS">
               <option value="<TMPL_VAR NAME="USERNAME">"><TMPL_VAR NAME="USERNAME"> (<TMPL_VAR NAME="DISPLAYNAME">)</option>
               </TMPL_LOOP>
-
+            </td>
+            <td><input type="submit" name="add" value="Add"/></td>
+          </tr>
+          <tr><td align="center" colspan="3"><input type="submit" name="commit" value="Commit Changes"/></td></tr>
+      </tbody></table>
+      <h3>Access Control Table</h3>
+      <table style="border:1pt solid">
+        <tr><th>Path</th> <th>User(group)</th><th>Access</th><th></th></tr>
+        <TMPL_LOOP NAME="PERMISSION_LOOP">
+        <tr>
+          <td><input type="hidden" name="path[<TMPL_VAR NAME="LOOP_ACL_NUMBER"/>]" value="<TMPL_VAR NAME="LOOP_PATH"/>"/>/</td>
+          <td><input type="hidden" name="usergroup[<TMPL_VAR NAME="LOOP_ACL_NUMBER"/>]" value="<TMPL_VAR NAME="LOOP_USER_GROUP"/>"/><TMPL_VAR NAME="LOOP_USER_GROUP"/></td>
+          <td><select name="access[<TMPL_VAR NAME="LOOP_ACL_NUMBER"/>]" >
+            <option selected="selected" value="rw">rw</option>
+            <option value="r">r</option>
+            <option value="">-</option>
+          </select></td>
+          <td><label><input type="checkbox" name="deleteacl" value="<TMPL_VAR NAME="LOOP_ACL_NUMBER"/>"/>Delete</label></td>
+        </tr>
+        </TMPL_LOOP>
+        <!-- TODO: Put loop here for adding permissions. -->
+        <tr>
+          <td><input type="hidden" name="numacl" value="1"/><input type="text" name="path[1]" value="/" size="30" /></td>
+          <td><select name="usergroup[1]" >
+              <option selected="selected" value=""></option>
+              <option value="@Abacus-admins">@Abacus-admins</option>
+          </select></td>
+          <td><select name="access[0]" >
+            <option selected="selected" value="rw">rw</option>
+            <option value="r">r</option>
+            <option value="">-</option>
+          </select></td>
+          <td><input type="submit" name=".submit" value="Add" /></td>
+        </tr>
+        <tr><td align="center" colspan="4">
+            <input type="submit" name="commit" value="Commit Changes" />
+      </td></tr>
+    </table>
+    </form>
+    <p>You can give read/write or read-only rights to a single user or a user group. A user group is
+    denoted by @<TMPL_VAR NAME="REPOSITORY">-&lt;groupname&gt;.  The access rights are valid
+    for the given path and all sub directories.  For details see the 
+    <a href="http://svnbook.red-bean.com/en/1.7/svn.serverconfig.httpd.html#svn.serverconfig.httpd.authz.perdir">Manual</a>.
+    </p><p><strong>Warning:</strong> the ViewCVS script does not always respect path restrictions.  A
+    skilled user with read-only access to one directory of the
+    repository can read the whole repository.  Better use different repositories.</p>
+    </div>
     </TMPL_IF>
 
     <div class="row">

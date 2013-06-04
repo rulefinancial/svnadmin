@@ -608,11 +608,11 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
     } elsif ($key =~ /^\@([a-zA-Z0-9._-]+)$/) {
       if (! defined($globals->{'groups'}{$1}) && 
         ! grep /^$i$/, @deleteacl) {
-        print p(escapeHTML("Unknown group: $1"));
+        $template_params->{ACTION_WARNING} = "Unknown group: $1";
         $key = undef;
       }
     } elsif ($key !~ /^[A-Za-z][A-Za-z0-9._-]+$/ && $key ne '*') {
-      print p(escapeHTML("Invalid login name: $key"));
+      $template_params->{ACTION_WARNING} = "Invalid login name: $key";
       $key = undef;
     }
 
@@ -620,16 +620,16 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
       # error printed above
     } elsif ($value !~ /^(rw?)?$/
       || $path !~ /^[!-Z^-~]+$/) {
-      print p(escapeHTML("Invalid values: $path $key $value"));
+      $template_params->{ACTION_WARNING} = "Invalid values: $path $key $value";
     } else {
       if (grep /^$i$/, @deleteacl) {
         delete $repositories->{$repos}{$path}{$key};
         $needupdate = 1;
         if (scalar(keys %{$repositories->{$repos}{$path}}) == 0) {
           delete $repositories->{$repos}{$path};
-          print p("Delete a path: $repos:$path $key");
+          $template_params->{ACTION_OUTPUT} = "Delete a path: $repos:$path $key";
         } else {
-          print p("Delete a user: $repos:$path $key");
+          $template_params->{ACTION_OUTPUT} = "Delete a user: $repos:$path $key";
         }
       } elsif (!defined $repositories->{$repos}{$path}) {
         $repositories->{$repos}{$path} = {$key => [$value]};
@@ -748,16 +748,10 @@ if (@admgroups) {
     $adminrepo{CURRENT} = $repos eq $adminrepo{REPOSITORY};
     push @adminrepos, \%adminrepo;
   }
+  $template_params->{ADMIN_REPOS} = \@adminrepos;
 }
 
 if ($repos ne "" && in_group("$repos-admins")) {
-
-  print start_form(-method => 'post', -enctype => 'multipart/form-data');
-  print hidden(-name => 'repos', -default => "$repos", -force =>'1');
-  print hidden(-name => 'action', -default => 'chgroupacl', -force => '1');
-  print h3("Groups");
-  print "<table style=\"border:1pt solid;\">";
-  print Tr(th("Group"),th("Users"));
   my @reposgroups = 
   sort grep /^$repos-[a-zA-Z0-9_]+$/, keys %{$globals->{'groups'}};
   my $group;
@@ -773,46 +767,36 @@ if ($repos ne "" && in_group("$repos-admins")) {
     push @group_params, \%group_param;
     $grpnr++;
   }
-  print Tr(td(hidden(-name => 'numgroups', -default => $grpnr, -force =>'1').
-      "${repos}-".
-      textfield(-name => "grpname[$grpnr]", -default => '', 
-        -force => '1', -size => '15')), 
-    td(scrolling_list(-name => "l_users[$grpnr]",
-        -value => [sort (keys %users)],
-        -labels => {map {$_ => "$_ (" . $users{$_}->{'displayName'} . ')' } 
-          (keys %users)},
-        -size => 5,
-        -multiple => 'true')),
-    td(submit(-name => 'add', -label => 'Add')));
-  print Tr(td({-colspan => '3', -align => 'center'}, 
-      submit(-name => 'commit', -label => 'Commit Changes')));
-  print "</table>";
+  $template_params->{GROUP_LOOP} = \@group_params;
+  $template_params->{GROUPCOUNT} = $grpnr;
 
-  print h3("Access Control Table");
-  print "<table style=\"border:1pt solid;\">";
+  my @user_params;
+  foreach my $username (sort keys %users) {
+    my %user_param;
+    $user_param{USERNAME} = $username;
+    $user_param{DISPLAYNAME} = "$username (" . $users{$username}->{'displayName'} . ') ';
+    push @user_params, \%user_param;
+  }
+  $template_params->{AVAILABLE_USERS} = \@user_params;
 
-  my $path;
-  my $key;
   my $aclnr = 0;
-  my $manual = a({href => "http://svnbook.red-bean.com/en/1.5/svn.serverconfig.httpd.html#svn.serverconfig.httpd.authz.perdir"}, "Manual");
-  print Tr(th("Path"),th("User(group)"),th("Access"),th(""));
-  foreach $path (sort keys %{$repositories->{$repos}}) {
-    foreach $key (sort keys %{$repositories->{$repos}{$path}}) {
+  my @permissions;
+  foreach my $path (sort keys %{$repositories->{$repos}}) {
+    foreach my $key (sort keys %{$repositories->{$repos}{$path}}) {
       my $value = join(",", @{$repositories->{$repos}{$path}{$key}});
-      print Tr(td([hidden(-name => "path[$aclnr]", -value => "$path", 
-              -force => 1) . $path,
-            hidden(-name => "usergroup[$aclnr]", -value => "$key", 
-              -force => 1) . $key,
-            popup_menu(-name => "access[$aclnr]", 
-              -values => [ 'rw', 'r', ''], 
-              -default => $value, -force => 1,
-              -labels => { '' => '-' }),
-            checkbox(-name => "deleteacl", -value => "$aclnr", 
-              -checked => 0, -force => 1,
-              -label => "Delete")]));
+      my %permission;
+      $permission{LOOP_ACL_NUMBER} = $aclnr;
+      $permission{LOOP_USER_GROUP} = $key;
+      $permission{LOOP_PATH} = $path;
+      $permission{LOOP_HAS_RW_PERM} = $has_rw_perm;
+      $permission{LOOP_HAS_RO_PERM} = $has_ro_perm;
+
+      push @permissions, \%permission;
       $aclnr++;
     }
   }
+  $template_params->{PERMISSION_LOOP} = \@permissions;
+  $template_params->{ACL_NUMBER} = $aclnr;
 
   print Tr(td([hidden(-name => 'numacl', -default => "$aclnr", -force =>'1').
         textfield(-name => "path[$aclnr]", -default => '/', 
