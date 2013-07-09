@@ -1,0 +1,62 @@
+#!/bin/bash
+#
+# Backup Script for subversion repositories.
+#
+#
+# Adding Password of Backup user:
+# -------------------------------
+#
+# The backup user must be in the Subversion group "$repos-backup".
+# Note that password must be put in ~/.netrc.  So add a line as follows:
+#
+# machine subversion.server.org login hoenickebackup password g0d
+#
+# and make sure the file is only readable by user.
+# FIXME: It seems that "--user" is ignored when an entry in netrc is found.
+#
+# Using https:
+# ------------
+#
+# If you think your password is valuable, use https instead of http and set
+# WGETOPTS=--ca-certificate=ca.crt
+# Where ca.crt is found in /etc/apache2/ssl.crt
+#
+# Adding GPG keys:
+# ----------------
+#
+# Your GPG key must be installed on the server.  The key can be uploaded
+# via the svnadmin interface.  However you must also make sure that the key
+# is trusted.  This may require to login manually to the wwwrun user and
+# invoking gpg there. 
+#
+# If you do not want to go through the hassle of using gpg, you can use
+# gz instead of gpg below. Then the backup user must be in the $repos-admin
+# group. Of course, make sure that the backup is not readable by
+# unauthorized persons and use https (see above).
+
+## NOTE: you need to create .netrc (see above)
+## NOTE: password is sent unencrypted (see above)
+## NOTE: you need to add your gpg key on the subversion server (see above)
+BACKUPUSER=hoenickebackup
+WGETOPTS=
+URL=http://subversion.server.org/svnadmin
+cd $HOME/backup
+
+for REPOS in hoenicke admin; do
+    if [ -f $REPOS.rev ]; then
+        LAST=`cat $REPOS.rev`
+    else
+	LAST="-1"
+    fi
+    LATEST=`wget $WGETOPTS -q -O - --user=$BACKUPUSER $URL/$REPOS.rev`
+    if [ "$?" -ne 0 ]; then
+        echo "Cannot get revision number of repository $REPOS."
+    else
+        # echo Last backup is $LAST and latest revision is $LATEST.
+        if [ "$LAST" -lt "$LATEST" ]; then
+            let NEXT=$LAST+1
+	    wget $WGETOPTS -nv --user=$BACKUPUSER \
+                 $URL/$REPOS-$NEXT:$LATEST.gpg && echo $LATEST > $REPOS.rev
+	fi
+    fi
+done
