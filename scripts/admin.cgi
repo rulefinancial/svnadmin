@@ -783,7 +783,8 @@ if ($repos ne "" && in_group("$repos-admins")) {
   my @permissions;
   foreach my $path (sort keys %{$repositories->{$repos}}) {
     foreach my $key (sort keys %{$repositories->{$repos}{$path}}) {
-      my $value = join(",", @{$repositories->{$repos}{$path}{$key}});
+      my $has_rw_perm = grep("rw", @{$repositories->{$repos}{$path}{$key}});
+      my $has_ro_perm = grep("r", @{$repositories->{$repos}{$path}{$key}});
       my %permission;
       $permission{LOOP_ACL_NUMBER} = $aclnr;
       $permission{LOOP_USER_GROUP} = $key;
