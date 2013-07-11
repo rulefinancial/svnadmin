@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"><head><title>Subversion eXtended Administration</title>
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head><body>
+<h3>Hello hoenicke,</h3><p>You are administrator for [admin] <a href="#">[csdpapers]</a> <a href="#">[hoenicke]</a> <a href="#">[jmoby]</a> <a href="#">[moby]</a> <a href="#">[pea]</a> <a href="#">[prrzs06]</a> <a href="#">[skript]</a>. <a href="#">General administration</a>.</p><h2 id="admin">Administrate repository <a href="#">admin</a></h2><form method="post" action="#" enctype="multipart/form-data">
+<input name="action" value="adduser" type="hidden"><h3>Create Users</h3><table style="border: 1pt solid ;"><tbody><tr><td>User (Login):</td> <td><input name="newUser" size="30" maxlength="30" type="text"></td></tr><tr><td>Full name:</td> <td><input name="fullname" size="60" maxlength="80" type="text"></td></tr><tr><td>Email:</td> <td><input name="email" size="60" maxlength="180" type="text"></td></tr><tr><td>Passphrase:</td> <td><input name="pwd" size="32" maxlength="80" type="password"></td></tr><tr><td>Verify passphrase:</td> <td><input name="vpwd" size="32" maxlength="80" type="password"></td></tr><tr><td rowspan="2"><input name="add" value="Add" type="submit"></td></tr></tbody></table></form><form method="post" action="#" enctype="multipart/form-data">
+<input name="repos" value="admin" type="hidden"><input name="action" value="chgroupacl" type="hidden"><h3>Groups</h3><table style="border: 1pt solid ;"><tbody><tr><th>Group</th> <th>Users</th></tr><tr><td><input name="grpname[0]" value="admins" type="hidden">admin-admins</td> <td><input name="users[0]" value="admin,hoenicke,xehonk" size="50" type="text"></td> <td></td></tr><tr><td><input name="grpname[1]" value="backup" type="hidden">admin-backup</td> <td><input name="users[1]" value="hoenickebackup" size="50" type="text"></td> <td><label><input name="deletegrp" value="1" type="checkbox">Delete</label></td></tr><tr><td><input name="grpname[2]" value="readers" type="hidden">admin-readers</td> <td><input name="users[2]" value="hoenicke,xehonk" size="50" type="text"></td> <td><label><input name="deletegrp" value="2" type="checkbox">Delete</label></td></tr><tr><td><input name="numgroups" value="3" type="hidden">admin-<input name="grpname[3]" size="15" type="text"></td> <td><select name="l_users[3]" size="5" multiple="multiple">
+<option value="admin">admin</option>
+<option value="hoenicke">hoenicke</option>
+<option value="hoenickebackup">hoenickebackup</option>
+<option value="jfaber">jfaber</option>
+<option value="walter">walter</option>
+<option value="xehonk">xehonk</option>
+</select></td> <td><input name="add" value="Add" type="submit"></td></tr><tr><td colspan="3" align="center"><input name="commit" value="Commit Changes" type="submit"></td></tr></tbody></table><h3>Access Control Table</h3><table style="border: 1pt solid ;"><tbody><tr><th>Path</th> <th>User(group)</th> <th>Access</th> <th></th></tr><tr><td><input name="path[0]" value="/" type="hidden">/</td> <td><input name="usergroup[0]" value="@admin-readers" type="hidden">@admin-readers</td> <td><select name="access[0]">
+<option value="rw">rw</option>
+<option selected="selected" value="r">r</option>
+<option value="">-</option>
+</select></td> <td><label><input name="deleteacl" value="0" type="checkbox">Delete</label></td></tr><tr><td><input name="path[1]" value="/" type="hidden">/</td> <td><input name="usergroup[1]" value="admin" type="hidden">admin</td> <td><select name="access[1]">
+<option selected="selected" value="rw">rw</option>
+<option value="r">r</option>
+<option value="">-</option>
+</select></td> <td><label><input name="deleteacl" value="1" type="checkbox">Delete</label></td></tr><tr><td><input name="numacl" value="2" type="hidden"><input name="path[2]" value="/" size="30" type="text"></td> <td><select name="usergroup[2]">
+<option selected="selected" value=""></option>
+<option value="@admin-admins">@admin-admins</option>
+<option value="@admin-backup">@admin-backup</option>
+<option value="@admin-readers">@admin-readers</option>
+<option value="admin">admin</option>
+<option value="hoenicke">hoenicke</option>
+<option value="hoenickebackup">hoenickebackup</option>
+<option value="jfaber">jfaber</option>
+<option value="walter">walter</option>
+<option value="xehonk">xehonk</option>
+</select></td> <td><select name="access[2]">
+<option selected="selected" value="rw">rw</option>
+<option value="r">r</option>
+<option value="">-</option>
+</select></td> <td><input name=".submit" value="Add" type="submit"></td></tr><tr><td colspan="4" align="center"><input name="commit" value="Commit Changes" type="submit"></td></tr></tbody></table><p>You
+can give read/write or read-only rights to a single user or a user
+group. A user group is denoted by @admin-&lt;groupname&gt;. The access
+rights are valid for the given path and all sub directories. For
+details see the <a href="#">Manual</a>.</p><p><strong>Warning:</strong>
+the ViewCVS script does not always respect path restrictions. A skilled
+user with read-only access to one directory of the repository can read
+the whole repository. Better use different repositories.</p><div><input name=".cgifields" value="deletegrp" type="hidden"><input name=".cgifields" value="deleteacl" type="hidden"><input name=".cgifields" value="l_users[3]" type="hidden"></div></form><h3>Get/Upload dump file</h3><p>Click here, to download a <a href="#">dump file</a> of repository admin</p><p>Upload an  <b>incremental</b>  dump file into repository admin:</p><form method="post" action="#" enctype="multipart/form-data">
+<input name="action" value="load" type="hidden"><input name="repos" value="admin" type="hidden"><table><tbody><tr><td><strong>Dump File: </strong></td> <td><input name="dumpfile" size="40" type="file"></td></tr> <tr><td><strong>Subdirectory: </strong></td> <td><input name="dumpsubdir" size="20" type="text"></td></tr></tbody></table><input name=".submit" value="Load" type="submit"></form><hr><p><small>Copyright 2005&#8211;2007 Jochen Hoenicke, Michael Möller, Marco Lübcke; based on code from Theo Van Dinter</small></p>
+
+
+</body></html>
