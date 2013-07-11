@@ -1,0 +1,134 @@
+body {
+  color: black;
+  margin: 0;
+  padding: 0;
+  min-width: 640px;
+  font-family: verdana, arial, sans-serif ;
+}
+a[href] { color: #0B4D8C; text-decoration: underline; }
+a[href]:visited { color: black; }
+a[href].external {
+  background: url(../img/external.png) center right no-repeat;
+  padding-right: 13px;
+}
+
+.skip {
+  position: absolute;
+  margin-left: -999px;
+  width: 990px;
+}
+h1 {
+  font-size: 2.7em;
+  font-weight: bold;
+  line-height: 0.8em;
+  padding: 0.6em 0 0.2em 0;
+  margin: 0;
+  border-bottom: 1px dashed #E6E6FA;
+}
+h2, h3, h4 { font-weight: normal; }
+h1, h2, h3, h4, h5, h6 {
+  color: #0030ff;
+}
+img {
+  max-width: 95%;
+}
+.fleft {
+  float: left;
+  margin: 0 1em 0.2em 0;
+}
+.fright {
+  float: right;
+  margin: 0 0 0.2em 1em;
+  padding: 1px;
+}
+
+.secnav {
+  float: right;
+  text-align: right;
+  margin: 1em 0 0 0;
+  border-style: none;
+}
+
+.small {
+  font-size: 80%;
+}
+
+
+/* -- Layoutspezifisches -- */
+#container {
+  max-width: 70em;
+  margin: auto;
+  margin-left: 0;
+}
+#footer {
+  text-align: right;
+  color: black;
+  clear: both;
+  padding: 0 20px;
+}
+
+#subnav {
+  color: #e06000;
+  float: left; 
+  padding: 2em 0 2em 0;
+  margin: 0 0 0 0;
+}
+
+#subnav li div {
+  display: block;
+  padding: 0.2em 0 0.2em 1em;
+}
+#subnav li a {
+  width: 9em;
+  color: #000040;
+  padding: 0.2em 0 0.2em 1em;
+  display: block;
+  text-decoration: none;
+}
+#subnav li a:visited {
+  color: #404060;
+}
+#subnav li div:hover {
+  background: #c0c0c0;
+}
+#subnav li a:hover {
+  background: #c0c0c0;
+}
+#subnav li {
+  min-width: 0em;
+  list-style-type: none;
+  display: block;
+  font-weight: bold;
+/*  border:1px dotted black;*/
+}
+#subnav li ul {
+  /*background: url(../img/background.png) 0 0 #1848a8;*/
+  color: #e06000;
+  padding: 0 0 0 0;
+  margin: .2em 0 0 1.5em;
+}
+
+#subnav li ul li a {
+  width: 7.5em
+}
+#subnav li ul li ul li a {
+  width: 6em
+}
+#subnav li ul li ul li ul li a {
+  width: 4.5em
+}
+
+dt {
+  float :left;
+  color: #777777;
+  font-weight: bold;
+}
+dd {
+  margin: 0 0 0 10em;
+}
+
+#main {
+  margin: 0 0 0 10em;
+  background: white; 
+  padding: 0 1em 1em 1em;
+}

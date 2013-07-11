@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>SVN Admin</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="Content-Language" content="en" />
+  <link href="css/print.css" rel="stylesheet" type="text/css" media="print" />
+  <link href="css/screen.css" rel="stylesheet" type="text/css" media="screen, projection" />
+  <!--[if lte IE 6]><link rel="stylesheet" href="../css/ielte6.css"
+  type="text/css" media="screen" /><![endif]-->
+ <meta name="Generator" content="htp 1.17" />
+</head>
+<body>
+<h1><a name="up"></a>SVN-Admin</h1>
+<a href="#sec-2" class="noprint"><img src="img/gonext.gif" alt="go next" class="secnav" title="go next" height="15" width="15"></a>
+<a href="#up" class="noprint"><img src="img/gotop.gif" alt="top of page" class="secnav" title="top of page" height="15" width="15"></a>
+  <h2><a name="sec-1"></a>A Web Interface for Administering Subversion Repositories</h2>
+<p>The problem after setting up a subversion server with Apache
+and the <code>mod_dav_svn</code> module is to give users the right to
+change their passwords, administer their repositories, get backups, etc.
+without having a shell account on the subversion server.
+</p>
+<p>This script should close this gap by providing the most common
+functionality.</p>
+<a href="#sec-3" class="noprint"><img src="img/gonext.gif" alt="go next" class="secnav" title="go next" height="15" width="15"></a>
+<a href="#up" class="noprint"><img src="img/gotop.gif" alt="top of page" class="secnav" title="top of page" height="15" width="15"></a>
+<a href="#sec-1" class="noprint"><img src="img/goback.gif" alt="go back" class="secnav" title="go back" height="15" width="15"></a>
+  <h2><a name="sec-2"></a>Screenshot</h2>
+<iframe src="dau.html" height="200" width="90%">
+  <a href="dau.html">screenshot</a>
+</iframe>
+<center>Change Password Interface</center>
+<hr>
+<iframe src="admin.html" height="200" width="90%">
+  <a href="admin.html">screenshot</a>
+</iframe>
+<center>Administrator Interface</center>
+<hr>
+<iframe src="repos.html" height="200" width="90%">
+  <a href="repos.html">screenshot</a>
+</iframe>
+<center>Administrate Repository</center>
+<a href="#sec-4" class="noprint"><img src="img/gonext.gif" alt="go next" class="secnav" title="go next" height="15" width="15"></a>
+<a href="#up" class="noprint"><img src="img/gotop.gif" alt="top of page" class="secnav" title="top of page" height="15" width="15"></a>
+<a href="#sec-2" class="noprint"><img src="img/goback.gif" alt="go back" class="secnav" title="go back" height="15" width="15"></a>
+  <h2><a name="sec-3"></a>Quick install instruction</h2>
+<p>Install apache and mod_dav_svn as usual.  Then create a new
+directory that contains subversion repositories
+(e.g. /srv/www/subversion).  Put the admin.cgi script into another
+directory (e.g. /srv/www/svnadmin).  You should open it with some
+editor and adapt the paths at the beginning of the script.  Then add
+the following config to your <code>httpd.conf</code>:
+</p>
+<pre>&lt;IfModule mod_dav_svn.c&gt;
+  &lt;Location /svn&gt;
+    DAV svn
+    SVNParentPath /srv/www/subversion
+
+    # The access control policy
+    # Allow anonymous access, unless explicitly forbidden 
+    Satisfy Any
+    Require valid-user
+    AuthzSVNAccessFile /srv/www/subversion/.htsvnaccess
+
+    AuthType Basic
+    AuthName "Subversion repository"
+    AuthUserFile /srv/www/subversion/.htpasswd
+  &lt;/Location&gt;
+&lt;/IfModule&gt;
+
+ScriptAlias /svnadmin /srv/www/svnadmin/admin.cgi
+&lt;Location /svnadmin&gt;
+    AllowOverride None
+    Options +ExecCGI
+    Order allow,deny
+    Allow from all
+
+    Satisfy All
+    Require valid-user
+
+    AuthType Basic
+    AuthName "Subversion repository"
+    AuthUserFile /srv/www/subversion/.htpasswd
+&lt;/Location&gt;
+</pre>
+<p>
+Now create the empty files <code>/srv/www/subversion/.htpasswd</code> and <code>/srv/www/subversion/.htuserinfo</code> and add
+an initial user with</p>
+<pre>htpasswd -m .htpasswd hoenicke
+echo 'hoenicke:Jochen Hoenicke:hoenicke@...' &gt; .htuserinfo
+</pre>
+If you update from a previous version of admin.cgi, you need to create
+the file <code>.htuserinfo</code> manually.
+<p>
+Create <code>/srv/www/subversion/.htsvnaccess</code> with the following
+content:</p>
+<pre>[groups]
+admin = hoenicke
+</pre>
+<p>
+Now you're ready to go.  Put your browser to the URL
+<code>http://your.svn.server/svnadmin/</code>, enter the
+credentials for an administrator login, and create repositories.
+You can add new users at the configuration page of the repository.
+</p>
+            <img src="img/nogo.gif" alt=" " class="secnav" height="15" width="15">
+<a href="#up" class="noprint"><img src="img/gotop.gif" alt="top of page" class="secnav" title="top of page" height="15" width="15"></a>
+<a href="#sec-3" class="noprint"><img src="img/goback.gif" alt="go back" class="secnav" title="go back" height="15" width="15"></a>
+<hr/>
+<p>Copyright (c) 2007-2008 Jochen Hoenicke, Michael Möller</p>
+<p> This program is free software; you can redistribute it and/or
+modify it under the terms of the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public
+License</a> as published by the Free Software Foundation; either
+version 2, or (at your option) any later version.</p>
+<p> This program is distributed in the hope that it will be useful,
+but <b>WITHOUT ANY WARRANTY</b>; without even the implied warranty of
+<b>MERCHANTABILITY</b> or <b>FITNESS FOR A PARTICULAR PURPOSE</b>.
+See the <a href="http://www.gnu.org/licenses/gpl.html">GNU General
+Public License</a> for more details.</p>
+</body></html>
