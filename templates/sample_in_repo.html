@@ -1,0 +1,2029 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> <html
+      xmlns="http://www.w3.org/1999/xhtml" lang="en-US"
+      xml:lang="en-US"> <head> <title>Subversion  eXtended
+          Administration</title> <meta http-equiv="Content-Type"
+        content="text/html; charset=iso-8859-1" /> </head> <body>
+        <h3>Hello rneish,</h3><p>You are administrator for [Abacus] <a
+          href="Archetypes">[Archetypes]</a> <a
+          href="AssociatesWeb">[AssociatesWeb]</a> <a
+          href="AutomatedTesting">[AutomatedTesting]</a> <a
+          href="BCNmob">[BCNmob]</a> <a href="BP">[BP]</a> <a
+  href="BarcelonaTest">[BarcelonaTest]</a> <a
+  href="BarclaysComplianceRisk">[BarclaysComplianceRisk]</a> <a
+  href="BarclaysControlRoomSurveillance">[BarclaysControlRoomSurveillance]</a>
+<a href="BemLoad">[BemLoad]</a> <a href="CQS">[CQS]</a> <a
+  href="Calypso">[Calypso]</a> <a href="CityOdds">[CityOdds]</a> <a
+  href="ClaimsTracker">[ClaimsTracker]</a> <a href="Comp">[Comp]</a> <a
+  href="ComplianceControl">[ComplianceControl]</a> <a
+  href="CreditRiskDataLoad">[CreditRiskDataLoad]</a> <a
+  href="CreditRiskSystem">[CreditRiskSystem]</a> <a
+  href="DBBSG">[DBBSG]</a> <a
+  href="DBConferencesBid">[DBConferencesBid]</a> <a
+  href="ETFManager">[ETFManager]</a> <a
+  href="EUCRemediation">[EUCRemediation]</a> <a
+  href="Eclectica">[Eclectica]</a> <a
+  href="Fortis-Calypso">[Fortis-Calypso]</a> <a
+  href="GradSandbox">[GradSandbox]</a> <a
+  href="GreenParts">[GreenParts]</a> <a href="Horizon">[Horizon]</a> <a
+  href="HsbcFxoClearing">[HsbcFxoClearing]</a> <a
+  href="Intranet">[Intranet]</a> <a href="JSClient">[JSClient]</a> <a
+  href="Luxor">[Luxor]</a> <a href="MIST">[MIST]</a> <a
+  href="MobileGuestRegistration">[MobileGuestRegistration]</a> <a
+  href="MoveTest">[MoveTest]</a> <a
+  href="NARecruiting">[NARecruiting]</a> <a href="NewCo">[NewCo]</a> <a
+  href="NorthAmericaOperations">[NorthAmericaOperations]</a> <a
+  href="Odey">[Odey]</a> <a
+  href="OdeyApplicationLogicMove">[OdeyApplicationLogicMove]</a> <a
+  href="OdeyFocusList">[OdeyFocusList]</a> <a
+  href="OdeyImport">[OdeyImport]</a> <a
+  href="RBCRiskOutsourcing">[RBCRiskOutsourcing]</a> <a
+  href="RIDYT">[RIDYT]</a> <a href="Rambo">[Rambo]</a> <a
+  href="Rule">[Rule]</a> <a href="RuleALDOP">[RuleALDOP]</a> <a
+  href="RuleCareerMgmt">[RuleCareerMgmt]</a> <a
+  href="RuleMaven">[RuleMaven]</a> <a href="RuleNY">[RuleNY]</a> <a
+  href="RulePivot">[RulePivot]</a> <a
+  href="TradeSimulator">[TradeSimulator]</a> <a
+  href="TriPartyApp">[TriPartyApp]</a> <a href="UBS-Led">[UBS-Led]</a>
+<a href="WellsFargoGridCachePoC">[WellsFargoGridCachePoC]</a> <a
+  href="XMLReporting">[XMLReporting]</a> <a href="citi-fx">[citi-fx]</a>
+<a href="dalepride">[dalepride]</a> <a href="ebcm">[ebcm]</a> <a
+  href="ebcm2ng">[ebcm2ng]</a> <a href="finca">[finca]</a> <a
+  href="forteus-admin">[forteus-admin]</a> <a
+  href="forteus">[forteus]</a> <a
+  href="forteus-baseapp">[forteus-baseapp]</a> <a
+  href="forteus-env">[forteus-env]</a> <a
+  href="forteus-home">[forteus-home]</a> <a
+  href="gradrepo">[gradrepo]</a> <a href="iDesk">[iDesk]</a> <a
+  href="iPhoneRiskDemo">[iPhoneRiskDemo]</a> <a href="luup">[luup]</a>
+<a href="rontech">[rontech]</a> <a href="rulebook">[rulebook]</a> <a
+  href="svnhome">[svnhome]</a> <a href="tbbx">[tbbx]</a> <a
+  href="tcweb">[tcweb]</a> <a href="tullett">[tullett]</a> <a
+  href="utils">[utils]</a>. <a href=".">General
+  administration</a>.</p><h2 id="Abacus">Administrate repository <a
+    href="/viewvc/Abacus/">Abacus</a></h2><form method="post"
+  action="/svn-admin/Abacus" enctype="multipart/form-data"> <input
+  type="hidden" name="action" value="adduser"  /><h3>Create
+    Users</h3><table style="border:1pt solid;"><tr><td>User
+        (Login):</td> <td><input type="text" name="newUser"  size="30"
+        maxlength="30" /></td></tr><tr><td>Full name:</td> <td><input
+        type="text" name="fullname"  size="60" maxlength="80"
+        /></td></tr><tr><td>Email:</td> <td><input type="text"
+        name="email"  size="60" maxlength="180"
+        /></td></tr><tr><td>Passphrase:</td> <td><input type="password"
+        name="pwd"  size="32" maxlength="80" /></td></tr><tr><td>Verify
+        passphrase:</td> <td><input type="password" name="vpwd"
+        size="32" maxlength="80" /></td></tr><tr><td rowspan='2'><input
+        type='submit' name='add'
+        value='Add'/></td></tr></table></form><form method="post"
+  action="/svn-admin/Abacus" enctype="multipart/form-data"> <input
+  type="hidden" name="repos" value="Abacus"  /><input type="hidden"
+  name="action" value="chgroupacl"  /><h3>Groups</h3><table
+    style="border:1pt solid;"><tr><th>Group</th>
+      <th>Users</th></tr><tr><td><input type="hidden" name="grpname[0]"
+        value="admins"  />Abacus-admins</td> <td><input type="text"
+        name="users[0]" value="@admins" size="50" /></td>
+      <td></td></tr><tr><td><input type="hidden" name="numgroups"
+        value="1"  />Abacus-<input type="text" name="grpname[1]"
+        size="15" /></td> <td><select name="l_users[1]"  size="5"
+          multiple="multiple"> <option value="AKubas">AKubas (Andrzej
+          Kubas)</option> <option value="ATRaccount">ATRaccount
+          (ATRaccount)</option> <option
+          value="AbsenceManager">AbsenceManager
+          (AbsenceManager)</option> <option value="AddPC">AddPC
+          (AddPC)</option> <option value="Aldgateroom">Aldgateroom (*
+          Aldgate LDZ Room (6))</option> <option value="ArcSer">ArcSer
+          (ArcServer Alert)</option> <option
+          value="BJanaszewski">BJanaszewski (Bartosz
+          Janaszewski)</option> <option value="Bankroom">Bankroom (*
+          Bank LDZ Room (12))</option> <option
+          value="Barbicanroom">Barbicanroom (* Barbican LDZ Room
+          (6))</option> <option value="Benefitspoland">Benefitspoland
+          (Benefitspoland)</option> <option
+          value="Blackfriarsroom">Blackfriarsroom (* Blackfriars LDZ
+          Room (6))</option> <option value="CMS_admin">CMS_admin
+          (CMS_admin)</option> <option value="CSIuser">CSIuser (CSIuser
+          CSIuser)</option> <option value="CV">CV (CV)</option> <option
+          value="ClientSupport">ClientSupport (Client Support)</option>
+          <option value="ConfRoomBookingPLN">ConfRoomBookingPLN
+          (ConfRoomBookingPLN)</option> <option
+          value="ConfRoomBookingPLN_6thfloor">ConfRoomBookingPLN_6thfloor
+          (ConfRoomBookingPLN_6thfloor)</option> <option
+          value="Cortonroom">Cortonroom (* Corton Room (10))</option>
+          <option value="DChojnacki">DChojnacki (Dawid
+          Chojnacki)</option> <option value="DavidM">DavidM (David
+          Moss)</option> <option value="Feedback">Feedback
+          (Feedback)</option> <option
+          value="Hammersmithroom">Hammersmithroom (* Hammersmith LDZ
+          Room (6))</option> <option value="IRMaccount">IRMaccount
+          (IRMaccount)</option> <option value="IRMadmin">IRMadmin
+          (IRMadmin)</option> <option value="Ideas2Action">Ideas2Action
+          (Ideas2Action)</option> <option value="Intranet">Intranet
+          (Intranet Admin)</option> <option value="JMajewska">JMajewska
+          (Joanna Majewska)</option> <option value="JNiemiec">JNiemiec
+          (Jakub Niemiec)</option> <option value="Jira">Jira
+          (Jira)</option> <option value="Jira_bot1">Jira_bot1 (Jira
+          Bot)</option> <option value="KFrajtak">KFrajtak (Katarzyna
+          Frajtak)</option> <option value="KZamaria">KZamaria (Katarzyna
+          Zamaria)</option> <option value="LBGBAMN">LBGBAMN (LBG BAM New
+          Issue)</option> <option value="LBGBAMS">LBGBAMS (LBG BAM
+          Support)</option> <option value="LBGBAMU">LBGBAMU (LBG BAM
+          Update Issues)</option> <option value="LJagucki">LJagucki
+          (Lukasz Jagucki)</option> <option value="Latour">Latour (*
+          Latour Room (12))</option> <option
+          value="LodzReception">LodzReception (LodzReception)</option>
+          <option value="MJablonski">MJablonski (Maciej
+          Jablonski)</option> <option value="MMalinowski">MMalinowski
+          (Maciej Malinowski)</option> <option
+          value="MPiaskowski">MPiaskowski (Michal Piaskowski)</option>
+          <option value="MWasiak">MWasiak (Michal Wasiak)</option>
+          <option value="MZielinski">MZielinski (Maciej
+          Zielinski)</option> <option
+          value="Maryleboneroom">Maryleboneroom (* Marylebone LDZ Room
+          (6))</option> <option value="MatrixRobot">MatrixRobot
+          (MatrixRobot)</option> <option
+          value="MilestoneCalendar">MilestoneCalendar
+          (MilestoneCalendar)</option> <option value="Mobile">Mobile
+          (Mobile)</option> <option
+          value="MobileSupportDevice1">MobileSupportDevice1
+          (MobileSupportDevice1 One)</option> <option
+          value="Montrachet">Montrachet (* Montrachet Room (2))</option>
+          <option value="Monumentroom">Monumentroom (* Monument LDZ Room
+          (12))</option> <option value="NARecruitment">NARecruitment
+          (NARecruitment)</option> <option value="NYHolidays">NYHolidays
+          (NY Holiday Calendar)</option> <option
+          value="NYscanner">NYscanner (NY Scanner)</option> <option
+          value="PKozlowski">PKozlowski (Pawel Kozlowski)</option>
+          <option value="PLD0030_user">PLD0030_user
+          (PLD0030_user)</option> <option
+          value="Paddingtonroom">Paddingtonroom (* Paddington LDZ Room
+          (6))</option> <option value="PembleM">PembleM (Malcolm
+          Pemble)</option> <option
+          value="PoznanAdministration">PoznanAdministration
+          (PoznanAdministration)</option> <option value="RKlys">RKlys
+          (Rafal Klys)</option> <option value="Recruitment">Recruitment
+          (Recruitment)</option> <option
+          value="Referrals-NA">Referrals-NA (Referrals-NA)</option>
+          <option value="RuleNY">RuleNY (Rule NY)</option> <option
+          value="SLilani">SLilani (Shehzad Lilani)</option> <option
+          value="SVC-BES">SVC-BES (SVC-BES)</option> <option
+          value="SVC-Dtex">SVC-Dtex (SVC-Dtex)</option> <option
+          value="SVC-Eurex">SVC-Eurex (SVC-Eurex)</option> <option
+          value="SVC-FSSPAdmin">SVC-FSSPAdmin (SVC-FSSPAdmin)</option>
+          <option value="SVC-MossAdmin">SVC-MossAdmin
+          (SVC-MossAdmin)</option> <option
+          value="SVC-MossExcel">SVC-MossExcel (SVC-MossExcel)</option>
+          <option value="SVC-MossFarm">SVC-MossFarm
+          (SVC-MossFarm)</option> <option
+          value="SVC-MossProfile">SVC-MossProfile
+          (SVC-MossProfile)</option> <option
+          value="SVC-MossSearchServic">SVC-MossSearchServic
+          (SVC-MossSearchService)</option> <option
+          value="SVC-MossSecureStore">SVC-MossSecureStore
+          (SVC-MossSecureStore)</option> <option
+          value="SVC-MossSspAdmin">SVC-MossSspAdmin
+          (SVC-MossSspAdmin)</option> <option
+          value="SVC-MossSspMySite">SVC-MossSspMySite
+          (SVC-MossSspMySite)</option> <option
+          value="SVC-MossSspService">SVC-MossSspService
+          (SVC-MossSspService)</option> <option
+          value="SVC-MossWeb">SVC-MossWeb (SVC-MossWeb)</option> <option
+          value="SVC-QlikView">SVC-QlikView (SVC-QlikView)</option>
+          <option value="SVC-SAP">SVC-SAP (SVC-SAP)</option> <option
+          value="SVC-SQLCLUSTER">SVC-SQLCLUSTER
+          (SVC-SQLCLUSTER)</option> <option
+          value="SVC-SQLSERVER">SVC-SQLSERVER (SVC-SQLSERVER)</option>
+          <option value="SVC-SQLSHIPLOG">SVC-SQLSHIPLOG
+          (SVC-SQLSHIPLOG)</option> <option
+          value="SVC-SQLService">SVC-SQLService
+          (SVC-SQLService)</option> <option value="SVC-SUBV">SVC-SUBV
+          (SVC-subversion)</option> <option
+          value="SVC-TFSService">SVC-TFSService
+          (SVC-TFSService)</option> <option
+          value="SVC-VSTFSService">SVC-VSTFSService
+          (SVC-VSTFSService)</option> <option
+          value="SVC-VaultMoss">SVC-VaultMoss (SVC-VaultMoss)</option>
+          <option value="SVC-VaultSQL">SVC-VaultSQL
+          (SVC-VaultSQL)</option> <option
+          value="SVC-WSSAdmin">SVC-WSSAdmin (SVC-WSSAdmin)</option>
+          <option value="SVC-WssContentAccess">SVC-WssContentAccess
+          (SVC-WssContentAccess)</option> <option
+          value="SVC-WssSearchService">SVC-WssSearchService
+          (SVC-WssSearchService)</option> <option
+          value="SVC-buildmanager">SVC-buildmanager
+          (SVC-buildmanager)</option> <option
+          value="SVC-clickapp">SVC-clickapp (SVC-clickapp)</option>
+          <option value="SVC-rulepivotCI">SVC-rulepivotCI
+          (SVC-rulepivotCI)</option> <option
+          value="SVCAbsenceTracker">SVCAbsenceTracker
+          (SVCAbsenceTracker)</option> <option
+          value="SVNSourceBuildDEV">SVNSourceBuildDEV
+          (SVNSourceBuildDEV)</option> <option
+          value="SVNSourceBuildSST">SVNSourceBuildSST
+          (SVNSourceBuildSST)</option> <option
+          value="Securedrop1">Securedrop1 (Securedrop1)</option> <option
+          value="SecuritiesFinance">SecuritiesFinance (Securities
+          Finance)</option> <option value="SkypeLodz">SkypeLodz
+          (*SkypeLodz)</option> <option
+          value="SourceSupportMobile">SourceSupportMobile
+          (SourceSupportMobile)</option> <option
+          value="Source_ETFRCA_new">Source_ETFRCA_new (Source ETFRCA
+          new)</option> <option
+          value="Source_ETFRCA_update">Source_ETFRCA_update (Source
+          ETFRCA update)</option> <option value="SysRatCI">SysRatCI
+          (SysRatCI SysRatCI)</option> <option
+          value="TFS-Reports">TFS-Reports (SVC-TFSReports)</option>
+          <option value="TSokolowski">TSokolowski (Tomasz
+          Sokolowski)</option> <option value="Test_DI">Test_DI
+          (Test_DI)</option> <option value="Test_PMO">Test_PMO
+          (Test_PMO)</option> <option value="Test_TL">Test_TL
+          (Test_TL)</option> <option
+          value="_Room_Barcelona">_Room_Barcelona
+          (_Room_Barcelona)</option> <option
+          value="_Room_Canada">_Room_Canada (_Room_Canada)</option>
+          <option value="aaugustine">aaugustine (Andre
+          Augustine)</option> <option value="abourne">abourne (Alexander
+          Bourne)</option> <option value="abraidwood">abraidwood
+          (Alistair Braidwood)</option> <option value="achawla">achawla
+          (Amrik Chawla)</option> <option value="acraven">acraven (Adam
+          Craven)</option> <option value="acromarty">acromarty
+          (Alexander Cromarty)</option> <option value="adavis">adavis
+          (Alex Davis)</option> <option value="afisk">afisk (Andy
+          Fisk)</option> <option value="afriend">afriend (Amanda
+          Friend)</option> <option value="agadomska">agadomska (Anna
+          Gadomska)</option> <option value="agonzalez">agonzalez (Amado
+          Gonzalez)</option> <option value="agrewal">agrewal (Ami
+          Grewal)</option> <option value="agupta">agupta (Amit
+          Gupta)</option> <option
+          value="ahinesocallaghan">ahinesocallaghan (Alan
+          Hines-O’Callaghan)</option> <option
+          value="ajadczak">ajadczak (Andrzej Jadczak)</option> <option
+          value="ajaeschke">ajaeschke (Andrzej Jaeschke)</option>
+          <option value="akelly">akelly (Amanda Kelly)</option> <option
+          value="akochanowski">akochanowski (Adam Kochanowski)</option>
+          <option value="akonsewiczzawadzka">akonsewiczzawadzka (Anna
+          Konsewicz-Zawadzka)</option> <option
+          value="akorolewski">akorolewski (Adrian Korolewski)</option>
+          <option value="akurman">akurman (Anna Kurman)</option> <option
+          value="akurp">akurp (Adam Kurp)</option> <option
+          value="amadej">amadej (Aleksander Madej)</option> <option
+          value="amajkowska">amajkowska (Agata Majkowska)</option>
+          <option value="amatyszewska">amatyszewska (Agata
+          Matyszewska)</option> <option value="amazur">amazur (Anatolie
+          Mazur)</option> <option value="amichalak">amichalak (Adam
+          Michalak)</option> <option value="amielczarek">amielczarek
+          (Anna Mielczarek)</option> <option value="amilne">amilne
+          (amilne)</option> <option value="amorley">amorley (Alan
+          Morley)</option> <option value="amorton">amorton (Andrew
+          Morton)</option> <option value="andmielczarek">andmielczarek
+          (Andrzej Mielczarek)</option> <option value="anelson">anelson
+          (Alec Nelson)</option> <option value="anthonyh">anthonyh
+          (Anthony Horner)</option> <option value="aolapade">aolapade
+          (Abi Olapade)</option> <option value="apardoe">apardoe (Alex
+          Pardoe)</option> <option value="apatel">apatel (Alisha
+          Patel)</option> <option value="apiesiak">apiesiak (Adrian
+          Piesiak)</option> <option value="apple">apple (Apple)</option>
+          <option value="apronakis">apronakis (Andreas
+          Pronakis)</option> <option value="aramanathan">aramanathan
+          (Akshay Ramanathan)</option> <option
+          value="aresnikoff">aresnikoff (Alex Resnikoff)</option>
+          <option value="arogalska">arogalska (Anna Rogalska)</option>
+          <option value="aschneider">aschneider (Anja
+          Schneider)</option> <option value="asingh">asingh (Amrender
+          Singh)</option> <option value="askurski">askurski (Adam
+          Skurski)</option> <option value="asmirnov">asmirnov (Andrey
+          Smirnov)</option> <option value="asokolowska">asokolowska
+          (Agata Sokolowska)</option> <option
+          value="atolloczko">atolloczko (Adam Tolloczko)</option>
+          <option value="aulacha">aulacha (Adam Ulacha)</option> <option
+          value="avinokurov">avinokurov (Alina Vinokurov)</option>
+          <option value="awaszak">awaszak (Anna Waszak)</option> <option
+          value="awitek">awitek (Arkadiusz Witek)</option> <option
+          value="awlodarczyk">awlodarczyk (Artur Wlodarczyk)</option>
+          <option value="azuzanski">azuzanski (Adam Zuzanski)</option>
+          <option value="backup">backup (Windows Backup)</option>
+          <option value="barcelonaldzroom">barcelonaldzroom (* Barcelona
+          LDZ Room (6))</option> <option value="barton">barton (* Barton
+          Room (8))</option> <option value="bbartos">bbartos (Beata
+          Bartos)</option> <option value="bbednarowicz">bbednarowicz
+          (Bartosz Bednarowicz)</option> <option
+          value="bbilicki">bbilicki (Bartosz Bilicki)</option> <option
+          value="bcncalls">bcncalls (BCN Conference Calls)</option>
+          <option value="bcnmeeting">bcnmeeting (BCN Meeting)</option>
+          <option value="bdsouza">bdsouza (Bharti D’Souza)</option>
+          <option value="bfrydrych">bfrydrych (Bartlomiej
+          Frydrych)</option> <option value="bkraczkowska">bkraczkowska
+          (Barbara Kraczkowska)</option> <option value="bkrol">bkrol
+          (Bartosz Krol)</option> <option value="bkuzio">bkuzio (Bartosz
+          Kuzio)</option> <option value="bluther">bluther (Beverley
+          Luther)</option> <option value="bmaciag">bmaciag (Bartosz
+          Maciag)</option> <option value="bmilczarek">bmilczarek
+          (Bartosz Milczarek)</option> <option value="bmiller">bmiller
+          (Bartosz Miller)</option> <option value="bnagorski">bnagorski
+          (Bartlomiej Nagorski)</option> <option
+          value="bpietras">bpietras (Barbara Pietras)</option> <option
+          value="bpinkowski">bpinkowski (Bartosz Pinkowski)</option>
+          <option value="bpozniak">bpozniak (Bartek Pozniak)</option>
+          <option value="brekhi">brekhi (Bindhu Rekhi)</option> <option
+          value="bsharratt">bsharratt (Brian Sharratt)</option> <option
+          value="bsingh">bsingh (Binoy Singh)</option> <option
+          value="bsmolarek">bsmolarek (Bartosz Smolarek)</option>
+          <option value="bsokol">bsokol (Bartosz Sokol)</option> <option
+          value="buildmanager">buildmanager (Build Manager SVN)</option>
+          <option value="bupotts">bupotts (Business Update - Chris
+          Potts)</option> <option value="bwagrowski">bwagrowski
+          (Bartlomiej Wagrowski)</option> <option value="bwilk">bwilk
+          (Barbara Wilk)</option> <option
+          value="bwyspianski">bwyspianski (Bartosz Wyspianski)</option>
+          <option value="byang">byang (Brian Yang)</option> <option
+          value="cbones">cbones (Carl Bones)</option> <option
+          value="ccalls">ccalls (Conference Calls)</option> <option
+          value="ccollins">ccollins (Christine Collins)</option> <option
+          value="cconesa">cconesa (Carlos Conesa)</option> <option
+          value="cdebrusk">cdebrusk (Chris DeBrusk)</option> <option
+          value="cdixit">cdixit (Chintan Dixit)</option> <option
+          value="cfeedback">cfeedback (Client Feedback)</option> <option
+          value="cgrafham">cgrafham (Christopher Grafham)</option>
+          <option value="chalpern">chalpern (Claudine Halpern)</option>
+          <option value="charlesh">charlesh (Charles Henderson)</option>
+          <option value="charper">charper (Colin Harper)</option>
+          <option value="charrigan">charrigan (Christian
+          Harrigan)</option> <option
+          value="ciechocinekroom">ciechocinekroom (* Ciechocinek LDZ
+          Room (6))</option> <option value="ckroon">ckroon (Chet
+          Kroon)</option> <option value="clasky">clasky (Craig
+          Lasky)</option> <option value="cleek">cleek (Colin
+          Leek)</option> <option value="cliffe">cliffe (Cliff
+          Evans)</option> <option value="cmehta">cmehta (Cyrus
+          Mehta)</option> <option value="cmitchell">cmitchell (Claire
+          Mitchell)</option> <option value="cnelson">cnelson (Chris
+          Nelson)</option> <option value="compliance">compliance
+          (Compliance)</option> <option value="conf-alnc">conf-alnc
+          (conf-alnc)</option> <option value="conf-bigdata">conf-bigdata
+          (conf bigdata)</option> <option value="conf_test">conf_test
+          (conf_test)</option> <option value="conference">conference
+          (conference)</option> <option value="confluence">confluence
+          (Confluence Atlassian)</option> <option
+          value="confmail">confmail (Confluence Mail)</option> <option
+          value="contact">contact (Contact)</option> <option
+          value="contractors">contractors (Contractors)</option> <option
+          value="cpotts">cpotts (Chris Potts)</option> <option
+          value="crmread">crmread (crmread)</option> <option
+          value="crmsupport">crmsupport (CRM Support)</option> <option
+          value="crush">crush (Christine Rush)</option> <option
+          value="ctarnowski">ctarnowski (Cezary Tarnowski)</option>
+          <option value="ctjokrohardjo">ctjokrohardjo (Casey
+          Tjokrohardjo)</option> <option value="cucm">cucm
+          (cucm)</option> <option value="cucmadlookup">cucmadlookup
+          (cucmadlookup)</option> <option value="customers">customers
+          (Customers)</option> <option value="cwatts">cwatts (Chris
+          Watts)</option> <option value="cwinch">cwinch (Chris
+          Winch)</option> <option value="dbalkwill">dbalkwill (David
+          Balkwill)</option> <option value="dbernacik">dbernacik (Damian
+          Bernacik)</option> <option value="dblades">dblades (David
+          Blades)</option> <option value="dblenkiron">dblenkiron (Dawn
+          Blenkiron)</option> <option value="dboberek">dboberek (Dariusz
+          Boberek)</option> <option value="dbryant">dbryant (David
+          Bryant)</option> <option value="dchristoff">dchristoff
+          (Dimitar Christoff)</option> <option value="dclive">dclive (DC
+          Live)</option> <option value="dcrowhurst">dcrowhurst (Dominic
+          Crowhurst)</option> <option value="ddabrowski">ddabrowski
+          (Daniel Dabrowski)</option> <option value="ddouglas">ddouglas
+          (Dirk Douglas)</option> <option
+          value="ddutkiewicz">ddutkiewicz (Daniel Dutkiewicz)</option>
+          <option value="dealsheets">dealsheets (DealSheets)</option>
+          <option value="dfernandes">dfernandes (Daphne
+          Fernandes)</option> <option value="dgarcia">dgarcia (Daniel
+          Garcia)</option> <option value="dgerrard">dgerrard (Donna
+          Gerrard)</option> <option value="dglover">dglover (Daniel
+          Glover)</option> <option value="dgoscinski">dgoscinski
+          (Dariusz Goscinski)</option> <option value="dho">dho (Denise
+          Ho)</option> <option value="dhoward">dhoward (Danny
+          Howard)</option> <option value="dhyatt">dhyatt (David
+          Hyatt)</option> <option value="djankowiak">djankowiak (Dawid
+          Jankowiak)</option> <option value="dlecki">dlecki (Dariusz
+          Lecki)</option> <option value="dlustig">dlustig (David
+          Lustig)</option> <option value="dnewman">dnewman (David
+          Newman)</option> <option value="dnikitin">dnikitin (Denis
+          Nikitin)</option> <option value="dnowakowski">dnowakowski
+          (Damian Nowakowski)</option> <option value="dperry">dperry
+          (Derek Perry)</option> <option value="dromolo">dromolo (Diana
+          Romolo)</option> <option value="dryrun">dryrun (Dry
+          Run)</option> <option value="dsadowska">dsadowska (Dorota
+          Sadowska)</option> <option value="dsobanski">dsobanski (Damian
+          Sobanski)</option> <option value="dsosnowski">dsosnowski
+          (Damian Sosnowski)</option> <option value="dsoyta">dsoyta
+          (Dariusz Soyta)</option> <option
+          value="dspoczynski">dspoczynski (Daniel Spoczynski)</option>
+          <option value="dstefanski">dstefanski (Damian
+          Stefanski)</option> <option value="dstrickland">dstrickland
+          (David Strickland)</option> <option
+          value="dtex_support2">dtex_support2 (Dtex Support2)</option>
+          <option value="dtexmobile">dtexmobile (Dtex
+          SupportMobile)</option> <option value="dtexsn">dtexsn (DTEX
+          Support New Issue)</option> <option value="dtexsupp">dtexsupp
+          (Dtex Support)</option> <option value="dtexu">dtexu (DTEX
+          Support Update)</option> <option value="durbanek">durbanek
+          (Dagmara Urbanek)</option> <option value="dwojcik">dwojcik
+          (Daniel Wojcik)</option> <option value="eadams">eadams (Emile
+          Adams)</option> <option value="ealmeida">ealmeida (Eric
+          Almeida)</option> <option value="ebarro">ebarro (Eder
+          Barro)</option> <option value="ebcmsupport">ebcmsupport (EBCM
+          Support)</option> <option value="ecates">ecates (Emily
+          Cates)</option> <option value="edragon">edragon (Ed
+          Dragon)</option> <option value="efrost">efrost (Emma
+          Frost)</option> <option value="egabrysiak">egabrysiak
+          (Elzbieta Gabrysiak)</option> <option
+          value="egoodchild">egoodchild (Elspeth Goodchild)</option>
+          <option value="ehektoen">ehektoen (Eirik Hektoen)</option>
+          <option value="ehuang">ehuang (Ellett Huang)</option> <option
+          value="ehumphrey">ehumphrey (Emma Humphrey)</option> <option
+          value="ejarzebowski">ejarzebowski (Ernest
+          Jarzebowski)</option> <option value="ekwasniak">ekwasniak
+          (Emil Kwasniak)</option> <option
+          value="epaluszewska">epaluszewska (Elwira
+          Paluszewska)</option> <option value="erestore">erestore (Email
+          Restore)</option> <option value="esuwala">esuwala (Ewa
+          Suwala)</option> <option value="etaskos">etaskos (Efstathios
+          Taskos)</option> <option value="etfmhudson">etfmhudson
+          (etfmhudson)</option> <option
+          value="etfmteamcity">etfmteamcity (etfmteamcity)</option>
+          <option value="euro2012">euro2012 (euro2012)</option> <option
+          value="ewasiolek">ewasiolek (Emil Wasiolek)</option> <option
+          value="ewright">ewright (Elliot Wright)</option> <option
+          value="exchange">exchange (NAV for Microsoft
+          Exchange-RULE1-2400-W2K)</option> <option
+          value="expenses">expenses (Expenses)</option> <option
+          value="fcook">fcook (Francis Cook)</option> <option
+          value="fcui">fcui (Fiona Cui)</option> <option
+          value="fdeshayes">fdeshayes (Fabien Deshayes)</option> <option
+          value="ffurniturewala">ffurniturewala (Faraz
+          Furniturewala)</option> <option value="fieldd">fieldd (David
+          Field)</option> <option value="finance">finance
+          (Finance)</option> <option value="fkaliakmanis">fkaliakmanis
+          (Filippos Kaliakmanis)</option> <option
+          value="flagana">flagana (Francesco Lagana)</option> <option
+          value="fshariff">fshariff (Faisal Shariff)</option> <option
+          value="gayzenberg">gayzenberg (Gene Ayzenberg)</option>
+          <option value="gborkowski">gborkowski (Grzegorz
+          Borkowski)</option> <option value="gdobrowolski">gdobrowolski
+          (Grzegorz Dobrowolski)</option> <option
+          value="ggarrett">ggarrett (Glenn Garrett)</option> <option
+          value="gharker">gharker (Graeme Harker)</option> <option
+          value="ghinojosa">ghinojosa (Gaetan Hinojosa)</option> <option
+          value="gjachimko">gjachimko (Grzegorz Jachimko)</option>
+          <option value="gocs">gocs (Global One Credit Suisse)</option>
+          <option value="goldingn">goldingn (Nick Golding)</option>
+          <option value="goubs">goubs (GlobalOne UBS)</option> <option
+          value="gpieterson">gpieterson (Godson Pieterson)</option>
+          <option value="gpochecker">gpochecker (gpochecker)</option>
+          <option value="grichardson">grichardson (Gareth
+          Richardson)</option> <option value="grookledge">grookledge
+          (Greg Rookledge)</option> <option value="grybak">grybak
+          (Grzegorz Rybak)</option> <option value="gsandhu">gsandhu
+          (Gurjeet Sandhu)</option> <option value="gsheeran">gsheeran
+          (Gillian Sheeran)</option> <option value="gsooch">gsooch
+          (Gurminder Sooch)</option> <option
+          value="gtrybulski">gtrybulski (Grzegorz Trybulski)</option>
+          <option value="gvalle">gvalle (Gaston Valle)</option> <option
+          value="gwhite">gwhite (Geoff White)</option> <option
+          value="gwood">gwood (Graeme Wood)</option> <option
+          value="hbiernacka">hbiernacka (Halina Biernacka)</option>
+          <option value="hdormer">hdormer (Howard Dormer)</option>
+          <option value="help.desk">help.desk (Help Desk)</option>
+          <option value="hkemp">hkemp (Henry Kemp)</option> <option
+          value="hmakwana">hmakwana (Hiten Makwana)</option> <option
+          value="hmesha">hmesha (Hany Mesha)</option> <option
+          value="horizonbackup">horizonbackup (Horizon Backup)</option>
+          <option value="hotdesk">hotdesk (Hotdesk)</option> <option
+          value="humanresources">humanresources (Human
+          Resources)</option> <option value="ibanas">ibanas (Iwo
+          Banas)</option> <option value="ibennett">ibennett (Ian
+          Bennett)</option> <option value="ielayaraja">ielayaraja (Issac
+          Elayaraja)</option> <option value="ifutcher">ifutcher (Iain
+          Futcher)</option> <option value="ikenny">ikenny (Iain
+          Kenny)</option> <option value="ilewandowska">ilewandowska
+          (Izabela Lewandowska)</option> <option
+          value="imachniewicz">imachniewicz (Ida Machniewicz)</option>
+          <option value="imc">imc (IMC)</option> <option
+          value="imcsupport">imcsupport (IMC Support)</option> <option
+          value="infosec">infosec (Information Security)</option>
+          <option value="istepien">istepien (Idalia Stepien)</option>
+          <option value="isupport">isupport (Intranet Support)</option>
+          <option value="its">its (ITS)</option> <option
+          value="ivanl">ivanl (Ivan Liakhovenko)</option> <option
+          value="ivizvary">ivizvary (Istvan Vizvary)</option> <option
+          value="iweavers">iweavers (Ian Weavers)</option> <option
+          value="jarcher">jarcher (Joy Archer)</option> <option
+          value="jbaker">jbaker (James Baker)</option> <option
+          value="jbarratt">jbarratt (James Barratt)</option> <option
+          value="jbelczacki">jbelczacki (Jakub Belczacki)</option>
+          <option value="jbesson">jbesson (Jared Besson)</option>
+          <option value="jbinkowski">jbinkowski (Jakub
+          Binkowski)</option> <option value="jbradbury">jbradbury (Jon
+          Bradbury)</option> <option value="jbudzisz">jbudzisz (Jan
+          Budzisz)</option> <option value="jcarter">jcarter (Janine
+          Carter)</option> <option value="jchaudhry">jchaudhry (Jamal
+          Chaudhry)</option> <option value="jcooke">jcooke (Jon
+          Cooke)</option> <option value="jcorbett">jcorbett (Jonathan
+          Corbett)</option> <option value="jdziworski">jdziworski (Jacek
+          Dziworski)</option> <option value="jfalek">jfalek (Jan
+          Falek)</option> <option value="jfocus">jfocus (Java
+          Focus)</option> <option value="jfree">jfree (John
+          Free)</option> <option value="jgajjar">jgajjar (Jack
+          Gajjar)</option> <option value="jgalas">jgalas (Jakub
+          Galas)</option> <option value="jgilchrist">jgilchrist (John
+          Gilchrist)</option> <option value="jgoslawski">jgoslawski
+          (Jaroslaw Goslawski)</option> <option
+          value="jgutkowski">jgutkowski (Jakub Gutkowski)</option>
+          <option value="jhaville">jhaville (James Haville)</option>
+          <option value="jhughes">jhughes (James Hughes)</option>
+          <option value="jira_test">jira_test (jira_test
+          jira_test)</option> <option value="jiredale">jiredale (Julia
+          Iredale)</option> <option value="jjaryszew">jjaryszew
+          (Jaroslaw Jaryszew)</option> <option value="jjurek">jjurek
+          (Jakub Jurek)</option> <option
+          value="jkazmierczak">jkazmierczak (Jaroslaw
+          Kazmierczak)</option> <option value="jkerr">jkerr (Jennifer
+          Kerr)</option> <option value="jklinec">jklinec (Jennifer
+          Klinec)</option> <option value="jlefevre">jlefevre (James
+          Lefevre)</option> <option value="jlitman">jlitman (Jason
+          Litman)</option> <option value="jmartin">jmartin (James
+          Martin)</option> <option value="jmaulkerson">jmaulkerson (John
+          Maulkerson)</option> <option value="jmilligan">jmilligan (Jeff
+          Milligan)</option> <option value="jmoore">jmoore (John
+          Moore)</option> <option value="jmorgan">jmorgan (James
+          Morgan)</option> <option value="jmorrissey">jmorrissey (Jason
+          Morrissey)</option> <option value="jmurlewski">jmurlewski (Jan
+          Murlewski)</option> <option value="jmurrell">jmurrell (James
+          Murrell)</option> <option value="jnowowiejski">jnowowiejski
+          (Jedrzej Nowowiejski)</option> <option value="joelm">joelm
+          (Joel Mahatsri)</option> <option value="jokrojek">jokrojek
+          (Jacek Okrojek)</option> <option value="jpatel">jpatel (Jeenal
+          Patel)</option> <option value="jpiasecki">jpiasecki (Janusz
+          Piasecki)</option> <option value="jpolak">jpolak (Jan
+          Polak)</option> <option value="jpustelnik">jpustelnik (Jan
+          Pustelnik)</option> <option value="jraposa">jraposa (Jan
+          Raposa)</option> <option value="jrawden">jrawden (Jack
+          Rawden)</option> <option value="jrichards">jrichards (Justin
+          Richards)</option> <option value="jsandhu">jsandhu (Jag
+          Sandhu)</option> <option value="jsherlock">jsherlock (Jane
+          Sherlock)</option> <option value="jsingh">jsingh (Jeewan
+          Singh)</option> <option value="jsmyczek">jsmyczek (Jerzy
+          Smyczek)</option> <option value="jsoley">jsoley (Javier
+          Soley)</option> <option value="jstein">jstein (Jeffrey
+          Stein)</option> <option
+          value="jszczepankiewicz">jszczepankiewicz (Jaroslaw
+          Szczepankiewicz)</option> <option value="jtaylor">jtaylor
+          (Jeremy Taylor)</option> <option value="jtomkinson">jtomkinson
+          (James Tomkinson)</option> <option
+          value="jwarburton">jwarburton (Jim Warburton)</option> <option
+          value="jward">jward (James Ward)</option> <option
+          value="jwarren">jwarren (Jon Warren)</option> <option
+          value="jwarszawski">jwarszawski (Julian Warszawski)</option>
+          <option value="jwitczak">jwitczak (Jakub Witczak)</option>
+          <option value="jwolanski">jwolanski (Jan Wolanski)</option>
+          <option value="jwright">jwright (James Wright)</option>
+          <option value="jwyrzutowicz">jwyrzutowicz (Jaroslaw
+          Wyrzutowicz)</option> <option value="jzalejski">jzalejski
+          (Janusz Zalejski)</option> <option value="kbien">kbien
+          (Krzysztof Bien)</option> <option value="kchavda">kchavda
+          (Kavel Chavda)</option> <option value="kcydzik">kcydzik (Karol
+          Cydzik)</option> <option value="kczelej">kczelej (Krzysztof
+          Czelej)</option> <option value="kdworakowski">kdworakowski
+          (Krzysztof Dworakowski)</option> <option value="kgould">kgould
+          (Kevin Gould)</option> <option value="khubbert">khubbert
+          (Kevin Hubbert)</option> <option value="kimble">kimble
+          (Kimble)</option> <option value="kimbletest">kimbletest
+          (Kimble Test)</option> <option value="kimbleuat">kimbleuat
+          (Kimble UAT)</option> <option value="kjasiak">kjasiak
+          (Katarzyna Jasiak)</option> <option value="kjez">kjez (Kamil
+          Jez)</option> <option value="kkasperczak">kkasperczak
+          (Krzysztof Kasperczak)</option> <option
+          value="kkorczak">kkorczak (Kacper Korczak)</option> <option
+          value="kkorzel">kkorzel (Konrad Korzel)</option> <option
+          value="kkosiec">kkosiec (Kamil Kosiec)</option> <option
+          value="kkotlarski">kkotlarski (Krzysztof Kotlarski)</option>
+          <option value="kkoval">kkoval (Kate Koval)</option> <option
+          value="kkozak">kkozak (Krzysztof Kozak)</option> <option
+          value="kkrishnarajan">kkrishnarajan (Kas
+          Krishnarajan)</option> <option value="kkrzeminski">kkrzeminski
+          (Kamil Krzeminski)</option> <option
+          value="kkunikowski">kkunikowski (Konrad Kunikowski)</option>
+          <option value="kmanka">kmanka (Kamil Manka)</option> <option
+          value="kmartsinkevich">kmartsinkevich (Kiryl
+          Martsinkevich)</option> <option value="kmaterka">kmaterka
+          (Konrad Materka)</option> <option value="knotis">knotis
+          (Konstantine Notis)</option> <option
+          value="kpabjanczyk">kpabjanczyk (Kacper Pabjanczyk)</option>
+          <option value="kpawlowski">kpawlowski (Karol
+          Pawlowski)</option> <option value="kpijewski">kpijewski
+          (Krzysztof Pijewski)</option> <option value="ksarma">ksarma
+          (Krishna Sarma)</option> <option
+          value="kskrzypinski">kskrzypinski (Krzysztof
+          Skrzypinski)</option> <option value="kslazak">kslazak
+          (Krzysztof Slazak)</option> <option value="ksmith">ksmith
+          (Katie Smith)</option> <option value="kstaciwa">kstaciwa
+          (Krzysztof Staciwa)</option> <option value="kstoma">kstoma
+          (Kamil Stoma)</option> <option value="kswiatek">kswiatek
+          (Katarzyna Swiatek)</option> <option
+          value="kszafranski">kszafranski (Karol Szafranski)</option>
+          <option value="ktang">ktang (Karwoo Tang)</option> <option
+          value="kthomas">kthomas (Kevin Thomas)</option> <option
+          value="ktrepczynski">ktrepczynski (Kamil Trepczynski)</option>
+          <option value="kveligeti">kveligeti (Kalyan Veligeti)</option>
+          <option value="kwoinska">kwoinska (Klaudia Woinska)</option>
+          <option value="kzdanowski">kzdanowski (Krzysztof
+          Zdanowski)</option> <option value="labraham">labraham (Lekha
+          Abraham)</option> <option value="laltadill">laltadill (Luis
+          Altadill)</option> <option value="lauronen">lauronen (Lauri
+          Auronen)</option> <option value="lbalogun">lbalogun (Lara
+          Balogun)</option> <option value="lbutton">lbutton (Lizzie
+          Button)</option> <option value="lcasciari">lcasciari (Lucy
+          Casciari)</option> <option value="lcole">lcole (Liz
+          Cole)</option> <option value="lcyrulski">lcyrulski (Lukasz
+          Cyrulski)</option> <option value="ldncalls">ldncalls (LDN
+          calls)</option> <option value="leono">leono (Leon
+          Orr)</option> <option value="lganko">lganko (Lukasz
+          Ganko)</option> <option value="lhansen">lhansen (Lawrence
+          Hansen)</option> <option value="lharland">lharland (Laura
+          Harland)</option> <option value="lhorodniczy">lhorodniczy
+          (Lukasz Horodniczy)</option> <option
+          value="liquidity">liquidity (Liquidity)</option> <option
+          value="ljanicki">ljanicki (Lukasz Janicki)</option> <option
+          value="ljankowski">ljankowski (Lukasz Jankowski)</option>
+          <option value="lkantorek">lkantorek (Leszek Kantorek)</option>
+          <option value="lkirby">lkirby (Lewis Kirby)</option> <option
+          value="lkowalski">lkowalski (Lukasz Kowalski)</option> <option
+          value="llenartowski">llenartowski (Lukasz
+          Lenartowski)</option> <option value="llorek">llorek (Leszek
+          Lorek)</option> <option value="lmakowski">lmakowski (Lukasz
+          Makowski)</option> <option value="lnouchi">lnouchi (Laurent
+          Nouchi)</option> <option value="lolejnik">lolejnik (Lukasz
+          Olejnik)</option> <option value="londonldzroom">londonldzroom
+          (* London LDZ Room (12))</option> <option
+          value="lpower">lpower (Lisa Power)</option> <option
+          value="lrzanek">lrzanek (Lukasz Rzanek)</option> <option
+          value="lsajpelt">lsajpelt (Lukasz Sajpelt)</option> <option
+          value="lsobczak">lsobczak (Lukasz Sobczak)</option> <option
+          value="lstachowiak">lstachowiak (Lukasz Stachowiak)</option>
+          <option value="lthomsen">lthomsen (Leif Thomsen)</option>
+          <option value="ltomczak">ltomczak (Lukasz Tomczak)</option>
+          <option value="ltrigg">ltrigg (Luke Trigg)</option> <option
+          value="lurbaniak">lurbaniak (Lukasz Urbaniak)</option> <option
+          value="lwierzbicka">lwierzbicka (Lidia Wierzbicka)</option>
+          <option value="lwoodward">lwoodward (Liz Woodward)</option>
+          <option value="lwrzeszcz">lwrzeszcz (Lukasz Wrzeszcz)</option>
+          <option value="makaczmarek">makaczmarek (Marcin
+          Kaczmarek)</option> <option value="malborkroom">malborkroom (*
+          Malbork LDZ Room (6))</option> <option
+          value="mallport">mallport (Mike Allport)</option> <option
+          value="marcusr">marcusr (Marcus Rule)</option> <option
+          value="margaux">margaux (* Margaux Room (4))</option> <option
+          value="marketing">marketing (Marketing)</option> <option
+          value="mbaker">mbaker (Martin Baker)</option> <option
+          value="mbalbus">mbalbus (Mateusz Balbus)</option> <option
+          value="mbanini">mbanini (Mark Banini)</option> <option
+          value="mbartosik">mbartosik (Marek Bartosik)</option> <option
+          value="mbednarek">mbednarek (Maciej Bednarek)</option> <option
+          value="mbialas">mbialas (Marcin Bialas)</option> <option
+          value="mbibel">mbibel (Michal Bibel)</option> <option
+          value="mbiegala">mbiegala (Marcin Biegala)</option> <option
+          value="mbogdanski">mbogdanski (Maciej Bogdanski)</option>
+          <option value="mbogusz">mbogusz (Maciej Bogusz)</option>
+          <option value="mbolomboy">mbolomboy (Magalie
+          Bolomboy)</option> <option value="mbugaj">mbugaj (Marcin
+          Bugaj)</option> <option value="mbukarewicz">mbukarewicz
+          (Mariusz Bukarewicz)</option> <option value="mbutler">mbutler
+          (Mathew Butler)</option> <option value="mcamara">mcamara
+          (Mamadu Camara)</option> <option value="mchadney">mchadney
+          (mchadney)</option> <option
+          value="mchlopczynski">mchlopczynski (Michal
+          Chlopczynski)</option> <option value="mclark">mclark (Matthew
+          Clark)</option> <option value="mdebinski">mdebinski (Maciej
+          Debinski)</option> <option value="mdeuling">mdeuling (Magnus
+          Deuling)</option> <option value="mdzwonnik">mdzwonnik (Maciej
+          Dzwonnik)</option> <option value="mfidor">mfidor (Maciej
+          Fidor)</option> <option value="mgarnysz">mgarnysz (Michal
+          Garnysz)</option> <option value="mgawin">mgawin (Maciej
+          Gawin)</option> <option value="mgibson">mgibson (Maddy
+          Gibson)</option> <option value="mgill">mgill (Mandeep
+          Gill)</option> <option value="mgodlewski">mgodlewski (Marcin
+          Godlewski)</option> <option value="mgordon">mgordon (Michael
+          Gordon)</option> <option value="mgorynia">mgorynia (Mateusz
+          Gorynia)</option> <option
+          value="mgozalbo-moragrega">mgozalbo-moragrega (Mercedes
+          Gozalbo-Moragrega)</option> <option
+          value="mgrabowski">mgrabowski (Maciej Grabowski)</option>
+          <option value="mgrzejszczak">mgrzejszczak (Marcin
+          Grzejszczak)</option> <option value="mguzek">mguzek (Maciej
+          Guzek)</option> <option value="mhobday">mhobday (Malcolm
+          Hobday)</option> <option value="mielnoroom">mielnoroom (*
+          Mielno LDZ Room (6))</option> <option
+          value="mikolajkiroom">mikolajkiroom (* Mikolajki LDZ Room
+          (6))</option> <option value="mistbackup">mistbackup (Mist
+          Backup)</option> <option value="mjagiello">mjagiello (Michal
+          Jagiello)</option> <option value="mjaskolski">mjaskolski
+          (Michal Jaskolski)</option> <option
+          value="mkaczmarek">mkaczmarek (Michal Kaczmarek)</option>
+          <option value="mkaminski">mkaminski (Michal Kaminski)</option>
+          <option value="mkandl">mkandl (Mark Kandl)</option> <option
+          value="mkellie">mkellie (Mark Kellie)</option> <option
+          value="mklimecka">mklimecka (Magdalena Klimecka)</option>
+          <option value="mkolodziejski">mkolodziejski (Mateusz
+          Kolodziejski)</option> <option value="mkowalczyk">mkowalczyk
+          (Mariusz Kowalczyk)</option> <option
+          value="mkowalski">mkowalski (Marcin Kowalski)</option> <option
+          value="mkus">mkus (Magdalena Kus)</option> <option
+          value="mkwiatkowski">mkwiatkowski (Maciej
+          Kwiatkowski)</option> <option value="mlacugna">mlacugna
+          (Margaret LaCugna)</option> <option
+          value="mlewandowski">mlewandowski (Maciej
+          Lewandowski)</option> <option value="mlines">mlines (Mike
+          Lines)</option> <option value="mliszewski">mliszewski (Michal
+          Liszewski)</option> <option value="mludwig">mludwig (Marta
+          Ludwig)</option> <option value="mmacmillan">mmacmillan
+          (Matthew MacMillan)</option> <option
+          value="mmajcherski">mmajcherski (Michal Majcherski)</option>
+          <option value="mmarciniak">mmarciniak (Mariusz
+          Marciniak)</option> <option
+          value="mmiklaszewski">mmiklaszewski (Mariusz
+          Miklaszewski)</option> <option value="mmonfort">mmonfort
+          (Marcos Monfort)</option> <option
+          value="mmuszynska">mmuszynska (Marta Muszynska)</option>
+          <option value="mnowak">mnowak (Michal Nowak)</option> <option
+          value="mnowosielski">mnowosielski (Mateusz
+          Nowosielski)</option> <option value="moikonomou">moikonomou
+          (Maria Oikonomou)</option> <option
+          value="moleksiewicz">moleksiewicz (Marcin
+          Oleksiewicz)</option> <option value="molenski">molenski
+          (Milosz Olenski)</option> <option value="monitor">monitor
+          (Monitor)</option> <option value="moodle">moodle (Moodle
+          Mailer)</option> <option value="mostruszka">mostruszka (Michal
+          Ostruszka)</option> <option value="mpasinski">mpasinski
+          (Michal Pasinski)</option> <option value="mpaszta">mpaszta
+          (Maciej Paszta)</option> <option value="mpeacock">mpeacock
+          (Mick Peacock)</option> <option value="mpestka">mpestka
+          (Maciej Pestka)</option> <option value="mpotok">mpotok (Marina
+          Potok)</option> <option value="mprokopowicz">mprokopowicz
+          (Michal Prokopowicz)</option> <option value="mpryce">mpryce
+          (Mitzi Pryce)</option> <option value="mradzki">mradzki (Marcin
+          Radzki)</option> <option value="mryan">mryan (Monica
+          Ryan)</option> <option value="msamulak">msamulak (Michal
+          Samulak)</option> <option value="mschofield">mschofield (Mark
+          Schofield)</option> <option value="mscott">mscott (Mark
+          Scott)</option> <option value="mserbos">mserbos (Miltos
+          Serbos)</option> <option value="mslowikowski">mslowikowski
+          (Michal Slowikowski)</option> <option
+          value="msmolarczyk">msmolarczyk (Mateusz Smolarczyk)</option>
+          <option value="msobanski">msobanski (Michal Sobanski)</option>
+          <option value="msondh">msondh (Malvinder Sondh)</option>
+          <option value="mspeight">mspeight (Mike Speight)</option>
+          <option value="msrodek">msrodek (Mariusz Srodek)</option>
+          <option value="mstrejczek">mstrejczek (Marek
+          Strejczek)</option> <option value="msuski">msuski (Marek
+          Suski)</option> <option value="msuwala">msuwala (Monika
+          Suwala)</option> <option value="mszczucki">mszczucki (Michal
+          Szczucki)</option> <option value="mszewczyk">mszewczyk (Michal
+          Szewczyk)</option> <option value="mtailor">mtailor (Madhvi
+          Tailor)</option> <option value="mtomac">mtomac (Martina
+          Tomac)</option> <option value="murbaniak">murbaniak (Michal
+          Urbaniak)</option> <option value="mwacholek">mwacholek (Marta
+          Wacholek)</option> <option value="mwhite">mwhite (Margaret
+          White)</option> <option value="mwojciechowski">mwojciechowski
+          (Marcin Wojciechowski)</option> <option
+          value="mwrzeszcz">mwrzeszcz (Maciej Wrzeszcz)</option> <option
+          value="mwysokinski">mwysokinski (Michal Wysokinski)</option>
+          <option value="mwyszynski">mwyszynski (Marek
+          Wyszynski)</option> <option value="mzbrzezny">mzbrzezny
+          (Maciej Zbrzezny)</option> <option
+          value="naexpenses">naexpenses (NA Expenses)</option> <option
+          value="newsletter">newsletter (Newsletter)</option> <option
+          value="newyorkldzroom">newyorkldzroom (* NewYork LDZ Room
+          (12))</option> <option value="nfelcyn">nfelcyn (Natalia
+          Felcyn)</option> <option value="nhooda">nhooda (Neeraj
+          Hooda)</option> <option value="nhookway">nhookway (Neil
+          Hookway)</option> <option value="nhughes">nhughes (Nicola
+          Hughes)</option> <option value="njones">njones (Neil
+          Jones)</option> <option value="nnogacki">nnogacki (Norbert
+          Nogacki)</option> <option value="nrao">nrao (Niranjan
+          Rao)</option> <option value="nrathod">nrathod (Neelam
+          Rathod)</option> <option value="nsupport">nsupport (Nuview
+          Support)</option> <option value="nustundag">nustundag (Nevin
+          Ustundag)</option> <option value="nuviewadmin">nuviewadmin
+          (NuView Admin)</option> <option value="nycalls">nycalls (NY
+          Conference Calls)</option> <option value="nzhang">nzhang (Nan
+          Zhang)</option> <option value="oadmin">oadmin (Office
+          Admin)</option> <option value="oolawuyi">oolawuyi (Olayinka
+          Olawuyi)</option> <option value="orchestra">orchestra
+          (Orchestra)</option> <option value="palmer">palmer (* Palmer
+          Room (6))</option> <option value="pambroziak">pambroziak
+          (Pawel Ambroziak)</option> <option value="pbakowski">pbakowski
+          (Pawel Bakowski)</option> <option value="pbialy">pbialy
+          (Przemyslaw Bialy)</option> <option value="pbicz">pbicz (Pawel
+          Bicz)</option> <option value="pbirnie">pbirnie (Paul
+          Birnie)</option> <option value="pbogdanowicz">pbogdanowicz
+          (Pawel Bogdanowicz)</option> <option value="pbolonek">pbolonek
+          (Pawel Bolonek)</option> <option value="pbrygidyn">pbrygidyn
+          (Piotr Brygidyn)</option> <option value="pclimpson">pclimpson
+          (Paul Climpson)</option> <option value="petrus">petrus (*
+          Petrus Room (6))</option> <option value="pgain">pgain (Paul
+          Gain)</option> <option value="pgracey">pgracey (Patrick
+          Gracey)</option> <option value="pgraham">pgraham (Paul
+          Graham)</option> <option value="pguenet">pguenet (Philippe
+          Guenet)</option> <option value="pgwiazda">pgwiazda (Piotr
+          Gwiazda)</option> <option value="phenderson">phenderson (Paul
+          Henderson)</option> <option value="pilski">pilski (Piotr
+          Ilski)</option> <option value="pjuszkiewicz">pjuszkiewicz
+          (Przemyslaw Juszkiewicz)</option> <option
+          value="pkania">pkania (Piotr Kania)</option> <option
+          value="pkaszubowski">pkaszubowski (Pawel Kaszubowski)</option>
+          <option value="pkelly">pkelly (Paul Kelly)</option> <option
+          value="pkoluda">pkoluda (Pawel Koluda)</option> <option
+          value="pkosinski">pkosinski (Piotr Kosinski)</option> <option
+          value="pkosmowski">pkosmowski (Piotr Kosmowski)</option>
+          <option value="pkotynia">pkotynia (Piotr Kotynia)</option>
+          <option value="pkrolikowski">pkrolikowski (Pawel
+          Krolikowski)</option> <option value="pkrudysz">pkrudysz (Piotr
+          Krudysz)</option> <option value="pleszczynski">pleszczynski
+          (Piotr Leszczynski)</option> <option
+          value="plewandowski">plewandowski (Pawel Lewandowski)</option>
+          <option value="pmarsden">pmarsden (Phil Marsden)</option>
+          <option value="pmosiniak">pmosiniak (Piotr Mosiniak)</option>
+          <option value="pnasalski">pnasalski (Piotr Nasalski)</option>
+          <option value="pnguyen">pnguyen (Peter Nguyen)</option>
+          <option value="porlowski">porlowski (Piotr Orlowski)</option>
+          <option value="pparker">pparker (Pauline Parker)</option>
+          <option value="primeservices">primeservices (Prime
+          Services)</option> <option value="probinson">probinson (Phil
+          Robinson)</option> <option value="prozenbajher">prozenbajher
+          (Patryk Rozenbajher)</option> <option
+          value="pserwacinski">pserwacinski (Pawel Serwacinski)</option>
+          <option value="psimpeasante">psimpeasante (Patrick
+          Simpe-Asante)</option> <option
+          value="pskrobiszewski">pskrobiszewski (Piotr
+          Skrobiszewski)</option> <option
+          value="psmialkowski">psmialkowski (Piotr Smialkowski)</option>
+          <option value="psoni">psoni (Priti Soni)</option> <option
+          value="pszczepaniec">pszczepaniec (Piotr Szczepaniec)</option>
+          <option value="pszerszynski">pszerszynski (Piotr
+          Szerszynski)</option> <option value="ptecza">ptecza (Piotr
+          Tecza)</option> <option value="ptokarski">ptokarski (Piotr
+          Tokarski)</option> <option value="ptolchard">ptolchard (Paul
+          Tolchard)</option> <option value="pwatson">pwatson (Paul
+          Watson)</option> <option value="pwojdyga">pwojdyga (Pawel
+          Wojdyga)</option> <option value="pzmuda">pzmuda (Pawel
+          Zmuda)</option> <option value="rallalouf">rallalouf (Richard
+          Allalouf)</option> <option value="randrew">randrew (Rachel
+          Andrew)</option> <option value="rbarczynski">rbarczynski
+          (Rafal Barczynski)</option> <option value="rbuczko">rbuczko
+          (Radoslaw Buczko)</option> <option value="rbudner">rbudner
+          (Robert Budner)</option> <option value="rcairns">rcairns (Rob
+          Cairns)</option> <option value="rcavendish">rcavendish (Rupert
+          Cavendish)</option> <option value="rcollins">rcollins (Rob
+          Collins)</option> <option value="rdemicheli">rdemicheli
+          (Roberto De Micheli)</option> <option
+          value="rdevdutt">rdevdutt (Remya Devdutt)</option> <option
+          value="rdunn">rdunn (Roger Dunn)</option> <option
+          value="reception">reception (Reception)</option> <option
+          value="rfield">rfield (Rupert Field)</option> <option
+          value="rfinancial">rfinancial (Rule Financial)</option>
+          <option value="rfox">rfox (Roger Fox)</option> <option
+          value="rfraser">rfraser (Robert Fraser)</option> <option
+          value="rgarbala">rgarbala (Rafal Garbala)</option> <option
+          value="rgordon">rgordon (Ruth Gordon)</option> <option
+          value="rgorecki">rgorecki (Robert Gorecki)</option> <option
+          value="rhawkins">rhawkins (Rob Hawkins)</option> <option
+          value="rhogan">rhogan (Rachel Hogan)</option> <option
+          value="richardg">richardg (Richard Goldklang)</option> <option
+          value="rjanicki">rjanicki (Rafal Janicki)</option> <option
+          value="rkohli">rkohli (Rashmi Kohli)</option> <option
+          value="rkwiaton">rkwiaton (Roman Kwiaton)</option> <option
+          value="rlancett">rlancett (Richard Lancett)</option> <option
+          value="rlittle">rlittle (Richard Little)</option> <option
+          value="rmcgeachy">rmcgeachy (Rob McGeachy)</option> <option
+          value="rmeyer">rmeyer (Richard Meyer)</option> <option
+          value="rmiller">rmiller (Richard Miller)</option> <option
+          value="rmontero">rmontero (Richard Montero)</option> <option
+          value="rnagarajan">rnagarajan (Rangaswamy Nagarajan)</option>
+          <option value="rneish">rneish (Richard Neish)</option> <option
+          value="rnikiel">rnikiel (Rafal Nikiel)</option> <option
+          value="rnowak">rnowak (Robert Nowak)</option> <option
+          value="rothschild">rothschild (* Rothschild Room (6))</option>
+          <option value="rpatel">rpatel (Rajendra Patel)</option>
+          <option value="rpiotrowski">rpiotrowski (Radoslaw
+          Piotrowski)</option> <option
+          value="rpospieszynski">rpospieszynski (Rafal
+          Pospieszynski)</option> <option value="rposwiata">rposwiata
+          (Radoslaw Poswiata)</option> <option value="rrankin">rrankin
+          (Richard Rankin)</option> <option value="rschmidt">rschmidt
+          (Rob Schmidt)</option> <option value="rsese">rsese (Russell
+          Sese)</option> <option value="rsiatka">rsiatka (Radoslaw
+          Siatka)</option> <option value="rsilver">rsilver (Robert
+          Silver)</option> <option value="rvarlese">rvarlese (Ross
+          Varlese)</option> <option value="rvivancos">rvivancos (Roberto
+          Vivancos)</option> <option value="rwlodarski">rwlodarski
+          (Rafal Wlodarski)</option> <option value="rwozniak">rwozniak
+          (Rafal Wozniak)</option> <option value="ryoung">ryoung (Rob
+          Young)</option> <option value="sInones">sInones (Sebastian
+          Inones)</option> <option value="salesadmin">salesadmin (Sales
+          Administrator)</option> <option value="sauron">sauron
+          (sauron)</option> <option value="sbarnett">sbarnett (Simon
+          Barnett)</option> <option value="sbenmbarek">sbenmbarek
+          (Sebastien Ben MBarek)</option> <option
+          value="sblachowicz">sblachowicz (Szymon Blachowicz)</option>
+          <option value="schernyshev">schernyshev (Sergey
+          Chernyshev)</option> <option value="schoudhury">schoudhury
+          (Samiul Choudhury)</option> <option
+          value="sclouting">sclouting (Simon Clouting)</option> <option
+          value="scommittee">scommittee (Social Committee)</option>
+          <option value="sconway">sconway (Stephen Conway)</option>
+          <option value="scowell">scowell (Steve Cowell)</option>
+          <option value="screening">screening (Screening)</option>
+          <option value="sdevelopment">sdevelopment (Solution
+          Development)</option> <option value="sdhiman">sdhiman (Sanjeev
+          Dhiman)</option> <option value="sdyapa">sdyapa (Sridhar
+          Dyapa)</option> <option value="secfincalendar">secfincalendar
+          (SecFin Calendar)</option> <option value="secilo">secilo
+          (Secil Ozgur)</option> <option value="selhajoui">selhajoui
+          (Sara El Hajoui)</option> <option value="sellis">sellis (Sarah
+          Ellis)</option> <option value="sfinance">sfinance (Sec
+          Finance)</option> <option value="sgallie">sgallie (Stuart
+          Gallie)</option> <option value="sgradka">sgradka (Szymon
+          Gradka)</option> <option value="sgreen">sgreen (Stephen
+          Green)</option> <option value="sgunapala">sgunapala (Sara
+          Gunapala)</option> <option value="shall">shall (Steven
+          Hall)</option> <option value="sjain">sjain (Sunilkumar
+          Jain)</option> <option value="sjakobczak">sjakobczak (Sylwia
+          Jakobczak)</option> <option value="sjasinski">sjasinski
+          (Sebastian Jasinski)</option> <option
+          value="skaczmarczyk">skaczmarczyk (Szymon
+          Kaczmarczyk)</option> <option value="skarbowiak">skarbowiak
+          (Sylwia Karbowiak)</option> <option value="sklab">sklab
+          (Slawomir Klab)</option> <option value="skotze">skotze
+          (Stephan Kotze)</option> <option value="skowal">skowal
+          (Slawomir Kowal)</option> <option value="skrishnan">skrishnan
+          (Sheela Krishnan)</option> <option value="skumar">skumar
+          (Sampath Kumar)</option> <option value="slawlor">slawlor
+          (Stephen Lawlor)</option> <option value="slee">slee (Sang
+          Lee)</option> <option value="slewandowicz">slewandowicz
+          (Sylwester Lewandowicz)</option> <option value="slyle">slyle
+          (Steve Lyle)</option> <option value="smalik">smalik (Siobhan
+          Malik)</option> <option value="smember">smember (Sharepoint
+          Member)</option> <option value="smichalak">smichalak (Seweryn
+          Michalak)</option> <option value="smpawulo">smpawulo (Sam
+          Mpawulo)</option> <option value="solroom">solroom (* Sol BCN
+          Room)</option> <option value="sombraroom">sombraroom (* Sombra
+          BCN Room)</option> <option value="sopotroom">sopotroom (*
+          Sopot LDZ Room (6))</option> <option
+          value="sourcedatafeed">sourcedatafeed (Source
+          Datafeed)</option> <option value="sourcedev">sourcedev (Source
+          Development)</option> <option value="sourceetfp">sourceetfp
+          (Source ETFP)</option> <option value="sourcen">sourcen (Source
+          New Issues)</option> <option value="sourcetest">sourcetest
+          (Source Test)</option> <option value="sourcetest1">sourcetest1
+          (Source Test1)</option> <option value="sourceu">sourceu
+          (Source Update Issues)</option> <option
+          value="sourcewebprod">sourcewebprod (Source Web
+          PreProd)</option> <option value="sourcewebuat">sourcewebuat
+          (Source Web Uat)</option> <option value="sowner">sowner
+          (Sharepoint Owner)</option> <option value="spiu">spiu
+          (Sebastian Piu)</option> <option value="spsaltis">spsaltis
+          (Steve Psaltis)</option> <option value="spusz">spusz (Szymon
+          Pusz)</option> <option value="sramachandran">sramachandran
+          (Sandeep Ramachandran)</option> <option
+          value="srogalska">srogalska (Sandra Rogalska)</option> <option
+          value="sromp">sromp (Simon Romp)</option> <option
+          value="sryan">sryan (Sean Ryan)</option> <option
+          value="ssaivanathan">ssaivanathan (Shrivany
+          Saivanathan)</option> <option value="sshepperson">sshepperson
+          (Sylvia Shepperson)</option> <option value="ssiudek">ssiudek
+          (Slawomir Siudek)</option> <option value="ssupport">ssupport
+          (Source Support)</option> <option value="ssupport3">ssupport3
+          (Source Support3)</option> <option value="ssupport4">ssupport4
+          (Source Support4)</option> <option value="sthompson">sthompson
+          (Steve Thompson)</option> <option value="styl">styl (Sebastian
+          Tyl)</option> <option value="sunderhill">sunderhill (Simon
+          Underhill)</option> <option value="svc-act">svc-act
+          (SVC-Act)</option> <option
+          value="svc-automailer">svc-automailer (SVC-
+          Automailer)</option> <option value="svc-crm">svc-crm
+          (SVC-CRM)</option> <option value="svc-exbackup">svc-exbackup
+          (svc-exbackup)</option> <option
+          value="svc-horizonbuild">svc-horizonbuild
+          (SVC-HorizonBuild)</option> <option value="svc-marc">svc-marc
+          (SVC-MARC)</option> <option
+          value="svc-mossapppool">svc-mossapppool
+          (SVC-MossAppPool)</option> <option
+          value="svc-nuview">svc-nuview (SVC-Nuview)</option> <option
+          value="svc-oni">svc-oni (SVC-ONI)</option> <option
+          value="svc-sharepoint">svc-sharepoint
+          (SVC-Sharepoint)</option> <option
+          value="svc-sharpowl">svc-sharpowl (SVC-Sharpowl)</option>
+          <option value="svc-svn">svc-svn (SVC-SVN)</option> <option
+          value="sviewer">sviewer (Sharepoint Viewer)</option> <option
+          value="svirani">svirani (Saleem Virani)</option> <option
+          value="svn-ny">svn-ny (svn-ny)</option> <option
+          value="svnsync-user">svnsync-user (svn sync-user)</option>
+          <option value="swilliams">swilliams (Sandra Williams)</option>
+          <option value="swlodarczyk">swlodarczyk (Szymon
+          Wlodarczyk)</option> <option value="syoung">syoung (Simon
+          Young)</option> <option
+          value="szczebrzeszynroom">szczebrzeszynroom (* Szczebrzeszyn
+          LDZ Room (6))</option> <option value="talbot">talbot (* Talbot
+          Room (8))</option> <option value="tbilewicz">tbilewicz (Tomasz
+          Bilewicz)</option> <option value="tbrudnicki">tbrudnicki
+          (Tomasz Brudnicki)</option> <option value="tciejka">tciejka
+          (Tomasz Ciejka)</option> <option value="tclark">tclark (Tom
+          Clark)</option> <option value="tcuthbert">tcuthbert (Ted
+          Cuthbert)</option> <option value="tczechowski">tczechowski
+          (Tomasz Czechowski)</option> <option
+          value="template_new_user">template_new_user (template_new_user
+          template_new_user)</option> <option
+          value="test_SP_user">test_SP_user (test_SP_user
+          test_SP_user)</option> <option
+          value="test_absence_tracker">test_absence_tracker
+          (test_absence_tracker test_absence_tracker)</option> <option
+          value="test_book">test_book (TEST_book_TEST
+          TEST_book_TEST)</option> <option
+          value="test_rule_library">test_rule_library (test_rule_library
+          test_rule_library)</option> <option
+          value="testing2012">testing2012 (TMO Testing)</option> <option
+          value="testmail">testmail (Test Mail)</option> <option
+          value="tjanik">tjanik (Tomasz Janik)</option> <option
+          value="tjurek">tjurek (Tomasz Jurek)</option> <option
+          value="tkaczmarek">tkaczmarek (Tomasz Kaczmarek)</option>
+          <option value="tkuczborski">tkuczborski (Tomasz
+          Kuczborski)</option> <option value="tkusmierz">tkusmierz
+          (Tymoteusz Kusmierz)</option> <option
+          value="tniemczyk">tniemczyk (Tomasz Niemczyk)</option> <option
+          value="torontoroom1">torontoroom1 (* Toronto1 LDZ Room
+          (12))</option> <option value="torontoroom2">torontoroom2 (*
+          Toronto2 LDZ Room (12))</option> <option value="tosler">tosler
+          (Tim Osler)</option> <option value="tpskiet">tpskiet (Tomasz
+          Pskiet)</option> <option value="travel">travel
+          (Travel)</option> <option value="troca">troca (Tedi
+          Roca)</option> <option value="tsavage">tsavage (Todd
+          Savage)</option> <option value="umakan">umakan (Uma
+          Makan)</option> <option value="visitor1">visitor1 (Visitor
+          1)</option> <option value="visitor2">visitor2 (Visitor
+          2)</option> <option value="visitor3">visitor3 (Visitor
+          3)</option> <option value="visitor4">visitor4 (Visitor
+          4)</option> <option value="visitor5">visitor5 (Visitor
+          5)</option> <option value="vkumar">vkumar (Varun
+          Kumar)</option> <option value="vleivadara">vleivadara (Vanessa
+          Leivadara)</option> <option value="vmanjrekar">vmanjrekar
+          (Vishal Manjrekar)</option> <option
+          value="vmelezhik">vmelezhik (Vladislav Melezhik)</option>
+          <option value="vpai">vpai (Vijayendra Pai)</option> <option
+          value="vweinberg">vweinberg (Victor Weinberg)</option> <option
+          value="wasztemborski">wasztemborski (Wojciech
+          Asztemborski)</option> <option
+          value="waterlooroom">waterlooroom (* Waterloo LDZ Room
+          (6))</option> <option value="wfijarczyk">wfijarczyk (Wojciech
+          Fijarczyk)</option> <option value="whiteboard">whiteboard
+          (whiteboard)</option> <option value="whitmoreg">whitmoreg (Ges
+          Whitmore)</option> <option value="wpasierbski">wpasierbski
+          (Wojciech Pasierbski)</option> <option
+          value="wraczynska">wraczynska (Weronika Raczynska)</option>
+          <option value="wrozenberg">wrozenberg (Wojciech
+          Rozenberg)</option> <option value="wszymanski">wszymanski
+          (Wiktor Szymanski)</option> <option
+          value="xerox_printer">xerox_printer (xerox_printer
+          xerox_printer)</option> <option value="yarezki">yarezki (Yazid
+          Arezki)</option> <option value="yjiang">yjiang (Yangzi
+          Jiang)</option> <option value="ylazaryev">ylazaryev (Yuriy
+          Lazaryev)</option> <option value="zakopaneroom">zakopaneroom
+          (* Zakopane LDZ Room (6))</option> <option
+          value="zrudnicki">zrudnicki (Zbigniew Rudnicki)</option>
+        </select></td> <td><input type="submit" name="add" value="Add"
+        /></td></tr><tr><td align="center" colspan="3"><input
+        type="submit" name="commit" value="Commit Changes"
+        /></td></tr></table><h3>Access Control Table</h3><table
+      style="border:1pt solid;"><tr><th>Path</th> <th>User(group)</th>
+        <th>Access</th> <th></th></tr><tr><td><input type="hidden"
+          name="path[0]" value="/"  />/</td> <td><input type="hidden"
+          name="usergroup[0]" value="svnsync-user"  />svnsync-user</td>
+        <td><select name="access[0]" > <option selected="selected"
+            value="rw">rw</option> <option value="r">r</option> <option
+            value="">-</option> </select></td> <td><label><input
+            type="checkbox" name="deleteacl" value="0"
+            />Delete</label></td></tr><tr><td><input type="hidden"
+          name="numacl" value="1"  /><input type="text" name="path[1]"
+          value="/" size="30" /></td> <td><select name="usergroup[1]" >
+            <option selected="selected" value=""></option> <option
+            value="@Abacus-admins">@Abacus-admins</option> <option
+            value="AKubas">AKubas</option> <option
+            value="ATRaccount">ATRaccount</option> <option
+            value="AbsenceManager">AbsenceManager</option> <option
+            value="AddPC">AddPC</option> <option
+            value="Aldgateroom">Aldgateroom</option> <option
+            value="ArcSer">ArcSer</option> <option
+            value="BJanaszewski">BJanaszewski</option> <option
+            value="Bankroom">Bankroom</option> <option
+            value="Barbicanroom">Barbicanroom</option> <option
+            value="Benefitspoland">Benefitspoland</option> <option
+            value="Blackfriarsroom">Blackfriarsroom</option> <option
+            value="CMS_admin">CMS_admin</option> <option
+            value="CSIuser">CSIuser</option> <option
+            value="CV">CV</option> <option
+            value="ClientSupport">ClientSupport</option> <option
+            value="ConfRoomBookingPLN">ConfRoomBookingPLN</option>
+            <option
+            value="ConfRoomBookingPLN_6thfloor">ConfRoomBookingPLN_6thfloor</option>
+            <option value="Cortonroom">Cortonroom</option> <option
+            value="DChojnacki">DChojnacki</option> <option
+            value="DavidM">DavidM</option> <option
+            value="Feedback">Feedback</option> <option
+            value="Hammersmithroom">Hammersmithroom</option> <option
+            value="IRMaccount">IRMaccount</option> <option
+            value="IRMadmin">IRMadmin</option> <option
+            value="Ideas2Action">Ideas2Action</option> <option
+            value="Intranet">Intranet</option> <option
+            value="JMajewska">JMajewska</option> <option
+            value="JNiemiec">JNiemiec</option> <option
+            value="Jira">Jira</option> <option
+            value="Jira_bot1">Jira_bot1</option> <option
+            value="KFrajtak">KFrajtak</option> <option
+            value="KZamaria">KZamaria</option> <option
+            value="LBGBAMN">LBGBAMN</option> <option
+            value="LBGBAMS">LBGBAMS</option> <option
+            value="LBGBAMU">LBGBAMU</option> <option
+            value="LJagucki">LJagucki</option> <option
+            value="Latour">Latour</option> <option
+            value="LodzReception">LodzReception</option> <option
+            value="MJablonski">MJablonski</option> <option
+            value="MMalinowski">MMalinowski</option> <option
+            value="MPiaskowski">MPiaskowski</option> <option
+            value="MWasiak">MWasiak</option> <option
+            value="MZielinski">MZielinski</option> <option
+            value="Maryleboneroom">Maryleboneroom</option> <option
+            value="MatrixRobot">MatrixRobot</option> <option
+            value="MilestoneCalendar">MilestoneCalendar</option> <option
+            value="Mobile">Mobile</option> <option
+            value="MobileSupportDevice1">MobileSupportDevice1</option>
+            <option value="Montrachet">Montrachet</option> <option
+            value="Monumentroom">Monumentroom</option> <option
+            value="NARecruitment">NARecruitment</option> <option
+            value="NYHolidays">NYHolidays</option> <option
+            value="NYscanner">NYscanner</option> <option
+            value="PKozlowski">PKozlowski</option> <option
+            value="PLD0030_user">PLD0030_user</option> <option
+            value="Paddingtonroom">Paddingtonroom</option> <option
+            value="PembleM">PembleM</option> <option
+            value="PoznanAdministration">PoznanAdministration</option>
+            <option value="RKlys">RKlys</option> <option
+            value="Recruitment">Recruitment</option> <option
+            value="Referrals-NA">Referrals-NA</option> <option
+            value="RuleNY">RuleNY</option> <option
+            value="SLilani">SLilani</option> <option
+            value="SVC-BES">SVC-BES</option> <option
+            value="SVC-Dtex">SVC-Dtex</option> <option
+            value="SVC-Eurex">SVC-Eurex</option> <option
+            value="SVC-FSSPAdmin">SVC-FSSPAdmin</option> <option
+            value="SVC-MossAdmin">SVC-MossAdmin</option> <option
+            value="SVC-MossExcel">SVC-MossExcel</option> <option
+            value="SVC-MossFarm">SVC-MossFarm</option> <option
+            value="SVC-MossProfile">SVC-MossProfile</option> <option
+            value="SVC-MossSearchServic">SVC-MossSearchServic</option>
+            <option
+            value="SVC-MossSecureStore">SVC-MossSecureStore</option>
+            <option value="SVC-MossSspAdmin">SVC-MossSspAdmin</option>
+            <option value="SVC-MossSspMySite">SVC-MossSspMySite</option>
+            <option
+            value="SVC-MossSspService">SVC-MossSspService</option>
+            <option value="SVC-MossWeb">SVC-MossWeb</option> <option
+            value="SVC-QlikView">SVC-QlikView</option> <option
+            value="SVC-SAP">SVC-SAP</option> <option
+            value="SVC-SQLCLUSTER">SVC-SQLCLUSTER</option> <option
+            value="SVC-SQLSERVER">SVC-SQLSERVER</option> <option
+            value="SVC-SQLSHIPLOG">SVC-SQLSHIPLOG</option> <option
+            value="SVC-SQLService">SVC-SQLService</option> <option
+            value="SVC-SUBV">SVC-SUBV</option> <option
+            value="SVC-TFSService">SVC-TFSService</option> <option
+            value="SVC-VSTFSService">SVC-VSTFSService</option> <option
+            value="SVC-VaultMoss">SVC-VaultMoss</option> <option
+            value="SVC-VaultSQL">SVC-VaultSQL</option> <option
+            value="SVC-WSSAdmin">SVC-WSSAdmin</option> <option
+            value="SVC-WssContentAccess">SVC-WssContentAccess</option>
+            <option
+            value="SVC-WssSearchService">SVC-WssSearchService</option>
+            <option value="SVC-buildmanager">SVC-buildmanager</option>
+            <option value="SVC-clickapp">SVC-clickapp</option> <option
+            value="SVC-rulepivotCI">SVC-rulepivotCI</option> <option
+            value="SVCAbsenceTracker">SVCAbsenceTracker</option> <option
+            value="SVNSourceBuildDEV">SVNSourceBuildDEV</option> <option
+            value="SVNSourceBuildSST">SVNSourceBuildSST</option> <option
+            value="Securedrop1">Securedrop1</option> <option
+            value="SecuritiesFinance">SecuritiesFinance</option> <option
+            value="SkypeLodz">SkypeLodz</option> <option
+            value="SourceSupportMobile">SourceSupportMobile</option>
+            <option value="Source_ETFRCA_new">Source_ETFRCA_new</option>
+            <option
+            value="Source_ETFRCA_update">Source_ETFRCA_update</option>
+            <option value="SysRatCI">SysRatCI</option> <option
+            value="TFS-Reports">TFS-Reports</option> <option
+            value="TSokolowski">TSokolowski</option> <option
+            value="Test_DI">Test_DI</option> <option
+            value="Test_PMO">Test_PMO</option> <option
+            value="Test_TL">Test_TL</option> <option
+            value="_Room_Barcelona">_Room_Barcelona</option> <option
+            value="_Room_Canada">_Room_Canada</option> <option
+            value="aaugustine">aaugustine</option> <option
+            value="abourne">abourne</option> <option
+            value="abraidwood">abraidwood</option> <option
+            value="achawla">achawla</option> <option
+            value="acraven">acraven</option> <option
+            value="acromarty">acromarty</option> <option
+            value="adavis">adavis</option> <option
+            value="afisk">afisk</option> <option
+            value="afriend">afriend</option> <option
+            value="agadomska">agadomska</option> <option
+            value="agonzalez">agonzalez</option> <option
+            value="agrewal">agrewal</option> <option
+            value="agupta">agupta</option> <option
+            value="ahinesocallaghan">ahinesocallaghan</option> <option
+            value="ajadczak">ajadczak</option> <option
+            value="ajaeschke">ajaeschke</option> <option
+            value="akelly">akelly</option> <option
+            value="akochanowski">akochanowski</option> <option
+            value="akonsewiczzawadzka">akonsewiczzawadzka</option>
+            <option value="akorolewski">akorolewski</option> <option
+            value="akurman">akurman</option> <option
+            value="akurp">akurp</option> <option
+            value="amadej">amadej</option> <option
+            value="amajkowska">amajkowska</option> <option
+            value="amatyszewska">amatyszewska</option> <option
+            value="amazur">amazur</option> <option
+            value="amichalak">amichalak</option> <option
+            value="amielczarek">amielczarek</option> <option
+            value="amilne">amilne</option> <option
+            value="amorley">amorley</option> <option
+            value="amorton">amorton</option> <option
+            value="andmielczarek">andmielczarek</option> <option
+            value="anelson">anelson</option> <option
+            value="anthonyh">anthonyh</option> <option
+            value="aolapade">aolapade</option> <option
+            value="apardoe">apardoe</option> <option
+            value="apatel">apatel</option> <option
+            value="apiesiak">apiesiak</option> <option
+            value="apple">apple</option> <option
+            value="apronakis">apronakis</option> <option
+            value="aramanathan">aramanathan</option> <option
+            value="aresnikoff">aresnikoff</option> <option
+            value="arogalska">arogalska</option> <option
+            value="aschneider">aschneider</option> <option
+            value="asingh">asingh</option> <option
+            value="askurski">askurski</option> <option
+            value="asmirnov">asmirnov</option> <option
+            value="asokolowska">asokolowska</option> <option
+            value="atolloczko">atolloczko</option> <option
+            value="aulacha">aulacha</option> <option
+            value="avinokurov">avinokurov</option> <option
+            value="awaszak">awaszak</option> <option
+            value="awitek">awitek</option> <option
+            value="awlodarczyk">awlodarczyk</option> <option
+            value="azuzanski">azuzanski</option> <option
+            value="backup">backup</option> <option
+            value="barcelonaldzroom">barcelonaldzroom</option> <option
+            value="barton">barton</option> <option
+            value="bbartos">bbartos</option> <option
+            value="bbednarowicz">bbednarowicz</option> <option
+            value="bbilicki">bbilicki</option> <option
+            value="bcncalls">bcncalls</option> <option
+            value="bcnmeeting">bcnmeeting</option> <option
+            value="bdsouza">bdsouza</option> <option
+            value="bfrydrych">bfrydrych</option> <option
+            value="bkraczkowska">bkraczkowska</option> <option
+            value="bkrol">bkrol</option> <option
+            value="bkuzio">bkuzio</option> <option
+            value="bluther">bluther</option> <option
+            value="bmaciag">bmaciag</option> <option
+            value="bmilczarek">bmilczarek</option> <option
+            value="bmiller">bmiller</option> <option
+            value="bnagorski">bnagorski</option> <option
+            value="bpietras">bpietras</option> <option
+            value="bpinkowski">bpinkowski</option> <option
+            value="bpozniak">bpozniak</option> <option
+            value="brekhi">brekhi</option> <option
+            value="bsharratt">bsharratt</option> <option
+            value="bsingh">bsingh</option> <option
+            value="bsmolarek">bsmolarek</option> <option
+            value="bsokol">bsokol</option> <option
+            value="buildmanager">buildmanager</option> <option
+            value="bupotts">bupotts</option> <option
+            value="bwagrowski">bwagrowski</option> <option
+            value="bwilk">bwilk</option> <option
+            value="bwyspianski">bwyspianski</option> <option
+            value="byang">byang</option> <option
+            value="cbones">cbones</option> <option
+            value="ccalls">ccalls</option> <option
+            value="ccollins">ccollins</option> <option
+            value="cconesa">cconesa</option> <option
+            value="cdebrusk">cdebrusk</option> <option
+            value="cdixit">cdixit</option> <option
+            value="cfeedback">cfeedback</option> <option
+            value="cgrafham">cgrafham</option> <option
+            value="chalpern">chalpern</option> <option
+            value="charlesh">charlesh</option> <option
+            value="charper">charper</option> <option
+            value="charrigan">charrigan</option> <option
+            value="ciechocinekroom">ciechocinekroom</option> <option
+            value="ckroon">ckroon</option> <option
+            value="clasky">clasky</option> <option
+            value="cleek">cleek</option> <option
+            value="cliffe">cliffe</option> <option
+            value="cmehta">cmehta</option> <option
+            value="cmitchell">cmitchell</option> <option
+            value="cnelson">cnelson</option> <option
+            value="compliance">compliance</option> <option
+            value="conf-alnc">conf-alnc</option> <option
+            value="conf-bigdata">conf-bigdata</option> <option
+            value="conf_test">conf_test</option> <option
+            value="conference">conference</option> <option
+            value="confluence">confluence</option> <option
+            value="confmail">confmail</option> <option
+            value="contact">contact</option> <option
+            value="contractors">contractors</option> <option
+            value="cpotts">cpotts</option> <option
+            value="crmread">crmread</option> <option
+            value="crmsupport">crmsupport</option> <option
+            value="crush">crush</option> <option
+            value="ctarnowski">ctarnowski</option> <option
+            value="ctjokrohardjo">ctjokrohardjo</option> <option
+            value="cucm">cucm</option> <option
+            value="cucmadlookup">cucmadlookup</option> <option
+            value="customers">customers</option> <option
+            value="cwatts">cwatts</option> <option
+            value="cwinch">cwinch</option> <option
+            value="dbalkwill">dbalkwill</option> <option
+            value="dbernacik">dbernacik</option> <option
+            value="dblades">dblades</option> <option
+            value="dblenkiron">dblenkiron</option> <option
+            value="dboberek">dboberek</option> <option
+            value="dbryant">dbryant</option> <option
+            value="dchristoff">dchristoff</option> <option
+            value="dclive">dclive</option> <option
+            value="dcrowhurst">dcrowhurst</option> <option
+            value="ddabrowski">ddabrowski</option> <option
+            value="ddouglas">ddouglas</option> <option
+            value="ddutkiewicz">ddutkiewicz</option> <option
+            value="dealsheets">dealsheets</option> <option
+            value="dfernandes">dfernandes</option> <option
+            value="dgarcia">dgarcia</option> <option
+            value="dgerrard">dgerrard</option> <option
+            value="dglover">dglover</option> <option
+            value="dgoscinski">dgoscinski</option> <option
+            value="dho">dho</option> <option
+            value="dhoward">dhoward</option> <option
+            value="dhyatt">dhyatt</option> <option
+            value="djankowiak">djankowiak</option> <option
+            value="dlecki">dlecki</option> <option
+            value="dlustig">dlustig</option> <option
+            value="dnewman">dnewman</option> <option
+            value="dnikitin">dnikitin</option> <option
+            value="dnowakowski">dnowakowski</option> <option
+            value="dperry">dperry</option> <option
+            value="dromolo">dromolo</option> <option
+            value="dryrun">dryrun</option> <option
+            value="dsadowska">dsadowska</option> <option
+            value="dsobanski">dsobanski</option> <option
+            value="dsosnowski">dsosnowski</option> <option
+            value="dsoyta">dsoyta</option> <option
+            value="dspoczynski">dspoczynski</option> <option
+            value="dstefanski">dstefanski</option> <option
+            value="dstrickland">dstrickland</option> <option
+            value="dtex_support2">dtex_support2</option> <option
+            value="dtexmobile">dtexmobile</option> <option
+            value="dtexsn">dtexsn</option> <option
+            value="dtexsupp">dtexsupp</option> <option
+            value="dtexu">dtexu</option> <option
+            value="durbanek">durbanek</option> <option
+            value="dwojcik">dwojcik</option> <option
+            value="eadams">eadams</option> <option
+            value="ealmeida">ealmeida</option> <option
+            value="ebarro">ebarro</option> <option
+            value="ebcmsupport">ebcmsupport</option> <option
+            value="ecates">ecates</option> <option
+            value="edragon">edragon</option> <option
+            value="efrost">efrost</option> <option
+            value="egabrysiak">egabrysiak</option> <option
+            value="egoodchild">egoodchild</option> <option
+            value="ehektoen">ehektoen</option> <option
+            value="ehuang">ehuang</option> <option
+            value="ehumphrey">ehumphrey</option> <option
+            value="ejarzebowski">ejarzebowski</option> <option
+            value="ekwasniak">ekwasniak</option> <option
+            value="epaluszewska">epaluszewska</option> <option
+            value="erestore">erestore</option> <option
+            value="esuwala">esuwala</option> <option
+            value="etaskos">etaskos</option> <option
+            value="etfmhudson">etfmhudson</option> <option
+            value="etfmteamcity">etfmteamcity</option> <option
+            value="euro2012">euro2012</option> <option
+            value="ewasiolek">ewasiolek</option> <option
+            value="ewright">ewright</option> <option
+            value="exchange">exchange</option> <option
+            value="expenses">expenses</option> <option
+            value="fcook">fcook</option> <option
+            value="fcui">fcui</option> <option
+            value="fdeshayes">fdeshayes</option> <option
+            value="ffurniturewala">ffurniturewala</option> <option
+            value="fieldd">fieldd</option> <option
+            value="finance">finance</option> <option
+            value="fkaliakmanis">fkaliakmanis</option> <option
+            value="flagana">flagana</option> <option
+            value="fshariff">fshariff</option> <option
+            value="gayzenberg">gayzenberg</option> <option
+            value="gborkowski">gborkowski</option> <option
+            value="gdobrowolski">gdobrowolski</option> <option
+            value="ggarrett">ggarrett</option> <option
+            value="gharker">gharker</option> <option
+            value="ghinojosa">ghinojosa</option> <option
+            value="gjachimko">gjachimko</option> <option
+            value="gocs">gocs</option> <option
+            value="goldingn">goldingn</option> <option
+            value="goubs">goubs</option> <option
+            value="gpieterson">gpieterson</option> <option
+            value="gpochecker">gpochecker</option> <option
+            value="grichardson">grichardson</option> <option
+            value="grookledge">grookledge</option> <option
+            value="grybak">grybak</option> <option
+            value="gsandhu">gsandhu</option> <option
+            value="gsheeran">gsheeran</option> <option
+            value="gsooch">gsooch</option> <option
+            value="gtrybulski">gtrybulski</option> <option
+            value="gvalle">gvalle</option> <option
+            value="gwhite">gwhite</option> <option
+            value="gwood">gwood</option> <option
+            value="hbiernacka">hbiernacka</option> <option
+            value="hdormer">hdormer</option> <option
+            value="help.desk">help.desk</option> <option
+            value="hkemp">hkemp</option> <option
+            value="hmakwana">hmakwana</option> <option
+            value="hmesha">hmesha</option> <option
+            value="horizonbackup">horizonbackup</option> <option
+            value="hotdesk">hotdesk</option> <option
+            value="humanresources">humanresources</option> <option
+            value="ibanas">ibanas</option> <option
+            value="ibennett">ibennett</option> <option
+            value="ielayaraja">ielayaraja</option> <option
+            value="ifutcher">ifutcher</option> <option
+            value="ikenny">ikenny</option> <option
+            value="ilewandowska">ilewandowska</option> <option
+            value="imachniewicz">imachniewicz</option> <option
+            value="imc">imc</option> <option
+            value="imcsupport">imcsupport</option> <option
+            value="infosec">infosec</option> <option
+            value="istepien">istepien</option> <option
+            value="isupport">isupport</option> <option
+            value="its">its</option> <option
+            value="ivanl">ivanl</option> <option
+            value="ivizvary">ivizvary</option> <option
+            value="iweavers">iweavers</option> <option
+            value="jarcher">jarcher</option> <option
+            value="jbaker">jbaker</option> <option
+            value="jbarratt">jbarratt</option> <option
+            value="jbelczacki">jbelczacki</option> <option
+            value="jbesson">jbesson</option> <option
+            value="jbinkowski">jbinkowski</option> <option
+            value="jbradbury">jbradbury</option> <option
+            value="jbudzisz">jbudzisz</option> <option
+            value="jcarter">jcarter</option> <option
+            value="jchaudhry">jchaudhry</option> <option
+            value="jcooke">jcooke</option> <option
+            value="jcorbett">jcorbett</option> <option
+            value="jdziworski">jdziworski</option> <option
+            value="jfalek">jfalek</option> <option
+            value="jfocus">jfocus</option> <option
+            value="jfree">jfree</option> <option
+            value="jgajjar">jgajjar</option> <option
+            value="jgalas">jgalas</option> <option
+            value="jgilchrist">jgilchrist</option> <option
+            value="jgoslawski">jgoslawski</option> <option
+            value="jgutkowski">jgutkowski</option> <option
+            value="jhaville">jhaville</option> <option
+            value="jhughes">jhughes</option> <option
+            value="jira_test">jira_test</option> <option
+            value="jiredale">jiredale</option> <option
+            value="jjaryszew">jjaryszew</option> <option
+            value="jjurek">jjurek</option> <option
+            value="jkazmierczak">jkazmierczak</option> <option
+            value="jkerr">jkerr</option> <option
+            value="jklinec">jklinec</option> <option
+            value="jlefevre">jlefevre</option> <option
+            value="jlitman">jlitman</option> <option
+            value="jmartin">jmartin</option> <option
+            value="jmaulkerson">jmaulkerson</option> <option
+            value="jmilligan">jmilligan</option> <option
+            value="jmoore">jmoore</option> <option
+            value="jmorgan">jmorgan</option> <option
+            value="jmorrissey">jmorrissey</option> <option
+            value="jmurlewski">jmurlewski</option> <option
+            value="jmurrell">jmurrell</option> <option
+            value="jnowowiejski">jnowowiejski</option> <option
+            value="joelm">joelm</option> <option
+            value="jokrojek">jokrojek</option> <option
+            value="jpatel">jpatel</option> <option
+            value="jpiasecki">jpiasecki</option> <option
+            value="jpolak">jpolak</option> <option
+            value="jpustelnik">jpustelnik</option> <option
+            value="jraposa">jraposa</option> <option
+            value="jrawden">jrawden</option> <option
+            value="jrichards">jrichards</option> <option
+            value="jsandhu">jsandhu</option> <option
+            value="jsherlock">jsherlock</option> <option
+            value="jsingh">jsingh</option> <option
+            value="jsmyczek">jsmyczek</option> <option
+            value="jsoley">jsoley</option> <option
+            value="jstein">jstein</option> <option
+            value="jszczepankiewicz">jszczepankiewicz</option> <option
+            value="jtaylor">jtaylor</option> <option
+            value="jtomkinson">jtomkinson</option> <option
+            value="jwarburton">jwarburton</option> <option
+            value="jward">jward</option> <option
+            value="jwarren">jwarren</option> <option
+            value="jwarszawski">jwarszawski</option> <option
+            value="jwitczak">jwitczak</option> <option
+            value="jwolanski">jwolanski</option> <option
+            value="jwright">jwright</option> <option
+            value="jwyrzutowicz">jwyrzutowicz</option> <option
+            value="jzalejski">jzalejski</option> <option
+            value="kbien">kbien</option> <option
+            value="kchavda">kchavda</option> <option
+            value="kcydzik">kcydzik</option> <option
+            value="kczelej">kczelej</option> <option
+            value="kdworakowski">kdworakowski</option> <option
+            value="kgould">kgould</option> <option
+            value="khubbert">khubbert</option> <option
+            value="kimble">kimble</option> <option
+            value="kimbletest">kimbletest</option> <option
+            value="kimbleuat">kimbleuat</option> <option
+            value="kjasiak">kjasiak</option> <option
+            value="kjez">kjez</option> <option
+            value="kkasperczak">kkasperczak</option> <option
+            value="kkorczak">kkorczak</option> <option
+            value="kkorzel">kkorzel</option> <option
+            value="kkosiec">kkosiec</option> <option
+            value="kkotlarski">kkotlarski</option> <option
+            value="kkoval">kkoval</option> <option
+            value="kkozak">kkozak</option> <option
+            value="kkrishnarajan">kkrishnarajan</option> <option
+            value="kkrzeminski">kkrzeminski</option> <option
+            value="kkunikowski">kkunikowski</option> <option
+            value="kmanka">kmanka</option> <option
+            value="kmartsinkevich">kmartsinkevich</option> <option
+            value="kmaterka">kmaterka</option> <option
+            value="knotis">knotis</option> <option
+            value="kpabjanczyk">kpabjanczyk</option> <option
+            value="kpawlowski">kpawlowski</option> <option
+            value="kpijewski">kpijewski</option> <option
+            value="ksarma">ksarma</option> <option
+            value="kskrzypinski">kskrzypinski</option> <option
+            value="kslazak">kslazak</option> <option
+            value="ksmith">ksmith</option> <option
+            value="kstaciwa">kstaciwa</option> <option
+            value="kstoma">kstoma</option> <option
+            value="kswiatek">kswiatek</option> <option
+            value="kszafranski">kszafranski</option> <option
+            value="ktang">ktang</option> <option
+            value="kthomas">kthomas</option> <option
+            value="ktrepczynski">ktrepczynski</option> <option
+            value="kveligeti">kveligeti</option> <option
+            value="kwoinska">kwoinska</option> <option
+            value="kzdanowski">kzdanowski</option> <option
+            value="labraham">labraham</option> <option
+            value="laltadill">laltadill</option> <option
+            value="lauronen">lauronen</option> <option
+            value="lbalogun">lbalogun</option> <option
+            value="lbutton">lbutton</option> <option
+            value="lcasciari">lcasciari</option> <option
+            value="lcole">lcole</option> <option
+            value="lcyrulski">lcyrulski</option> <option
+            value="ldncalls">ldncalls</option> <option
+            value="leono">leono</option> <option
+            value="lganko">lganko</option> <option
+            value="lhansen">lhansen</option> <option
+            value="lharland">lharland</option> <option
+            value="lhorodniczy">lhorodniczy</option> <option
+            value="liquidity">liquidity</option> <option
+            value="ljanicki">ljanicki</option> <option
+            value="ljankowski">ljankowski</option> <option
+            value="lkantorek">lkantorek</option> <option
+            value="lkirby">lkirby</option> <option
+            value="lkowalski">lkowalski</option> <option
+            value="llenartowski">llenartowski</option> <option
+            value="llorek">llorek</option> <option
+            value="lmakowski">lmakowski</option> <option
+            value="lnouchi">lnouchi</option> <option
+            value="lolejnik">lolejnik</option> <option
+            value="londonldzroom">londonldzroom</option> <option
+            value="lpower">lpower</option> <option
+            value="lrzanek">lrzanek</option> <option
+            value="lsajpelt">lsajpelt</option> <option
+            value="lsobczak">lsobczak</option> <option
+            value="lstachowiak">lstachowiak</option> <option
+            value="lthomsen">lthomsen</option> <option
+            value="ltomczak">ltomczak</option> <option
+            value="ltrigg">ltrigg</option> <option
+            value="lurbaniak">lurbaniak</option> <option
+            value="lwierzbicka">lwierzbicka</option> <option
+            value="lwoodward">lwoodward</option> <option
+            value="lwrzeszcz">lwrzeszcz</option> <option
+            value="makaczmarek">makaczmarek</option> <option
+            value="malborkroom">malborkroom</option> <option
+            value="mallport">mallport</option> <option
+            value="marcusr">marcusr</option> <option
+            value="margaux">margaux</option> <option
+            value="marketing">marketing</option> <option
+            value="mbaker">mbaker</option> <option
+            value="mbalbus">mbalbus</option> <option
+            value="mbanini">mbanini</option> <option
+            value="mbartosik">mbartosik</option> <option
+            value="mbednarek">mbednarek</option> <option
+            value="mbialas">mbialas</option> <option
+            value="mbibel">mbibel</option> <option
+            value="mbiegala">mbiegala</option> <option
+            value="mbogdanski">mbogdanski</option> <option
+            value="mbogusz">mbogusz</option> <option
+            value="mbolomboy">mbolomboy</option> <option
+            value="mbugaj">mbugaj</option> <option
+            value="mbukarewicz">mbukarewicz</option> <option
+            value="mbutler">mbutler</option> <option
+            value="mcamara">mcamara</option> <option
+            value="mchadney">mchadney</option> <option
+            value="mchlopczynski">mchlopczynski</option> <option
+            value="mclark">mclark</option> <option
+            value="mdebinski">mdebinski</option> <option
+            value="mdeuling">mdeuling</option> <option
+            value="mdzwonnik">mdzwonnik</option> <option
+            value="mfidor">mfidor</option> <option
+            value="mgarnysz">mgarnysz</option> <option
+            value="mgawin">mgawin</option> <option
+            value="mgibson">mgibson</option> <option
+            value="mgill">mgill</option> <option
+            value="mgodlewski">mgodlewski</option> <option
+            value="mgordon">mgordon</option> <option
+            value="mgorynia">mgorynia</option> <option
+            value="mgozalbo-moragrega">mgozalbo-moragrega</option>
+            <option value="mgrabowski">mgrabowski</option> <option
+            value="mgrzejszczak">mgrzejszczak</option> <option
+            value="mguzek">mguzek</option> <option
+            value="mhobday">mhobday</option> <option
+            value="mielnoroom">mielnoroom</option> <option
+            value="mikolajkiroom">mikolajkiroom</option> <option
+            value="mistbackup">mistbackup</option> <option
+            value="mjagiello">mjagiello</option> <option
+            value="mjaskolski">mjaskolski</option> <option
+            value="mkaczmarek">mkaczmarek</option> <option
+            value="mkaminski">mkaminski</option> <option
+            value="mkandl">mkandl</option> <option
+            value="mkellie">mkellie</option> <option
+            value="mklimecka">mklimecka</option> <option
+            value="mkolodziejski">mkolodziejski</option> <option
+            value="mkowalczyk">mkowalczyk</option> <option
+            value="mkowalski">mkowalski</option> <option
+            value="mkus">mkus</option> <option
+            value="mkwiatkowski">mkwiatkowski</option> <option
+            value="mlacugna">mlacugna</option> <option
+            value="mlewandowski">mlewandowski</option> <option
+            value="mlines">mlines</option> <option
+            value="mliszewski">mliszewski</option> <option
+            value="mludwig">mludwig</option> <option
+            value="mmacmillan">mmacmillan</option> <option
+            value="mmajcherski">mmajcherski</option> <option
+            value="mmarciniak">mmarciniak</option> <option
+            value="mmiklaszewski">mmiklaszewski</option> <option
+            value="mmonfort">mmonfort</option> <option
+            value="mmuszynska">mmuszynska</option> <option
+            value="mnowak">mnowak</option> <option
+            value="mnowosielski">mnowosielski</option> <option
+            value="moikonomou">moikonomou</option> <option
+            value="moleksiewicz">moleksiewicz</option> <option
+            value="molenski">molenski</option> <option
+            value="monitor">monitor</option> <option
+            value="moodle">moodle</option> <option
+            value="mostruszka">mostruszka</option> <option
+            value="mpasinski">mpasinski</option> <option
+            value="mpaszta">mpaszta</option> <option
+            value="mpeacock">mpeacock</option> <option
+            value="mpestka">mpestka</option> <option
+            value="mpotok">mpotok</option> <option
+            value="mprokopowicz">mprokopowicz</option> <option
+            value="mpryce">mpryce</option> <option
+            value="mradzki">mradzki</option> <option
+            value="mryan">mryan</option> <option
+            value="msamulak">msamulak</option> <option
+            value="mschofield">mschofield</option> <option
+            value="mscott">mscott</option> <option
+            value="mserbos">mserbos</option> <option
+            value="mslowikowski">mslowikowski</option> <option
+            value="msmolarczyk">msmolarczyk</option> <option
+            value="msobanski">msobanski</option> <option
+            value="msondh">msondh</option> <option
+            value="mspeight">mspeight</option> <option
+            value="msrodek">msrodek</option> <option
+            value="mstrejczek">mstrejczek</option> <option
+            value="msuski">msuski</option> <option
+            value="msuwala">msuwala</option> <option
+            value="mszczucki">mszczucki</option> <option
+            value="mszewczyk">mszewczyk</option> <option
+            value="mtailor">mtailor</option> <option
+            value="mtomac">mtomac</option> <option
+            value="murbaniak">murbaniak</option> <option
+            value="mwacholek">mwacholek</option> <option
+            value="mwhite">mwhite</option> <option
+            value="mwojciechowski">mwojciechowski</option> <option
+            value="mwrzeszcz">mwrzeszcz</option> <option
+            value="mwysokinski">mwysokinski</option> <option
+            value="mwyszynski">mwyszynski</option> <option
+            value="mzbrzezny">mzbrzezny</option> <option
+            value="naexpenses">naexpenses</option> <option
+            value="newsletter">newsletter</option> <option
+            value="newyorkldzroom">newyorkldzroom</option> <option
+            value="nfelcyn">nfelcyn</option> <option
+            value="nhooda">nhooda</option> <option
+            value="nhookway">nhookway</option> <option
+            value="nhughes">nhughes</option> <option
+            value="njones">njones</option> <option
+            value="nnogacki">nnogacki</option> <option
+            value="nrao">nrao</option> <option
+            value="nrathod">nrathod</option> <option
+            value="nsupport">nsupport</option> <option
+            value="nustundag">nustundag</option> <option
+            value="nuviewadmin">nuviewadmin</option> <option
+            value="nycalls">nycalls</option> <option
+            value="nzhang">nzhang</option> <option
+            value="oadmin">oadmin</option> <option
+            value="oolawuyi">oolawuyi</option> <option
+            value="orchestra">orchestra</option> <option
+            value="palmer">palmer</option> <option
+            value="pambroziak">pambroziak</option> <option
+            value="pbakowski">pbakowski</option> <option
+            value="pbialy">pbialy</option> <option
+            value="pbicz">pbicz</option> <option
+            value="pbirnie">pbirnie</option> <option
+            value="pbogdanowicz">pbogdanowicz</option> <option
+            value="pbolonek">pbolonek</option> <option
+            value="pbrygidyn">pbrygidyn</option> <option
+            value="pclimpson">pclimpson</option> <option
+            value="petrus">petrus</option> <option
+            value="pgain">pgain</option> <option
+            value="pgracey">pgracey</option> <option
+            value="pgraham">pgraham</option> <option
+            value="pguenet">pguenet</option> <option
+            value="pgwiazda">pgwiazda</option> <option
+            value="phenderson">phenderson</option> <option
+            value="pilski">pilski</option> <option
+            value="pjuszkiewicz">pjuszkiewicz</option> <option
+            value="pkania">pkania</option> <option
+            value="pkaszubowski">pkaszubowski</option> <option
+            value="pkelly">pkelly</option> <option
+            value="pkoluda">pkoluda</option> <option
+            value="pkosinski">pkosinski</option> <option
+            value="pkosmowski">pkosmowski</option> <option
+            value="pkotynia">pkotynia</option> <option
+            value="pkrolikowski">pkrolikowski</option> <option
+            value="pkrudysz">pkrudysz</option> <option
+            value="pleszczynski">pleszczynski</option> <option
+            value="plewandowski">plewandowski</option> <option
+            value="pmarsden">pmarsden</option> <option
+            value="pmosiniak">pmosiniak</option> <option
+            value="pnasalski">pnasalski</option> <option
+            value="pnguyen">pnguyen</option> <option
+            value="porlowski">porlowski</option> <option
+            value="pparker">pparker</option> <option
+            value="primeservices">primeservices</option> <option
+            value="probinson">probinson</option> <option
+            value="prozenbajher">prozenbajher</option> <option
+            value="pserwacinski">pserwacinski</option> <option
+            value="psimpeasante">psimpeasante</option> <option
+            value="pskrobiszewski">pskrobiszewski</option> <option
+            value="psmialkowski">psmialkowski</option> <option
+            value="psoni">psoni</option> <option
+            value="pszczepaniec">pszczepaniec</option> <option
+            value="pszerszynski">pszerszynski</option> <option
+            value="ptecza">ptecza</option> <option
+            value="ptokarski">ptokarski</option> <option
+            value="ptolchard">ptolchard</option> <option
+            value="pwatson">pwatson</option> <option
+            value="pwojdyga">pwojdyga</option> <option
+            value="pzmuda">pzmuda</option> <option
+            value="rallalouf">rallalouf</option> <option
+            value="randrew">randrew</option> <option
+            value="rbarczynski">rbarczynski</option> <option
+            value="rbuczko">rbuczko</option> <option
+            value="rbudner">rbudner</option> <option
+            value="rcairns">rcairns</option> <option
+            value="rcavendish">rcavendish</option> <option
+            value="rcollins">rcollins</option> <option
+            value="rdemicheli">rdemicheli</option> <option
+            value="rdevdutt">rdevdutt</option> <option
+            value="rdunn">rdunn</option> <option
+            value="reception">reception</option> <option
+            value="rfield">rfield</option> <option
+            value="rfinancial">rfinancial</option> <option
+            value="rfox">rfox</option> <option
+            value="rfraser">rfraser</option> <option
+            value="rgarbala">rgarbala</option> <option
+            value="rgordon">rgordon</option> <option
+            value="rgorecki">rgorecki</option> <option
+            value="rhawkins">rhawkins</option> <option
+            value="rhogan">rhogan</option> <option
+            value="richardg">richardg</option> <option
+            value="rjanicki">rjanicki</option> <option
+            value="rkohli">rkohli</option> <option
+            value="rkwiaton">rkwiaton</option> <option
+            value="rlancett">rlancett</option> <option
+            value="rlittle">rlittle</option> <option
+            value="rmcgeachy">rmcgeachy</option> <option
+            value="rmeyer">rmeyer</option> <option
+            value="rmiller">rmiller</option> <option
+            value="rmontero">rmontero</option> <option
+            value="rnagarajan">rnagarajan</option> <option
+            value="rneish">rneish</option> <option
+            value="rnikiel">rnikiel</option> <option
+            value="rnowak">rnowak</option> <option
+            value="rothschild">rothschild</option> <option
+            value="rpatel">rpatel</option> <option
+            value="rpiotrowski">rpiotrowski</option> <option
+            value="rpospieszynski">rpospieszynski</option> <option
+            value="rposwiata">rposwiata</option> <option
+            value="rrankin">rrankin</option> <option
+            value="rschmidt">rschmidt</option> <option
+            value="rsese">rsese</option> <option
+            value="rsiatka">rsiatka</option> <option
+            value="rsilver">rsilver</option> <option
+            value="rvarlese">rvarlese</option> <option
+            value="rvivancos">rvivancos</option> <option
+            value="rwlodarski">rwlodarski</option> <option
+            value="rwozniak">rwozniak</option> <option
+            value="ryoung">ryoung</option> <option
+            value="sInones">sInones</option> <option
+            value="salesadmin">salesadmin</option> <option
+            value="sauron">sauron</option> <option
+            value="sbarnett">sbarnett</option> <option
+            value="sbenmbarek">sbenmbarek</option> <option
+            value="sblachowicz">sblachowicz</option> <option
+            value="schernyshev">schernyshev</option> <option
+            value="schoudhury">schoudhury</option> <option
+            value="sclouting">sclouting</option> <option
+            value="scommittee">scommittee</option> <option
+            value="sconway">sconway</option> <option
+            value="scowell">scowell</option> <option
+            value="screening">screening</option> <option
+            value="sdevelopment">sdevelopment</option> <option
+            value="sdhiman">sdhiman</option> <option
+            value="sdyapa">sdyapa</option> <option
+            value="secfincalendar">secfincalendar</option> <option
+            value="secilo">secilo</option> <option
+            value="selhajoui">selhajoui</option> <option
+            value="sellis">sellis</option> <option
+            value="sfinance">sfinance</option> <option
+            value="sgallie">sgallie</option> <option
+            value="sgradka">sgradka</option> <option
+            value="sgreen">sgreen</option> <option
+            value="sgunapala">sgunapala</option> <option
+            value="shall">shall</option> <option
+            value="sjain">sjain</option> <option
+            value="sjakobczak">sjakobczak</option> <option
+            value="sjasinski">sjasinski</option> <option
+            value="skaczmarczyk">skaczmarczyk</option> <option
+            value="skarbowiak">skarbowiak</option> <option
+            value="sklab">sklab</option> <option
+            value="skotze">skotze</option> <option
+            value="skowal">skowal</option> <option
+            value="skrishnan">skrishnan</option> <option
+            value="skumar">skumar</option> <option
+            value="slawlor">slawlor</option> <option
+            value="slee">slee</option> <option
+            value="slewandowicz">slewandowicz</option> <option
+            value="slyle">slyle</option> <option
+            value="smalik">smalik</option> <option
+            value="smember">smember</option> <option
+            value="smichalak">smichalak</option> <option
+            value="smpawulo">smpawulo</option> <option
+            value="solroom">solroom</option> <option
+            value="sombraroom">sombraroom</option> <option
+            value="sopotroom">sopotroom</option> <option
+            value="sourcedatafeed">sourcedatafeed</option> <option
+            value="sourcedev">sourcedev</option> <option
+            value="sourceetfp">sourceetfp</option> <option
+            value="sourcen">sourcen</option> <option
+            value="sourcetest">sourcetest</option> <option
+            value="sourcetest1">sourcetest1</option> <option
+            value="sourceu">sourceu</option> <option
+            value="sourcewebprod">sourcewebprod</option> <option
+            value="sourcewebuat">sourcewebuat</option> <option
+            value="sowner">sowner</option> <option
+            value="spiu">spiu</option> <option
+            value="spsaltis">spsaltis</option> <option
+            value="spusz">spusz</option> <option
+            value="sramachandran">sramachandran</option> <option
+            value="srogalska">srogalska</option> <option
+            value="sromp">sromp</option> <option
+            value="sryan">sryan</option> <option
+            value="ssaivanathan">ssaivanathan</option> <option
+            value="sshepperson">sshepperson</option> <option
+            value="ssiudek">ssiudek</option> <option
+            value="ssupport">ssupport</option> <option
+            value="ssupport3">ssupport3</option> <option
+            value="ssupport4">ssupport4</option> <option
+            value="sthompson">sthompson</option> <option
+            value="styl">styl</option> <option
+            value="sunderhill">sunderhill</option> <option
+            value="svc-act">svc-act</option> <option
+            value="svc-automailer">svc-automailer</option> <option
+            value="svc-crm">svc-crm</option> <option
+            value="svc-exbackup">svc-exbackup</option> <option
+            value="svc-horizonbuild">svc-horizonbuild</option> <option
+            value="svc-marc">svc-marc</option> <option
+            value="svc-mossapppool">svc-mossapppool</option> <option
+            value="svc-nuview">svc-nuview</option> <option
+            value="svc-oni">svc-oni</option> <option
+            value="svc-sharepoint">svc-sharepoint</option> <option
+            value="svc-sharpowl">svc-sharpowl</option> <option
+            value="svc-svn">svc-svn</option> <option
+            value="sviewer">sviewer</option> <option
+            value="svirani">svirani</option> <option
+            value="svn-ny">svn-ny</option> <option
+            value="svnsync-user">svnsync-user</option> <option
+            value="swilliams">swilliams</option> <option
+            value="swlodarczyk">swlodarczyk</option> <option
+            value="syoung">syoung</option> <option
+            value="szczebrzeszynroom">szczebrzeszynroom</option> <option
+            value="talbot">talbot</option> <option
+            value="tbilewicz">tbilewicz</option> <option
+            value="tbrudnicki">tbrudnicki</option> <option
+            value="tciejka">tciejka</option> <option
+            value="tclark">tclark</option> <option
+            value="tcuthbert">tcuthbert</option> <option
+            value="tczechowski">tczechowski</option> <option
+            value="template_new_user">template_new_user</option> <option
+            value="test_SP_user">test_SP_user</option> <option
+            value="test_absence_tracker">test_absence_tracker</option>
+            <option value="test_book">test_book</option> <option
+            value="test_rule_library">test_rule_library</option> <option
+            value="testing2012">testing2012</option> <option
+            value="testmail">testmail</option> <option
+            value="tjanik">tjanik</option> <option
+            value="tjurek">tjurek</option> <option
+            value="tkaczmarek">tkaczmarek</option> <option
+            value="tkuczborski">tkuczborski</option> <option
+            value="tkusmierz">tkusmierz</option> <option
+            value="tniemczyk">tniemczyk</option> <option
+            value="torontoroom1">torontoroom1</option> <option
+            value="torontoroom2">torontoroom2</option> <option
+            value="tosler">tosler</option> <option
+            value="tpskiet">tpskiet</option> <option
+            value="travel">travel</option> <option
+            value="troca">troca</option> <option
+            value="tsavage">tsavage</option> <option
+            value="umakan">umakan</option> <option
+            value="visitor1">visitor1</option> <option
+            value="visitor2">visitor2</option> <option
+            value="visitor3">visitor3</option> <option
+            value="visitor4">visitor4</option> <option
+            value="visitor5">visitor5</option> <option
+            value="vkumar">vkumar</option> <option
+            value="vleivadara">vleivadara</option> <option
+            value="vmanjrekar">vmanjrekar</option> <option
+            value="vmelezhik">vmelezhik</option> <option
+            value="vpai">vpai</option> <option
+            value="vweinberg">vweinberg</option> <option
+            value="wasztemborski">wasztemborski</option> <option
+            value="waterlooroom">waterlooroom</option> <option
+            value="wfijarczyk">wfijarczyk</option> <option
+            value="whiteboard">whiteboard</option> <option
+            value="whitmoreg">whitmoreg</option> <option
+            value="wpasierbski">wpasierbski</option> <option
+            value="wraczynska">wraczynska</option> <option
+            value="wrozenberg">wrozenberg</option> <option
+            value="wszymanski">wszymanski</option> <option
+            value="xerox_printer">xerox_printer</option> <option
+            value="yarezki">yarezki</option> <option
+            value="yjiang">yjiang</option> <option
+            value="ylazaryev">ylazaryev</option> <option
+            value="zakopaneroom">zakopaneroom</option> <option
+            value="zrudnicki">zrudnicki</option> </select></td>
+        <td><select name="access[1]" > <option selected="selected"
+            value="rw">rw</option> <option value="r">r</option> <option
+            value="">-</option> </select></td> <td><input type="submit"
+          name=".submit" value="Add" /></td></tr><tr><td align="center"
+          colspan="4"><input type="submit" name="commit" value="Commit
+          Changes" /></td></tr></table><p>You can give read/write or
+    read-only rights to a single user or a user group. A user group is
+    denoted by @Abacus-&lt;groupname&gt;.  The access rights are valid
+    for the given path and all sub directories.  For details see the <a
+      href="http://svnbook.red-bean.com/en/1.5/svn.serverconfig.httpd.html#svn.serverconfig.httpd.authz.perdir">Manual</a>.</p><p><strong>Warning:</strong>
+    the ViewCVS script does not always respect path restrictions.  A
+    skilled user with read-only access to one directory of the
+    repository can read the whole repository.  Better use different
+    repositories.</p><div><input type="hidden" name=".cgifields"
+      value="l_users[1]"  /><input type="hidden" name=".cgifields"
+      value="deleteacl"  /></div></form><p><small>Copyright
+    2005&ndash;2009 Jochen Hoenicke, Michael M&ouml;ller, Marco
+    L&uuml;bcke; based on code from Theo Van Dinter</small></p>
+
+</body> </html>
