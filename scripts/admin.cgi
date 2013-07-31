@@ -462,6 +462,7 @@ my $template_params = {
   # Only offer to change passphrase if we are an HTPASSWD user - otherwise passwords are managed externally.
   CAN_CHANGE_PASSWORD => ($users{$curuser}->{'source'} eq 'HTPASSWD'),
   CAN_CREATE_REPOSITORY => in_group("admins"),
+  BACKUP_ENABLED => $config->{enable_backup},
 };
 
 #
@@ -767,7 +768,7 @@ if ($repos ne "" && in_group("$repos-admins")) {
     push @group_params, \%group_param;
     $grpnr++;
   }
-  $template_params->{GROUP_LOOP} = \@group_params;
+  $template_params->{REPO_GROUPS} = \@group_params;
   $template_params->{GROUPCOUNT} = $grpnr;
 
   my @user_params;
@@ -782,15 +783,16 @@ if ($repos ne "" && in_group("$repos-admins")) {
   my $aclnr = 0;
   my @permissions;
   foreach my $path (sort keys %{$repositories->{$repos}}) {
-    foreach my $key (sort keys %{$repositories->{$repos}{$path}}) {
-      my $has_rw_perm = grep("rw", @{$repositories->{$repos}{$path}{$key}});
-      my $has_ro_perm = grep("r", @{$repositories->{$repos}{$path}{$key}});
+    foreach my $user_or_group (sort keys %{$repositories->{$repos}{$path}}) {
+      my $has_rw_perm = grep("rw", @{$repositories->{$repos}{$path}{$user_or_group}});
+      my $has_ro_perm = grep("r", @{$repositories->{$repos}{$path}{$user_or_group}});
       my %permission;
       $permission{LOOP_ACL_NUMBER} = $aclnr;
-      $permission{LOOP_USER_GROUP} = $key;
+      $permission{LOOP_USER_GROUP} = $user_or_group;
       $permission{LOOP_PATH} = $path;
       $permission{LOOP_HAS_RW_PERM} = $has_rw_perm;
       $permission{LOOP_HAS_RO_PERM} = $has_ro_perm;
+      $permission{LOOP_HAS_NO_PERM} = !($has_rw_perm or $has_ro_perm);
 
       push @permissions, \%permission;
       $aclnr++;
@@ -799,75 +801,29 @@ if ($repos ne "" && in_group("$repos-admins")) {
   $template_params->{PERMISSION_LOOP} = \@permissions;
   $template_params->{ACL_NUMBER} = $aclnr;
 
-  print Tr(td([hidden(-name => 'numacl', -default => "$aclnr", -force =>'1').
-        textfield(-name => "path[$aclnr]", -default => '/', 
-          -force =>'1', -size => '30'),
-        popup_menu(-name => "usergroup[$aclnr]",
-          -default => '', -force => 1,
-          -values => [ '', (map { '@'.$_ } @reposgroups),
-            sort (keys %users) ]),
-        popup_menu(-name => "access[$aclnr]",
-          -values => [ 'rw', 'r', ''],
-          -default => 'rw', -labels => { '' => '-' }),
-        submit(-label => 'Add')]));
-  print Tr(td({-colspan => '4', -align => 'center'},
-      submit(-name => 'commit', -label => 'Commit Changes')));
-  print "</table>";
-  print p("You can give read/write or read-only rights to a single user or a user group. A user group is denoted by \@$repos-\&lt;groupname\&gt;.  The access rights are valid for the given path and all sub directories.  For details see the $manual.");
-  print p(strong("Warning:"), "the ViewCVS script does not always respect path restrictions.  A skilled user with read-only access to one directory of the repository can read the whole repository.  Better use different repositories.");
-
   if ($config->{enable_backup} and read_gpg_keys()) {
-    print h3("Manage GPG Keys");
-    print p("The users in the group $repos-backup can download an encrypted backup ", a({href => "$repos.gpg"}, "$repos.gpg"),". For regular backups you can adapt this ", a({href => "/svnbackup"}, "backup shell script"),". The backup is encrypted with the GPG keys in the following list.");
-
-    print "<table style=\"border:1pt solid;\">";
+    $template_params->{READ_GPG_KEYS} = 1;
     my @gpgkeyids = get_gpg_keyid($repos);
-    my $id;
-    for $id (@gpgkeyids) {
-      print Tr(td($id."&nbsp;".escapeHTML($gpgfpr{$id})),
-        td(checkbox(-name => "gpgdelkey", -value => "$id", 
-            -checked => 0, -force => 1,
-            -label => "Remove")));
+    my @gpg_keys_for_repo;
+    for my $id (@gpgkeyids) {
+      my %gpg_key_for_repo;
+      $gpg_key_for_repo{GPG_KEY_ID} = $id;
+      $gpg_key_for_repo{GPG_FINGERPRINT} = $gpgfpr{$id};
+
+      push @gpg_keys_for_repo, \%gpg_key_for_repo;
     }
+    $template_params->{GPG_KEYS_FOR_REPO} = \@gpg_keys_for_repo;
+
     $gpgfpr{""}="";
-    print Tr(td(popup_menu(-name => "gpgaddkey",
-          -value => [sort keys %gpgfpr],
-          -force => '1',
-          -labels => {map {$_ => "$_ $gpgfpr{$_}" } 
-            (keys %gpgfpr)})),
-      td(submit(-name => 'add', -label => 'Add')));
+    my @available_gpg_keys;
+    for my $id (sort keys %gpgfpr) {
+      my %gpg_key;
+      $gpg_key{GPG_KEY_ID} = $id;
+      $gpg_key{GPG_FINGERPRINT} = $gpgfpr{$id};
 
-    print Tr(td([strong("GPG Public Key: ").
-          filefield(-name => 'gpgkeyfile', -default => '', 
-            -size => '40')]));
-    print Tr(td({-colspan => '2', -align => 'center'},
-        submit(-name => 'commit', -label => 'Commit Changes')));
-    print "</table>";
-  }
-  print endform;
-
-
-  if ($config->{enable_backup}) {
-    print h3("Get/Upload dump file");
-    print p("Click here, to download a ".
-      a({href => "$repos.gz"}, "dump file").
-      " of repository $repos");
-    print p("Upload an ",b("incremental"),
-      " dump file into repository $repos:"),
-    start_form(-method=>"post", -enctype=>"multipart/form-data"), 
-    hidden(-name => 'action', -default => 'load', -force =>'1'),
-    hidden(-name => 'repos', -default => "$repos", -force =>'1'),
-    table(Tr([td([strong("Dump File: "),
-              filefield(-name => 'dumpfile', -default => '', 
-                -size => '40')]),
-          td([strong("Subdirectory: "),
-              textfield(-name => 'dumpsubdir', -default => '', 
-                -size => '20')])
-        ])),
-    submit(-label => 'Load'),
-    end_form;
-
-    print hr;
+      push @available_gpg_keys, \%gpg_key;
+    }
+    $template_params->{AVAILABLE_GPG_KEYS} = \@available_gpg_keys;
   }
 
 } elsif ($repos eq "") {
