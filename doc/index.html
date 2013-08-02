@@ -47,59 +47,20 @@ functionality.</p>
 <a href="#up" class="noprint"><img src="img/gotop.gif" alt="top of page" class="secnav" title="top of page" height="15" width="15"></a>
 <a href="#sec-2" class="noprint"><img src="img/goback.gif" alt="go back" class="secnav" title="go back" height="15" width="15"></a>
   <h2><a name="sec-3"></a>Quick install instruction</h2>
-<p>Install apache and mod_dav_svn as usual.  Then create a new
-directory that contains subversion repositories
-(e.g. /srv/www/subversion).  Put the admin.cgi script into another
-directory (e.g. /srv/www/svnadmin).  You should open it with some
-editor and adapt the paths at the beginning of the script.  Then add
-the following config to your <code>httpd.conf</code>:
+  <p><ul>
+    <li>Install Apache, mod_dav_svn and Subversion as usual.</li>
+    <li>Use <code>conf/svn_admin_httpd.conf.dist</code> as a template to create
+      <code>svn_admin_httpd.conf</code> and include it from your main Apache config file.</li>
+    <li>Use <code>scripts/config.pl.dist</code> as a template to create <code>scripts/config.pl</code>.</li>
+    <li>Make sure you have Perl installed. This has been tested to work with perl 5.10 on Ubuntu 8.10 and on Strawberry Perl 5.16.3 on Windows 7 and on Windows Server 2008 R2.</li>
+    <li>Make sure you have the required Perl modules installed. The following commands will install the required modules:
+    <ul>
+      <li><code>cpan install CGI</code></li>
+      <li><code>cpan install Net::LDAP</code></li>
+      <li><code>cpan install HTML::Template</code></li>
+    </ul>
+  </ul>
 </p>
-<pre>&lt;IfModule mod_dav_svn.c&gt;
-  &lt;Location /svn&gt;
-    DAV svn
-    SVNParentPath /srv/www/subversion
-
-    # The access control policy
-    # Allow anonymous access, unless explicitly forbidden 
-    Satisfy Any
-    Require valid-user
-    AuthzSVNAccessFile /srv/www/subversion/.htsvnaccess
-
-    AuthType Basic
-    AuthName "Subversion repository"
-    AuthUserFile /srv/www/subversion/.htpasswd
-  &lt;/Location&gt;
-&lt;/IfModule&gt;
-
-ScriptAlias /svnadmin /srv/www/svnadmin/admin.cgi
-&lt;Location /svnadmin&gt;
-    AllowOverride None
-    Options +ExecCGI
-    Order allow,deny
-    Allow from all
-
-    Satisfy All
-    Require valid-user
-
-    AuthType Basic
-    AuthName "Subversion repository"
-    AuthUserFile /srv/www/subversion/.htpasswd
-&lt;/Location&gt;
-</pre>
-<p>
-Now create the empty files <code>/srv/www/subversion/.htpasswd</code> and <code>/srv/www/subversion/.htuserinfo</code> and add
-an initial user with</p>
-<pre>htpasswd -m .htpasswd hoenicke
-echo 'hoenicke:Jochen Hoenicke:hoenicke@...' &gt; .htuserinfo
-</pre>
-If you update from a previous version of admin.cgi, you need to create
-the file <code>.htuserinfo</code> manually.
-<p>
-Create <code>/srv/www/subversion/.htsvnaccess</code> with the following
-content:</p>
-<pre>[groups]
-admin = hoenicke
-</pre>
 <p>
 Now you're ready to go.  Put your browser to the URL
 <code>http://your.svn.server/svnadmin/</code>, enter the
@@ -110,7 +71,7 @@ You can add new users at the configuration page of the repository.
 <a href="#up" class="noprint"><img src="img/gotop.gif" alt="top of page" class="secnav" title="top of page" height="15" width="15"></a>
 <a href="#sec-3" class="noprint"><img src="img/goback.gif" alt="go back" class="secnav" title="go back" height="15" width="15"></a>
 <hr/>
-<p>Copyright (c) 2007-2008 Jochen Hoenicke, Michael Möller</p>
+<p>Copyright &copy; 2007-2008 Jochen Hoenicke, Michael M&ouml;ller</p>
 <p> This program is free software; you can redistribute it and/or
 modify it under the terms of the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public
 License</a> as published by the Free Software Foundation; either
