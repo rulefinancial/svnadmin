@@ -17,13 +17,14 @@
   <div class="container">
     <div class="row">
       <div class="span12">
-        <h1>Hello <TMPL_VAR NAME="USERNAME">,</h1>
-        <TMPL_IF NAME="ADMIN_REPOS"><p>You are administrator for
-          <TMPL_LOOP NAME="ADMIN_REPOS">
-            <TMPL_IF NAME="CURRENT">
-              <TMPL_VAR NAME="REPOSITORY">
-            <TMPL_ELSE>
-              <a class="label label-info" href="<TMPL_VAR NAME="REPOSITORY">"><TMPL_VAR NAME="REPOSITORY"></a>
+        <h1>Hello <TMPL_VAR NAME="USERNAME" />,</h1>
+        <p>
+        <TMPL_IF NAME="LOOP_ADMIN_REPOS"><p>You are administrator for
+          <TMPL_LOOP NAME="LOOP_ADMIN_REPOS">
+            <TMPL_IF NAME="L_CURRENT">
+              <TMPL_VAR NAME="L_REPOSITORY"/>
+            <TMPL_ELSE/>
+              <a class="label label-info" href="<TMPL_VAR NAME="L_REPOSITORY"/>"><TMPL_VAR NAME="L_REPOSITORY"/></a>
             </TMPL_IF>
           </TMPL_LOOP>
         </TMPL_IF>
@@ -35,9 +36,9 @@
     <TMPL_IF NAME="IN_REPOSITORY">
     <!-- Display admin tasks specific to a single repository. -->
     <div class="container">
-    <h2>Administer repository <a href="/viewvc/<TMPL_VAR NAME="REPOSITORY">/"><TMPL_VAR NAME="REPOSITORY"></a></h2>
+    <h2>Administer repository <a href="/viewvc/<TMPL_VAR NAME="REPOSITORY"/>/"><TMPL_VAR NAME="REPOSITORY"/></a></h2>
     <TMPL_IF NAME="CAN_CREATE_USERS">
-    <form method="post" action="<TMPL_VAR NAME="REPOSITORY">" enctype="multipart/form-data">
+    <form method="post" action="<TMPL_VAR NAME="REPOSITORY"/>" enctype="multipart/form-data">
       <input name="action" value="adduser" type="hidden">
       <h3>Create Users</h3>
       <table><tbody>
@@ -51,32 +52,32 @@
     </form>
     </div>
     <div class="container">
-    <form method="post" action="<TMPL_VAR NAME="REPOSITORY">" enctype="multipart/form-data">
-      <input name="repos" value="<TMPL_VAR NAME="REPOSITORY">" type="hidden">
+    <form method="post" action="<TMPL_VAR NAME="REPOSITORY"/>" enctype="multipart/form-data">
+      <input name="repos" value="<TMPL_VAR NAME="REPOSITORY"/>" type="hidden">
       <input name="action" value="chgroupacl" type="hidden">
       <h3>Groups</h3>
       <table style="border:1pt solid;"><tbody>
           <tr><th>Group</th> <th>Users</th></tr>
-          <TMPL_LOOP NAME="REPO_GROUPS">
+          <TMPL_LOOP NAME="LOOP_REPO_GROUPS">
           <tr>
             <td>
-              <input name="grpname[<TMPL_VAR NAME="INDEX">]" value="<TMPL_VAR NAME="GROUPNAME">" type="hidden">
-              <TMPL_VAR NAME="REPOSITORY">-<TMPL_VAR NAME="GROUPNAME">
+              <input name="grpname[<TMPL_VAR NAME="L_INDEX"/>]" value="<TMPL_VAR NAME="L_GROUPNAME"/>" type="hidden">
+              <TMPL_VAR NAME="L_REPOSITORY"/>-<TMPL_VAR NAME="L_GROUPNAME"/>
             </td>
-            <td><input name="users[<TMPL_VAR NAME="INDEX">]" value="<TMPL_VAR NAME="GROUPUSERS">" size="50" type="text"></td>
-            <td><TMPL_IF NAME="CAN_BE_DELETED"><label><input name="deleteacl" value="<TMPL_VAR NAME="INDEX">" type="checkbox">Delete</label></TMPL_IF></td>
+            <td><input name="users[<TMPL_VAR NAME="L_INDEX"/>]" value="<TMPL_VAR NAME="L_GROUPUSERS"/>" size="50" type="text"></td>
+            <td><TMPL_IF NAME="L_CAN_BE_DELETED"><label><input name="deleteacl" value="<TMPL_VAR NAME="L_INDEX"/>" type="checkbox">Delete</label></TMPL_IF></td>
           </tr>
           </TMPL_LOOP>
           <tr>
             <td>
-              <input name="numgroups" value="<TMPL_VAR NAME="GROUPCOUNT">" type="hidden">
-              <TMPL_VAR NAME="REPOSITORY">-<input name="grpname[<TMPL_VAR NAME="GROUPCOUNT">]" size="15" type="text">
+              <input name="numgroups" value="<TMPL_VAR NAME="GROUPCOUNT"/>" type="hidden">
+              <TMPL_VAR NAME="REPOSITORY"/>-<input name="grpname[<TMPL_VAR NAME="GROUPCOUNT"/>]" size="15" type="text">
             </td>
-            <td><select name="l_users[<TMPL_VAR NAME="GROUPCOUNT">]" size="5" multiple="multiple">
-              <TMPL_LOOP NAME="AVAILABLE_USERS">
-              <option value="<TMPL_VAR NAME="USERNAME">"><TMPL_VAR NAME="DISPLAYNAME"></option>
+            <td><select name="l_users[<TMPL_VAR NAME="GROUPCOUNT"/>]" size="5" multiple="multiple">
+              <TMPL_LOOP NAME="LOOP_AVAILABLE_USERS">
+              <option value="<TMPL_VAR NAME="L_USERNAME"/>"><TMPL_VAR NAME="L_DISPLAYNAME"/></option>
               </TMPL_LOOP>
-            </td>
+            </select></td>
             <td><input type="submit" name="add" value="Add"/></td>
           </tr>
           <tr><td align="center" colspan="3"><input type="submit" name="commit" value="Commit Changes"/></td></tr>
@@ -85,39 +86,40 @@
       <table style="border:1pt solid">
         <tr><th>Path</th> <th>User(group)</th><th>Access</th><th></th></tr>
         <!-- Modify or delete the existing access for groups and users. -->
-        <TMPL_LOOP NAME="PERMISSION_LOOP">
+        <TMPL_LOOP NAME="LOOP_PERMISSIONS">
         <tr>
-          <td><input type="hidden" name="path[<TMPL_VAR NAME="LOOP_ACL_NUMBER"/>]" value="<TMPL_VAR NAME="LOOP_PATH"/>"/>/</td>
-          <td><input type="hidden" name="usergroup[<TMPL_VAR NAME="LOOP_ACL_NUMBER"/>]" value="<TMPL_VAR NAME="LOOP_USER_GROUP"/>"/><TMPL_VAR NAME="LOOP_USER_GROUP"/></td>
-          <td><select name="access[<TMPL_VAR NAME="LOOP_ACL_NUMBER"/>]" >
-            <option <TMPL_IF NAME="LOOP_HAS_RW_PERM">selected="selected" </TMPL_IF>value="rw">rw</option>
-            <option <TMPL_IF NAME="LOOP_HAS_RO_PERM">selected="selected" </TMPL_IF>value="r">r</option>
-            <option <TMPL_IF NAME="LOOP_HAS_NO_PERM">selected="selected" </TMPL_IF>value="">-</option>
+          <td><input type="hidden" name="path[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" value="<TMPL_VAR NAME="L_PATH"/>"/>/</td>
+          <td><input type="hidden" name="usergroup[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" value="<TMPL_VAR NAME="L_USER_GROUP"/>"/>
+            <TMPL_VAR NAME="L_USER_GROUP"/></td>
+          <td><select name="access[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" >
+            <option <TMPL_IF NAME="L_HAS_RW_PERM">selected="selected" </TMPL_IF>value="rw">rw</option>
+            <option <TMPL_IF NAME="L_HAS_RO_PERM">selected="selected" </TMPL_IF>value="r">r</option>
+            <option <TMPL_IF NAME="L_HAS_NO_PERM">selected="selected" </TMPL_IF>value="">-</option>
           </select></td>
-          <td><label><input type="checkbox" name="deleteacl" value="<TMPL_VAR NAME="LOOP_ACL_NUMBER"/>"/>Delete</label></td>
+          <td><label><input type="checkbox" name="deleteacl" value="<TMPL_VAR NAME="L_ACL_NUMBER"/>"/>Delete</label></td>
         </tr>
         </TMPL_LOOP>
         <!-- Add access for a new group or user. -->
         <tr>
           <td>
-            <input type="hidden" name="numacl" value="<TMPL_VAR NAME="ACL_NUMBER">"/>
-            <input type="text" name="path[<TMPL_VAR NAME="ACL_NUMBER">]" value="/" size="30" />
+            <input type="hidden" name="numacl" value="<TMPL_VAR NAME="ACL_NUMBER"/>"/>
+            <input type="text" name="path[<TMPL_VAR NAME="ACL_NUMBER"/>]" value="/" size="30" />
           </td>
           <td>
-            <select name="usergroup[<TMPL_VAR NAME="ACL_NUMBER">]" >
+            <select name="usergroup[<TMPL_VAR NAME="ACL_NUMBER"/>]" >
               <option selected="selected" value=""></option>
               <!-- Groups for this repository. -->
-              <TMPL_LOOP NAME="REPO_GROUPS">
-              <option value="@<TMPL_VAR NAME="REPOSITORY">-<TMPL_VAR NAME="GROUPNAME">">
-                @<TMPL_VAR NAME="REPOSITORY">-<TMPL_VAR NAME="GROUPNAME"></option>
+              <TMPL_LOOP NAME="LOOP_REPO_GROUPS">
+              <option value="@<TMPL_VAR NAME="L_REPOSITORY"/>-<TMPL_VAR NAME="L_GROUPNAME"/>">
+                @<TMPL_VAR NAME="L_REPOSITORY"/>-<TMPL_VAR NAME="L_GROUPNAME"/></option>
               </TMPL_LOOP>
               <!-- Individual users.  Prefer groups over users for access rules. -->
-              <TMPL_LOOP NAME="AVAILABLE_USERS">
-              <option value="<TMPL_VAR NAME="USERNAME">"><TMPL_VAR NAME="DISPLAYNAME"></option>
+              <TMPL_LOOP NAME="LOOP_AVAILABLE_USERS">
+              <option value="<TMPL_VAR NAME="L_USERNAME"/>"><TMPL_VAR NAME="L_DISPLAYNAME"/></option>
               </TMPL_LOOP>
             </select>
           </td>
-          <td><select name="access[<TMPL_VAR NAME="ACL_NUMBER">]" >
+          <td><select name="access[<TMPL_VAR NAME="ACL_NUMBER"/>]" >
             <option selected="selected" value="rw">rw</option>
             <option value="r">r</option>
             <option value="">-</option>
@@ -125,62 +127,62 @@
           <td><input type="submit" name="add" value="Add" /></td>
         </tr>
         <tr><td align="center" colspan="4">
-            <input type="submit" name="commit" value="Commit Changes" />
-      </td></tr>
-    </table>
+            <input type="submit" name="commit" value="Commit Changes" /></td>
+        </tr>
+      </table>
+    </form>
+    </div>
 
     <p>You can give read/write or read-only rights to a single user or a user group. A user group is
-    denoted by @<TMPL_VAR NAME="REPOSITORY">-&lt;groupname&gt;.  The access rights are valid
+    denoted by @<TMPL_VAR NAME="REPOSITORY"/>-&lt;groupname&gt;.  The access rights are valid
     for the given path and all sub directories.  For details see the 
     <a href="http://svnbook.red-bean.com/en/1.7/svn.serverconfig.httpd.html#svn.serverconfig.httpd.authz.perdir">Manual</a>.
     </p>
     <p><strong>Warning:</strong> the ViewCVS script does not always respect path restrictions.  A
     skilled user with read-only access to one directory of the
     repository can read the whole repository.  Better use different repositories.</p>
-    </div>
     </TMPL_IF>
 
     <TMPL_IF NAME="BACKUP_ENABLED">
     <TMPL_IF NAME="READ_GPG_KEYS">
     <h3>Manage GPG Keys</h3>
-    <p>The users in the group @<TMPL_VAR NAME="REPOSITORY">-backup can download an encrypted backup 
-    <a href="<TMPL_VAR NAME="REPOSITORY">.gpg"><TMPL_VAR NAME="REPOSITORY">.gpg</a>.
+    <p>The users in the group @<TMPL_VAR NAME="REPOSITORY"/>-backup can download an encrypted backup
+    <a href="<TMPL_VAR NAME="REPOSITORY"/>.gpg"><TMPL_VAR NAME="REPOSITORY"/>.gpg</a>.
     For regular backups you can adapt this <a href="/svnbackup">backup shell script</a>.
     The backup is encrypted with the GPG keys in the following list.</p>
+    <form method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="action" value="chgpgkeys"/>
+      <input type="hidden" name="repos" value="<TMPL_VAR NAME="REPOSITORY"/>"/>
     <table style="border:1pt solid;">
-      <TMPL_LOOP NAME="GPG_KEYS_FOR_REPO">
-      <tr>
-        <td><TMPL_VAR NAME="GPG_KEY_ID">&nbsp;<TMPL_VAR NAME="GPG_FINGERPRINT" ESCAPE="HTML"></td>
-        <td><label><input type="checkbox" name="gpgdelkey" value="<TMPL_VAR NAME="GPG_KEY_ID">">Remove</label></td>
-      </tr>
-      </TMPL_LOOP>
+      <TMPL_LOOP NAME="LOOP_GPG_KEYS_FOR_REPO"><tr>
+        <td><TMPL_VAR NAME="L_GPG_KEY_ID"/>&nbsp;<TMPL_VAR NAME="L_GPG_FINGERPRINT" ESCAPE="HTML"/></td>
+        <td><label><input type="checkbox" name="gpgdelkey" value="<TMPL_VAR NAME="L_GPG_KEY_ID"/>">Remove</label></td>
+      </tr></TMPL_LOOP>
       <tr>
         <td>
-          <select name="gpgaddkey">
-            <TMPL_LOOP NAME="AVAILABLE_GPG_KEYS">
-            <option value="<TMPL_VAR NAME="GPG_KEY_ID">"><TMPL_VAR NAME="GPG_FINGERPRINT"></option>
-            </TMPL_LOOP>
+          <select name="gpgaddkey"><TMPL_LOOP NAME="LOOP_AVAILABLE_GPG_KEYS">
+            <option value="<TMPL_VAR NAME="L_GPG_KEY_ID"/>"><TMPL_VAR NAME="L_GPG_FINGERPRINT" ESCAPE="HTML"/></option></TMPL_LOOP>
           </select>
         </td>
-        <td><input type="submit" name="add" value="Add" />
+        <td><input type="submit" name="add" value="Add" /></td>
       </tr>
       <tr>
         <td><strong>GPG Public Key: </strong><input type="file" name="gpgkeyfile" size="40"/></td>
       </tr>
       <tr><td colspan="2" align="center"><input type="submit" name="commit" value="Commit Changes"/></td></tr>
     </table>
-    </TMPL_IF>
-    </TMPL_IF>
     </form>
+    </TMPL_IF>
+    </TMPL_IF>
 
     <TMPL_IF NAME="BACKUP_ENABLED">
     <h3>Get/Upload dump file</h3>
-    <p>Click here to download a <a href="<TMPL_VAR NAME="REPOSITORY">.gz">dump file</a>
-    of repository <TMPL_VAR NAME="REPOSITORY"></p>
-    <p>Upload an <b>incremental</b> dump file into repository <TMPL_VAR NAME="REPOSITORY">:</p>
+    <p>Click here to download a <a href="<TMPL_VAR NAME="REPOSITORY"/>.gz">dump file</a>
+    of repository <TMPL_VAR NAME="REPOSITORY"/></p>
+    <p>Upload an <b>incremental</b> dump file into repository <TMPL_VAR NAME="REPOSITORY"/>:</p>
     <form method="POST" enctype="multipart/form-data">
       <input type="hidden" name="action" value="load"/>
-      <input type="hidden" name="repos" value="<TMPL_VAR NAME="REPOSITORY">"/>
+      <input type="hidden" name="repos" value="<TMPL_VAR NAME="REPOSITORY"/>"/>
       <table>
         <tr>
           <td><strong>Dump File: </strong><input type="file" name="dumpfile" size="40"/></td>
@@ -221,27 +223,34 @@
       <form method="POST">
         <input name="action" value="create" type="hidden"/>
         <table><tbody>
-            <tr><td>Name of new repository: </td> <td><input name="repos" size="20" type="text"></td></td></tr>
-          <tr><td>Administrator: </td> <td><input name="reposadmin" value="<TMPL_VAR NAME="USERNAME">" size="20" type="text"></td></tr>
+            <tr><td>Name of new repository: </td> <td><input name="repos" size="20" type="text"></td></tr>
+          <tr><td>Administrator: </td> <td><input name="reposadmin" value="<TMPL_VAR NAME="USERNAME"/>" size="20" type="text"></td></tr>
         </tbody></table>
         <input value="Create" type="submit"/>
       </form>
       </TMPL_IF>
     </div>
+    <div class="container">
       <div class="span6">
         <h2>Your access rights</h2>
         
         <p>You have <strong>read-write</strong> access to the following repositories:</p>
         <div class="well">
           <ul class="nav nav-list">
-            <TMPL_LOOP NAME="RW_PATHS"><li><a href="<TMPL_VAR NAME="VIEWVC_URL" ESCAPE="HTML">/<TMPL_VAR NAME="REPOSITORY"><TMPL_VAR NAME="PATH">"><TMPL_VAR NAME="REPOSITORY"></a></li></TMPL_LOOP>
+            <TMPL_LOOP NAME="LOOP_RW_PATHS"><li>
+              <a href="<TMPL_VAR NAME="L_VIEWVC_URL" ESCAPE="HTML"/>/<TMPL_VAR NAME="L_REPOSITORY"/><TMPL_VAR NAME="L_PATH"/>">
+              <TMPL_VAR NAME="L_REPOSITORY"/></a>
+            </li></TMPL_LOOP>
           </ul>
         </div>
         
         <p>You have <strong>read-only</strong> access to the following repositories:</p>
         <div class="well">
           <ul class="nav nav-list">
-            <TMPL_LOOP NAME="RO_PATHS"><li><a href="<TMPL_VAR NAME="VIEWVC_URL" ESCAPE="HTML">/<TMPL_VAR NAME="REPOSITORY"><TMPL_VAR NAME="PATH">"><TMPL_VAR NAME="REPOSITORY"></a></li></TMPL_LOOP>
+            <TMPL_LOOP NAME="LOOP_RO_PATHS"><li>
+              <a href="<TMPL_VAR NAME="L_VIEWVC_URL" ESCAPE="HTML"/>/<TMPL_VAR NAME="L_REPOSITORY"/><TMPL_VAR NAME="L_PATH"/>">
+              <TMPL_VAR NAME="L_REPOSITORY"/></a>
+            </li></TMPL_LOOP>
           </ul>
         </div>
       </div>
