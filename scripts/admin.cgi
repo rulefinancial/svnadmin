@@ -545,7 +545,7 @@ if ($action eq "create" && in_group("admins")) {
     if (mkdir("$config->{svnroot}/$repos", 0770)
       && execute_command(\$template_params->{ACTION_RAW_OUTPUT}, $cmd)) {
       $template_params->{ACTION_OUTPUT} = 'The repository ' . code($repos) .
-      "was created for $reposadmin.";
+      " was created for $reposadmin.";
       $repositories->{$repos} = { "/" => {"$reposadmin" => ["rw"]}};
       $globals->{'groups'}{"$repos-admins"} = [ $reposadmin ];
       write_repos();
