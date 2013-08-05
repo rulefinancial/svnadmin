@@ -437,7 +437,7 @@ if ($config->{ldap_users}) {
 
 # Add parameters used in the default template.
 $template_params->{USERNAME} = $curuser;
-$template_params->{CAN_CREATE_USERS} = $config->{htpasswd_users};
+$template_params->{CAN_CREATE_USERS} = $config->{htpasswd_users} and in_group("admins");
 # Only offer to change passphrase if we are an HTPASSWD user - otherwise passwords are managed externally.
 $template_params->{CAN_CHANGE_PASSWORD} = ($users{$curuser}->{'source'} eq 'HTPASSWD');
 $template_params->{CAN_CREATE_REPOSITORY} = in_group("admins");
@@ -556,6 +556,36 @@ if ($action eq "create" && in_group("admins")) {
   }
 }
 
+if ($action eq "adduser" && in_group("admins")) {
+  my $newUser = param("newUser");
+  my $pwd = param("pwd");
+  my $vpwd = param("vpwd");
+
+  $template_params->{ACTION_TITLE} = 'Adding new user ' . code($newUser);
+  if (defined $users{$newUser}) {
+    $template_params->{ACTION_WARNING} = 'Sorry, the username already exists.';
+  } elsif ($newUser !~ /^[A-Za-z0-9]+$/) {
+    $template_params->{ACTION_WARNING} = 'Illegal characters in user name.';
+  } elsif (length($newUser) < 4) {
+    $template_params->{ACTION_WARNING} = 'Sorry, the username needs to be at least 4 characters long.';
+  } elsif (length($pwd) < 6) {
+    $template_params->{ACTION_WARNING} = 'Sorry, the passphrase needs to be at least 6 characters long';
+  } elsif (length($pwd) > 80) {
+    $template_params->{ACTION_WARNING} = 'Sorry, the passphrase can only be 80 characters maximum';
+  } elsif ($pwd ne $vpwd) {
+    $template_params->{ACTION_WARNING} = 'The passphrase and the verification don\'t match, please try again.';
+  } else {
+    # ok, things are good, do the htpasswd call
+    my $cmd = "\"$config->{htpasswd}\" -b -m \"$config->{htpasswd_file}\" \"$newUser\" \"$pwd\" 2>&1";
+    execute_command(\$template_params->{ACTION_RAW_OUTPUT}, $cmd);
+    $users{$newUser} = {
+      'username' => $newUser,
+      'source' => 'HTPASSWD',
+      'displayName' => $newUser,
+    }
+  }
+}
+
 if ($action eq "chgroupacl" && in_group("$repos-admins")) {
   my $needupdate = 0;
   my $numgroups = int(param("numgroups"));
@@ -598,24 +628,24 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
         $template_params->{ACTION_OUTPUT} = "Added group ${repos}-${grpname} with users $users";
         $globals->{'groups'}{"${repos}-${grpname}"} = \@value;
       $needupdate = 1;
-    } elsif ($i == $numgroups) {
-      # The expected behaviour is to add users to an
-      # existing group.
-      my @newvalue = @{$origvalue};
-      my $user;
-      foreach $user (@value) {
-        if (! grep {$_ eq $user} @newvalue) {
-          $template_params->{ACTION_OUTPUT} .= "Added user $user to group ${repos}-${grpname}\n";
-          push @newvalue, $user;
-          $needupdate = 1;
+      } elsif ($i == $numgroups) {
+        # The expected behaviour is to add users to an
+        # existing group.
+        my @newvalue = @{$origvalue};
+        my $user;
+        foreach $user (@value) {
+          if (! grep {$_ eq $user} @newvalue) {
+            $template_params->{ACTION_OUTPUT} .= "Added user $user to group ${repos}-${grpname}\n";
+            push @newvalue, $user;
+            $needupdate = 1;
+          }
         }
+        $globals->{'groups'}{"${repos}-${grpname}"} = \@newvalue;
+      } elsif (join(",", @{$origvalue}) ne join(",", @value)) {
+        $template_params->{ACTION_OUTPUT} = "Changed group ${repos}-${grpname} to $users";
+        $globals->{'groups'}{"${repos}-${grpname}"} = \@value;
+        $needupdate = 1;
       }
-      $globals->{'groups'}{"${repos}-${grpname}"} = \@newvalue;
-  } elsif (join(",", @{$origvalue}) ne join(",", @value)) {
-    $template_params->{ACTION_OUTPUT} = "Changed group ${repos}-${grpname} to $users";
-    $globals->{'groups'}{"${repos}-${grpname}"} = \@value;
-  $needupdate = 1;
-}
     }
   }
 
