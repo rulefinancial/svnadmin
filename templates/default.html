@@ -3,9 +3,9 @@
 <head>
   <title>Subversion  eXtended Administration</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
-  <link rel="stylesheet" href="./css/bootstrap-responsive.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
-  <script src="./js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="static/css/bootstrap-responsive.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <script src="static/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
   <div class="navbar navbar-static-top">
@@ -13,7 +13,23 @@
       <span class="brand">Subversion eXtended Administration</span>
     </div>
   </div>
-  
+
+  <TMPL_IF NAME="ACTION_TITLE">
+  <!-- Display output related to a previous action -->
+  <div class="container">
+    <h2><TMPL_VAR NAME="ACTION_TITLE"/></h2>
+    <TMPL_IF NAME="ACTION_OUTPUT"><div class="alert alert-success">
+      <TMPL_VAR NAME="ACTION_OUTPUT"/>
+    </div></TMPL_IF>
+    <TMPL_IF NAME="ACTION_WARNING"><div class="alert alert-error">
+      <TMPL_VAR NAME="ACTION_WARNING"/>
+    </div></TMPL_IF>
+    <TMPL_IF NAME="ACTION_RAW_OUTPUT"><pre>
+      <TMPL_VAR NAME="ACTION_RAW_OUTPUT"/>
+    </pre></TMPL_IF>
+  </div>
+  </TMPL_IF>
+
   <div class="container">
     <div class="row">
       <div class="span12">
@@ -56,7 +72,7 @@
       <input name="repos" value="<TMPL_VAR NAME="REPOSITORY"/>" type="hidden">
       <input name="action" value="chgroupacl" type="hidden">
       <h3>Groups</h3>
-      <table style="border:1pt solid;"><tbody>
+      <table><tbody>
           <tr><th>Group</th> <th>Users</th></tr>
           <TMPL_LOOP NAME="LOOP_REPO_GROUPS">
           <tr>
@@ -83,7 +99,7 @@
           <tr><td align="center" colspan="3"><input type="submit" name="commit" value="Commit Changes"/></td></tr>
       </tbody></table>
       <h3>Access Control Table</h3>
-      <table style="border:1pt solid">
+      <table>
         <tr><th>Path</th> <th>User(group)</th><th>Access</th><th></th></tr>
         <!-- Modify or delete the existing access for groups and users. -->
         <TMPL_LOOP NAME="LOOP_PERMISSIONS">
@@ -153,7 +169,7 @@
     <form method="POST" enctype="multipart/form-data">
       <input type="hidden" name="action" value="chgpgkeys"/>
       <input type="hidden" name="repos" value="<TMPL_VAR NAME="REPOSITORY"/>"/>
-    <table style="border:1pt solid;">
+    <table>
       <TMPL_LOOP NAME="LOOP_GPG_KEYS_FOR_REPO"><tr>
         <td><TMPL_VAR NAME="L_GPG_KEY_ID"/>&nbsp;<TMPL_VAR NAME="L_GPG_FINGERPRINT" ESCAPE="HTML"/></td>
         <td><label><input type="checkbox" name="gpgdelkey" value="<TMPL_VAR NAME="L_GPG_KEY_ID"/>">Remove</label></td>

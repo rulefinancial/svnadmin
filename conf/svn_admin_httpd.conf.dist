@@ -1,3 +1,4 @@
+Alias /svn-admin/static C:\Users\rneish\projects\svnadmin\www
 ScriptAlias /svn-admin /path/to/admin.cgi
 <Location /svn-admin>
         Options +ExecCGI
