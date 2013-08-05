@@ -11,6 +11,13 @@
   <div class="navbar navbar-static-top">
     <div class="navbar-inner">
       <span class="brand">Subversion eXtended Administration</span>
+      <ul class="nav">
+        <li><a href=".">Home</a></li>
+        <TMPL_IF NAME="IN_REPOSITORY"><li class="divider-vertical"></li>
+        <li class="navbar-text active"><TMPL_VAR NAME="REPOSITORY"/></li>
+      </TMPL_IF>
+      </ul>
+      <span class="navbar-text pull-right">Logged in as <TMPL_VAR NAME="USERNAME"/></span>
     </div>
   </div>
 
@@ -33,18 +40,16 @@
   <div class="container">
     <div class="row">
       <div class="span12">
-        <h1>Hello <TMPL_VAR NAME="USERNAME" />,</h1>
         <p>
         <TMPL_IF NAME="LOOP_ADMIN_REPOS"><p>You are administrator for
           <TMPL_LOOP NAME="LOOP_ADMIN_REPOS">
             <TMPL_IF NAME="L_CURRENT">
-              <TMPL_VAR NAME="L_REPOSITORY"/>
+            <span class="label label-success"><TMPL_VAR NAME="L_REPOSITORY"/></span>
             <TMPL_ELSE/>
               <a class="label label-info" href="<TMPL_VAR NAME="L_REPOSITORY"/>"><TMPL_VAR NAME="L_REPOSITORY"/></a>
             </TMPL_IF>
           </TMPL_LOOP>
         </TMPL_IF>
-        <TMPL_IF NAME="IN_REPOSITORY"><a href=".">General administration</a></TMPL_IF>
         </p>
       </div>
     </div>
