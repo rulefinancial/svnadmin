@@ -23,18 +23,14 @@
 
   <TMPL_IF NAME="ACTION_TITLE">
   <!-- Display output related to a previous action -->
-  <div class="container">
+  <div class="container"><div class="row"><div class="span12">
+    <TMPL_IF NAME="ACTION_WARNING"><div class="alert alert-error"><TMPL_ELSE><div class="alert alert-success"></TMPL_IF>
     <h2><TMPL_VAR NAME="ACTION_TITLE"/></h2>
-    <TMPL_IF NAME="ACTION_OUTPUT"><div class="alert alert-success">
-      <TMPL_VAR NAME="ACTION_OUTPUT"/>
-    </div></TMPL_IF>
-    <TMPL_IF NAME="ACTION_WARNING"><div class="alert alert-error">
-      <TMPL_VAR NAME="ACTION_WARNING"/>
-    </div></TMPL_IF>
-    <TMPL_IF NAME="ACTION_RAW_OUTPUT"><pre>
-      <TMPL_VAR NAME="ACTION_RAW_OUTPUT"/>
-    </pre></TMPL_IF>
-  </div>
+    <TMPL_IF NAME="ACTION_OUTPUT"><TMPL_VAR NAME="ACTION_OUTPUT"/></TMPL_IF>
+    <TMPL_IF NAME="ACTION_WARNING"><TMPL_VAR NAME="ACTION_WARNING"/></TMPL_IF>
+    <TMPL_IF NAME="ACTION_RAW_OUTPUT"><pre><TMPL_VAR NAME="ACTION_RAW_OUTPUT"/></pre></TMPL_IF>
+    </div>
+  </div></div></div>
   </TMPL_IF>
 
   <div class="container">
