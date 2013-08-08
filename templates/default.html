@@ -113,53 +113,53 @@
       <div class="row"><div class="span12">
       <h3>Access Control Table</h3>
       </div></div>
-      <table>
-        <tr><th>Path</th> <th>User(group)</th><th>Access</th><th></th></tr>
-        <!-- Modify or delete the existing access for groups and users. -->
-        <TMPL_LOOP NAME="LOOP_PERMISSIONS">
-        <tr>
-          <td><input type="hidden" name="path[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" value="<TMPL_VAR NAME="L_PATH"/>"/>/</td>
-          <td><input type="hidden" name="usergroup[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" value="<TMPL_VAR NAME="L_USER_GROUP"/>"/>
-            <TMPL_VAR NAME="L_USER_GROUP"/></td>
-          <td><select name="access[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" >
+      <div class="row">
+        <div class="span3"><strong>Path</strong></div><div class="span3"><strong>User(group)</strong></div><div class="span6"><strong>Access</strong></div>
+      </div>
+      <!-- Modify or delete the existing access for groups and users. -->
+      <TMPL_LOOP NAME="LOOP_PERMISSIONS">
+      <input type="hidden" name="path[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" value="<TMPL_VAR NAME="L_PATH"/>"/>
+      <input type="hidden" name="usergroup[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" value="<TMPL_VAR NAME="L_USER_GROUP"/>"/>
+      <div class="row">
+        <div class="span3"><TMPL_VAR NAME="L_PATH"/></div>
+        <div class="span3"><TMPL_VAR NAME="L_USER_GROUP"/></div>
+        <div class="span6"><select name="access[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" >
             <option <TMPL_IF NAME="L_HAS_RW_PERM">selected="selected" </TMPL_IF>value="rw">rw</option>
             <option <TMPL_IF NAME="L_HAS_RO_PERM">selected="selected" </TMPL_IF>value="r">r</option>
             <option <TMPL_IF NAME="L_HAS_NO_PERM">selected="selected" </TMPL_IF>value="">-</option>
-          </select></td>
-          <td><label><input type="checkbox" name="deleteacl" value="<TMPL_VAR NAME="L_ACL_NUMBER"/>"/>Delete</label></td>
-        </tr>
-        </TMPL_LOOP>
-        <!-- Add access for a new group or user. -->
-        <tr>
-          <td>
-            <input type="hidden" name="numacl" value="<TMPL_VAR NAME="ACL_NUMBER"/>"/>
-            <input type="text" name="path[<TMPL_VAR NAME="ACL_NUMBER"/>]" value="/" size="30" />
-          </td>
-          <td>
-            <select name="usergroup[<TMPL_VAR NAME="ACL_NUMBER"/>]" >
-              <option selected="selected" value=""></option>
-              <!-- Groups for this repository. -->
-              <TMPL_LOOP NAME="LOOP_REPO_GROUPS">
-              <option value="@<TMPL_VAR NAME="L_REPOSITORY"/>-<TMPL_VAR NAME="L_GROUPNAME"/>">
-                @<TMPL_VAR NAME="L_REPOSITORY"/>-<TMPL_VAR NAME="L_GROUPNAME"/></option>
-              </TMPL_LOOP>
-              <!-- Individual users.  Prefer groups over users for access rules. -->
-              <TMPL_LOOP NAME="LOOP_AVAILABLE_USERS">
-              <option value="<TMPL_VAR NAME="L_USERNAME"/>"><TMPL_VAR NAME="L_DISPLAYNAME"/></option>
-              </TMPL_LOOP>
-            </select>
-          </td>
-          <td><select name="access[<TMPL_VAR NAME="ACL_NUMBER"/>]" >
+          </select>
+          <input type="checkbox" id="deleteacl" name="deleteacl" value="<TMPL_VAR NAME="L_ACL_NUMBER"/>"/> Delete
+        </div>
+      </div>
+      </TMPL_LOOP>
+      <!-- Add access for a new group or user. -->
+      <input type="hidden" name="numacl" value="<TMPL_VAR NAME="ACL_NUMBER"/>"/>
+      <div class="row">
+        <div class="span3"><input type="text" name="path[<TMPL_VAR NAME="ACL_NUMBER"/>]" value="/" size="30" /></div>
+        <div class="span3"><select name="usergroup[<TMPL_VAR NAME="ACL_NUMBER"/>]">
+          <option selected="selected" value=""></option>
+          <!-- Groups for this repository. -->
+          <TMPL_LOOP NAME="LOOP_REPO_GROUPS">
+          <option value="@<TMPL_VAR NAME="L_REPOSITORY"/>-<TMPL_VAR NAME="L_GROUPNAME"/>">
+          @<TMPL_VAR NAME="L_REPOSITORY"/>-<TMPL_VAR NAME="L_GROUPNAME"/></option>
+          </TMPL_LOOP>
+          <!-- Individual users.  Prefer groups over users for access rules. -->
+          <TMPL_LOOP NAME="LOOP_AVAILABLE_USERS">
+          <option value="<TMPL_VAR NAME="L_USERNAME"/>"><TMPL_VAR NAME="L_DISPLAYNAME"/></option>
+          </TMPL_LOOP>
+        </select></div>
+        <div class="span6">
+          <select name="access[<TMPL_VAR NAME="ACL_NUMBER"/>]">
             <option selected="selected" value="rw">rw</option>
             <option value="r">r</option>
             <option value="">-</option>
-          </select></td>
-          <td><input type="submit" name="add" value="Add" /></td>
-        </tr>
-        <tr><td align="center" colspan="4">
-            <input type="submit" name="commit" value="Commit Changes" /></td>
-        </tr>
-      </table>
+          </select>
+          <button class="btn" type="submit">Add</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span12"><button class="btn" type="submit">Commit Changes</button></div>
+      </div>
     </form>
 
     <p>You can give read/write or read-only rights to a single user or a user group. A user group is
