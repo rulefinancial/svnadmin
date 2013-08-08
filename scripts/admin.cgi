@@ -34,6 +34,24 @@ my $repos;
 # Subroutines #
 ###############
 
+# Helper to populate a template loop.
+# Input:
+#   loop_name : top-level loop name.  If this does not exist in template_params,
+#               it will be created.
+#   param     : element to add to this loop.  This must be a reference to a hash.
+sub add_to_template_loop($$) {
+  my ($loop_name, $param) = @_;
+  if (not defined $template_params->{$loop_name}) {
+    $template_params->{$loop_name} = ();
+  }
+  push @{$template_params->{$loop_name}}, $param;
+}
+
+sub add_action_message($$) {
+  my ($msg_type, $msg) = @_;
+  add_to_template_loop "LOOP_ACTION_MSGS", {$msg_type => $msg};
+}
+
 sub error_exit($$$) {
   my ($status, $err_title, $err_message) = @_;
 
@@ -244,7 +262,7 @@ sub write_gpg_keyid($@) {
       "Cannot find configuration file '$config->{gpgkeys}'.");
   }
   if (!open(NEWGPGKEYS, ">$config->{gpgkeys}.new")) {
-    $template_params->{ACTION_WARNING} = "Can't change gpg keys\n";
+    add_action_message "ACTION_WARNING", "Can't change gpg keys";
     return;
   }
   my $found = 0;
@@ -260,7 +278,7 @@ sub write_gpg_keyid($@) {
   close GPGKEYS;
   close NEWGPGKEYS;
   if (!rename("$config->{gpgkeys}.new", "$config->{gpgkeys}")) {
-    $template_params->{ACTION_WARNING} = "Can't change gpg keys\n";
+    add_action_message "ACTION_WARNING", "Can't change gpg keys";
     return;
   }
   chmod $config->{svnaccess_conf_perm}, "$config->{gpgkeys}";
@@ -495,20 +513,19 @@ if ($action eq "changepw") {
 
   $template_params->{ACTION_TITLE} = "Changing Passphrase";
   if (length($pw) < 6) {
-    $template_params->{ACTION_WARNING} =
-    "Sorry, the passphrase needs to be at least 6 characters long";
+    add_action_message "ACTION_WARNING", "Sorry, the passphrase needs to be at least 6 characters long";
   } elsif (length($pw) > 80) {
-    $template_params->{ACTION_WARNING} =
-    "Sorry, the passphrase can only be 80 characters maximum";
+    add_action_message "ACTION_WARNING", "Sorry, the passphrase can only be 80 characters maximum";
   } elsif ($pw ne $vpw) {
-    $template_params->{ACTION_WARNING} =
-    "The passphrase and the verification don't match, please try again.";
+    add_action_message "ACTION_WARNING", "The passphrase and the verification don't match, please try again.";
   } else {
     # ok, things are good, do the htpasswd call and capture the output.
-    execute_command(\$template_params->{ACTION_RAW_OUTPUT},
+    my $raw_output = '';
+    execute_command(\$raw_output,
       "$config->{htpasswd} -b -m $config->{htpasswd_file} $curuser $pw 2>&1") ||
       error_exit('500 Internal Error', 'Internal Error',
       "Failed to execute htpasswd: $!");
+    add_action_message "ACTION_RAW_OUTPUT", \$raw_output;
   }
 }
 
@@ -530,27 +547,29 @@ if ($action eq "create" && in_group("admins")) {
   my $reposadmin = param('reposadmin')||'';
   $template_params->{ACTION_TITLE} = 'Creating repository ' . code($repos);
   if ($repos !~ /^[a-zA-Z0-9\-][a-zA-Z0-9\.\-]*$/) {
-    $template_params->{ACTION_WARNING} =
+    add_action_message "ACTION_WARNING",
     'The name of the repository may only contain printable ' .
     'characters.  Please try a different name.';
   } elsif ($reposadmin !~ /^\@?[a-z][a-z0-9]*$/) {
-    $template_params->{ACTION_WARNING} = 
+    add_action_message "ACTION_WARNING", 
     'The name of the repository administrator must be a valid ' .
     'login name.  Please try again.';
   } elsif (-e "$config->{svnroot}/$repos") {
-    $template_params->{ACTION_WARNING} = 
+    add_action_message "ACTION_WARNING", 
     'A repository with that name already exists.';
   } else {
     my $cmd = "$config->{svnadmin} create --fs-type fsfs $config->{svnroot}/$repos";
+    my $raw_output = '';
     if (mkdir("$config->{svnroot}/$repos", 0770)
-      && execute_command(\$template_params->{ACTION_RAW_OUTPUT}, $cmd)) {
-      $template_params->{ACTION_OUTPUT} = 'The repository ' . code($repos) .
+      && execute_command(\$raw_output, $cmd)) {
+      add_action_message "ACTION_OUTPUT", 'The repository ' . code($repos) .
       " was created for $reposadmin.";
+      add_action_message "ACTION_RAW_OUTPUT", $raw_output;
       $repositories->{$repos} = { "/" => {"$reposadmin" => ["rw"]}};
       $globals->{'groups'}{"$repos-admins"} = [ $reposadmin ];
       write_repos();
     } else {
-      $template_params->{ACTION_WARNING} = 
+      add_action_message "ACTION_WARNING", 
       'An unexpected error occured while creating repository.';
     }
   }
@@ -563,21 +582,24 @@ if ($action eq "adduser" && in_group("admins")) {
 
   $template_params->{ACTION_TITLE} = 'Adding new user ' . code($newUser);
   if (defined $users{$newUser}) {
-    $template_params->{ACTION_WARNING} = 'Sorry, the username already exists.';
+    add_action_message "ACTION_WARNING", 'Sorry, the username already exists.';
   } elsif ($newUser !~ /^[A-Za-z0-9]+$/) {
-    $template_params->{ACTION_WARNING} = 'Illegal characters in user name.';
+    add_action_message "ACTION_WARNING", 'Illegal characters in user name.';
   } elsif (length($newUser) < 4) {
-    $template_params->{ACTION_WARNING} = 'Sorry, the username needs to be at least 4 characters long.';
+    add_action_message "ACTION_WARNING", 'Sorry, the username needs to be at least 4 characters long.';
   } elsif (length($pwd) < 6) {
-    $template_params->{ACTION_WARNING} = 'Sorry, the passphrase needs to be at least 6 characters long';
+    add_action_message "ACTION_WARNING", 'Sorry, the passphrase needs to be at least 6 characters long';
   } elsif (length($pwd) > 80) {
-    $template_params->{ACTION_WARNING} = 'Sorry, the passphrase can only be 80 characters maximum';
+    add_action_message "ACTION_WARNING", 'Sorry, the passphrase can only be 80 characters maximum';
   } elsif ($pwd ne $vpwd) {
-    $template_params->{ACTION_WARNING} = 'The passphrase and the verification don\'t match, please try again.';
+    add_action_message "ACTION_WARNING", 'The passphrase and the verification don\'t match, please try again.';
   } else {
     # ok, things are good, do the htpasswd call
     my $cmd = "\"$config->{htpasswd}\" -b -m \"$config->{htpasswd_file}\" \"$newUser\" \"$pwd\" 2>&1";
-    execute_command(\$template_params->{ACTION_RAW_OUTPUT}, $cmd);
+    my $raw_output = '';
+    execute_command(\$raw_output, $cmd);
+    add_action_message "ACTION_RAW_OUTPUT", $raw_output;
+        
     $users{$newUser} = {
       'username' => $newUser,
       'source' => 'HTPASSWD',
@@ -587,6 +609,7 @@ if ($action eq "adduser" && in_group("admins")) {
 }
 
 if ($action eq "chgroupacl" && in_group("$repos-admins")) {
+  $template_params->{ACTION_TITLE} = "Changing groups and ACLs";
   my $needupdate = 0;
   my $numgroups = int(param("numgroups"));
   my @deletegrp = param("deletegrp");
@@ -602,30 +625,30 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
     if ($grpname eq "") {
       # ignore added entry
     } elsif ($grpname !~ /^[a-zA-Z0-9_]+$/) {
-      $template_params->{ACTION_WARNING} = 'The name of the new group should only contain ' .
+      add_action_message "ACTION_WARNING", 'The name of the new group should only contain ' .
         'alphanumeric characters.  Please try again.';
     } elsif (grep /^$i$/, @deletegrp) {
       my $j;
       for ($j = 0; $j < $numacl; $j++) {
         my $key = param("usergroup[$j]") || '';
         if ($key eq "\@$repos-$grpname" && ! grep /^$j$/, @deleteacl) {
-          $template_params->{ACTION_WARNING} = "Cannot delete group $repos-$grpname, " .
+          add_action_message "ACTION_WARNING", "Cannot delete group $repos-$grpname, " .
             "because it is still in use.";
           next groups;
         }
       }
-      $template_params->{ACTION_TITLE} = "Deleting group ${repos}-${grpname}.";
+      add_action_message "ACTION_OUTPUT", "Deleting group ${repos}-${grpname}.";
       delete $globals->{'groups'}{"${repos}-${grpname}"};
       $needupdate = 1;
     } elsif ($users !~ /^\@?[a-z][a-z0-9]*(\s*,\s*[a-z][a-z0-9]*)*$/) {
-      $template_params->{ACTION_WARNING} =
+      add_action_message "ACTION_WARNING",
         "The name of the group members of group $repos-$grpname " .
         "must be valid login names.  Please try again.";
     } else {
       my @value = split(/\s*,\s*/, $users);
       my $origvalue = $globals->{'groups'}{"${repos}-${grpname}"};
       if (!defined $origvalue) {
-        $template_params->{ACTION_OUTPUT} = "Added group ${repos}-${grpname} with users $users";
+        add_action_message "ACTION_OUTPUT", "Added group ${repos}-${grpname} with users $users";
         $globals->{'groups'}{"${repos}-${grpname}"} = \@value;
       $needupdate = 1;
       } elsif ($i == $numgroups) {
@@ -635,14 +658,14 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
         my $user;
         foreach $user (@value) {
           if (! grep {$_ eq $user} @newvalue) {
-            $template_params->{ACTION_OUTPUT} .= "Added user $user to group ${repos}-${grpname}\n";
+            add_action_message "ACTION_OUTPUT", "Added user $user to group ${repos}-${grpname}\n";
             push @newvalue, $user;
             $needupdate = 1;
           }
         }
         $globals->{'groups'}{"${repos}-${grpname}"} = \@newvalue;
       } elsif (join(",", @{$origvalue}) ne join(",", @value)) {
-        $template_params->{ACTION_OUTPUT} = "Changed group ${repos}-${grpname} to $users";
+        add_action_message "ACTION_OUTPUT", "Changed group ${repos}-${grpname} to $users";
         $globals->{'groups'}{"${repos}-${grpname}"} = \@value;
         $needupdate = 1;
       }
@@ -659,11 +682,11 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
     } elsif ($key =~ /^\@([a-zA-Z0-9._-]+)$/) {
       if (! defined($globals->{'groups'}{$1}) && 
         ! grep /^$i$/, @deleteacl) {
-        $template_params->{ACTION_WARNING} = "Unknown group: $1";
+        add_action_message "ACTION_WARNING", "Unknown group: $1";
         $key = undef;
       }
     } elsif ($key !~ /^[A-Za-z][A-Za-z0-9._-]+$/ && $key ne '*') {
-      $template_params->{ACTION_WARNING} = "Invalid login name: $key";
+      add_action_message "ACTION_WARNING", "Invalid login name: $key";
       $key = undef;
     }
 
@@ -671,29 +694,29 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
       # error printed above
     } elsif ($value !~ /^(rw?)?$/
       || $path !~ /^[!-Z^-~]+$/) {
-      $template_params->{ACTION_WARNING} = "Invalid values: $path $key $value";
+      add_action_message "ACTION_WARNING", "Invalid values: $path $key $value";
     } else {
       if (grep /^$i$/, @deleteacl) {
         delete $repositories->{$repos}{$path}{$key};
         $needupdate = 1;
         if (scalar(keys %{$repositories->{$repos}{$path}}) == 0) {
           delete $repositories->{$repos}{$path};
-          $template_params->{ACTION_OUTPUT} = "Delete a path: $repos:$path $key";
+          add_action_message "ACTION_OUTPUT", "Delete a path: $repos:$path $key";
         } else {
-          $template_params->{ACTION_OUTPUT} = "Delete a user: $repos:$path $key";
+          add_action_message "ACTION_OUTPUT", "Delete a user: $repos:$path $key";
         }
       } elsif (!defined $repositories->{$repos}{$path}) {
         $repositories->{$repos}{$path} = {$key => [$value]};
-        $template_params->{ACTION_OUTPUT} = "Creating a path: $repos:$path $key $value";
+        add_action_message "ACTION_OUTPUT", "Creating a path: $repos:$path $key $value";
         $needupdate = 1;
       } elsif (!defined $repositories->{$repos}{$path}{$key}) {
-        $template_params->{ACTION_OUTPUT} = "Creating a user: $repos:$path $key $value";
+        add_action_message "ACTION_OUTPUT", "Creating a user: $repos:$path $key $value";
         $repositories->{$repos}{$path}{$key} = [$value];
         $needupdate = 1;
       } elsif (join(",", @{$repositories->{$repos}{$path}{$key}}) 
         ne $value) {
         $repositories->{$repos}{$path}{$key} = [$value];
-        $template_params->{ACTION_OUTPUT} = "Changing access entry: $repos:$path $key $value";
+        add_action_message "ACTION_OUTPUT", "Changing access entry: $repos:$path $key $value";
         $needupdate = 1;
       }
     }
@@ -705,18 +728,18 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
     my $key = param("gpgaddkey");
     if ($key =~ /^[0-9a-f]+$/) {
       if (!grep {$_ eq $key} @gpgkeyids) {
-        $template_params->{ACTION_OUTPUT} = "Adding gpg key $key to backup";
+        add_action_message "ACTION_OUTPUT", "Adding gpg key $key to backup";
         push @gpgkeyids, $key;
       }
     } elsif ($key) {
-      $template_params->{ACTION_WARNING} = escapeHTML("Invalid key: $key");
+      add_action_message "ACTION_WARNING", escapeHTML("Invalid key: $key");
     }
     foreach $key (param("gpgdelkey")) {
       if ($key =~ /^[0-9a-f]+$/) {
-        $template_params->{ACTION_OUTPUT} = "Removing gpg key $key for backup";
+        add_action_message "ACTION_OUTPUT", "Removing gpg key $key for backup";
         @gpgkeyids = grep {$_ ne $key} @gpgkeyids;
       } elsif ($key) {
-        $template_params->{ACTION_WARNING} = escapeHTML("Invalid key: $key");
+        add_action_message "ACTION_WARNING", escapeHTML("Invalid key: $key");
       }
     }
     write_gpg_keyid($repos, @gpgkeyids);
@@ -731,8 +754,10 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
     open STDERR, ">&STDOUT";
 
     # upload a new public key
-    execute_command(\$template_params->{ACTION_RAW_OUTPUT},
+    my $raw_output = '';
+    execute_command(\$raw_output,
       "\"$config->{gpg}\" --homedir \"$config->{gpghome}\" --import < \"$gpgkeyfilename\"");
+    add_action_message "ACTION_RAW_OUTPUT", $raw_output;
   }
 }
 
@@ -741,7 +766,7 @@ if ($action eq "load" && in_group("$repos-admins")) {
   my $dumpsubdir = param('dumpsubdir')||'';
   $template_params->{ACTION_TITLE} = escapeHTML("Loading repository dump file into $repos:$dumpsubdir");
   if (!defined $dumpfile) {
-    $template_params->{ACTION_OUTPUT} = "No file was uploaded (" .
+    add_action_message "ACTION_WARNING", "No file was uploaded (" .
       escapeHTML($dumpfile) . "," .
       escapeHTML(param("dumpfile")) . "," .
       escapeHTML(cgi_error) . ")???";
@@ -755,13 +780,15 @@ if ($action eq "load" && in_group("$repos-admins")) {
     push @command,"$config->{svnroot}/$repos";
     my $pid = open (SVNDUMP, "-|");
     if (!defined $pid) {
-      $template_params->{ACTION_WARNING} = escapeHTML("Cannot fork: $!");
+      add_action_message "ACTION_WARNING", escapeHTML("Cannot fork: $!");
     } elsif ($pid) { 
       # parent
+      my $raw_output = '';
       while (<SVNDUMP>) {
-        $template_params->{ACTION_RAW_OUTPUT} .= escapeHTML($_);
+        $raw_output .= escapeHTML($_);
       }
       close(SVNDUMP);
+      add_action_message "ACTION_RAW_OUTPUT", $raw_output;
     } else {
       open (STDIN, "<&=", $dumpfile);
       open (STDERR, ">&STDOUT");

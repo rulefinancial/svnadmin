@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
   <link rel="stylesheet" href="static/css/bootstrap-responsive.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="static/css/svnadmin.css" type="text/css" media="screen" title="no title" charset="utf-8">
   <script src="static/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
   <div class="navbar navbar-static-top">
     <div class="navbar-inner">
+      <div class="container">
       <span class="brand">Subversion eXtended Administration</span>
       <ul class="nav">
         <li><a href=".">Home</a></li>
@@ -18,86 +20,99 @@
       </TMPL_IF>
       </ul>
       <span class="navbar-text pull-right">Logged in as <TMPL_VAR NAME="USERNAME"/></span>
+      </div>
     </div>
   </div>
 
   <TMPL_IF NAME="ACTION_TITLE">
   <!-- Display output related to a previous action -->
-  <div class="container"><div class="row"><div class="span12">
-    <TMPL_IF NAME="ACTION_WARNING"><div class="alert alert-error"><TMPL_ELSE><div class="alert alert-success"></TMPL_IF>
+  <div class="container">
+    <div class="alert">
     <h2><TMPL_VAR NAME="ACTION_TITLE"/></h2>
-    <TMPL_IF NAME="ACTION_OUTPUT"><TMPL_VAR NAME="ACTION_OUTPUT"/></TMPL_IF>
-    <TMPL_IF NAME="ACTION_WARNING"><TMPL_VAR NAME="ACTION_WARNING"/></TMPL_IF>
+    <TMPL_LOOP NAME="LOOP_ACTION_MSGS">
+    <TMPL_IF NAME="ACTION_WARNING"><p class="text-error"><TMPL_VAR NAME="ACTION_WARNING"/></p></TMPL_IF>
+    <TMPL_IF NAME="ACTION_OUTPUT"><p class="text-success"><TMPL_VAR NAME="ACTION_OUTPUT"/></p></TMPL_IF>
     <TMPL_IF NAME="ACTION_RAW_OUTPUT"><pre><TMPL_VAR NAME="ACTION_RAW_OUTPUT"/></pre></TMPL_IF>
+    </TMPL_LOOP>
     </div>
-  </div></div></div>
+  </div>
   </TMPL_IF>
 
-  <div class="container">
-    <div class="row">
-      <div class="span12">
-        <p>
-        <TMPL_IF NAME="LOOP_ADMIN_REPOS"><p>You are administrator for
-          <TMPL_LOOP NAME="LOOP_ADMIN_REPOS">
-            <TMPL_IF NAME="L_CURRENT">
-            <span class="label label-success"><TMPL_VAR NAME="L_REPOSITORY"/></span>
-            <TMPL_ELSE/>
-              <a class="label label-info" href="<TMPL_VAR NAME="L_REPOSITORY"/>"><TMPL_VAR NAME="L_REPOSITORY"/></a>
-            </TMPL_IF>
-          </TMPL_LOOP>
+  <div class="container"> <!-- Start main content layout -->
+
+    <TMPL_IF NAME="LOOP_ADMIN_REPOS"><div class="row"><div class="span12"><p>You are administrator for
+      <TMPL_LOOP NAME="LOOP_ADMIN_REPOS">
+        <TMPL_IF NAME="L_CURRENT">
+        <span class="label label-success"><TMPL_VAR NAME="L_REPOSITORY"/></span>
+        <TMPL_ELSE/>
+          <a class="label label-info" href="<TMPL_VAR NAME="L_REPOSITORY"/>"><TMPL_VAR NAME="L_REPOSITORY"/></a>
         </TMPL_IF>
-        </p>
-      </div>
-    </div>
+      </TMPL_LOOP>
+    </p></div></div></TMPL_IF>
 
     <TMPL_IF NAME="IN_REPOSITORY">
     <!-- Display admin tasks specific to a single repository. -->
-    <div class="container">
-    <h2>Administer repository <a href="/viewvc/<TMPL_VAR NAME="REPOSITORY"/>/"><TMPL_VAR NAME="REPOSITORY"/></a></h2>
+    <div class="row"><div class="span12">
+    <h2>Administer repository <a class="external" href="/viewvc/<TMPL_VAR NAME="REPOSITORY"/>/"><TMPL_VAR NAME="REPOSITORY"/></a></h2>
+    </div></div>
     <TMPL_IF NAME="CAN_CREATE_USERS">
-    <form method="post" action="<TMPL_VAR NAME="REPOSITORY"/>" enctype="multipart/form-data">
+    <div class="row"><div class="span12">
+    <h3>Create User</h3>
+    </div></div>
+    <form class="form-horizontal" method="post" action="<TMPL_VAR NAME="REPOSITORY"/>">
       <input name="action" value="adduser" type="hidden">
-      <h3>Create User</h3>
-      <table><tbody>
-          <tr><td>User (Login):</td> <td><input name="newUser" size="30" maxlength="30" type="text"></td></tr>
-          <tr><td>Passphrase:</td> <td><input name="pwd" size="32" maxlength="80" type="password"></td></tr>
-          <tr><td>Verify passphrase:</td> <td><input name="vpwd" size="32" maxlength="80" type="password"></td></tr>
-          <tr><td rowspan="2"><input name="add" value="Add" type="submit"></td></tr>
-      </tbody></table>
+      <div class="control-group"><label class="control-label" for="newUser">User (Login)</label>
+        <div class="controls"><input id="newUser" name="newUser" size="30" maxlength="30" type="text"></div>
+      </div>
+      <div class="control-group"><label class="control-label" for="pwd">Passphrase</label>
+        <div class="controls"><input id="pwd" name="pwd" size="32" maxlength="80" type="password"></div>
+      </div>
+      <div class="control-group"><label class="control-label" for="vpwd">Verify passphrase</label>
+        <div class="controls"><input id="vpwd" name="vpwd" size="32" maxlength="80" type="password"></div>
+      </div>
+      <div class="control-group">
+        <div class="controls"><button type="submit" class="btn">Add</button></div>
+      </div>
     </form>
-    </div>
-    <div class="container">
-    <form method="post" action="<TMPL_VAR NAME="REPOSITORY"/>" enctype="multipart/form-data">
+    </TMPL_IF>
+    <form class="form-horizontal" method="post" action="<TMPL_VAR NAME="REPOSITORY"/>">
       <input name="repos" value="<TMPL_VAR NAME="REPOSITORY"/>" type="hidden">
       <input name="action" value="chgroupacl" type="hidden">
+      <div class="row"><div class="span12">
       <h3>Groups</h3>
-      <table><tbody>
-          <tr><th>Group</th> <th>Users</th></tr>
-          <TMPL_LOOP NAME="LOOP_REPO_GROUPS">
-          <tr>
-            <td>
-              <input name="grpname[<TMPL_VAR NAME="L_INDEX"/>]" value="<TMPL_VAR NAME="L_GROUPNAME"/>" type="hidden">
-              <TMPL_VAR NAME="L_REPOSITORY"/>-<TMPL_VAR NAME="L_GROUPNAME"/>
-            </td>
-            <td><input name="users[<TMPL_VAR NAME="L_INDEX"/>]" value="<TMPL_VAR NAME="L_GROUPUSERS"/>" size="50" type="text"></td>
-            <td><TMPL_IF NAME="L_CAN_BE_DELETED"><label><input name="deleteacl" value="<TMPL_VAR NAME="L_INDEX"/>" type="checkbox">Delete</label></TMPL_IF></td>
-          </tr>
-          </TMPL_LOOP>
-          <tr>
-            <td>
-              <input name="numgroups" value="<TMPL_VAR NAME="GROUPCOUNT"/>" type="hidden">
-              <TMPL_VAR NAME="REPOSITORY"/>-<input name="grpname[<TMPL_VAR NAME="GROUPCOUNT"/>]" size="15" type="text">
-            </td>
-            <td><select name="l_users[<TMPL_VAR NAME="GROUPCOUNT"/>]" size="5" multiple="multiple">
-              <TMPL_LOOP NAME="LOOP_AVAILABLE_USERS">
-              <option value="<TMPL_VAR NAME="L_USERNAME"/>"><TMPL_VAR NAME="L_DISPLAYNAME"/></option>
-              </TMPL_LOOP>
-            </select></td>
-            <td><input type="submit" name="add" value="Add"/></td>
-          </tr>
-          <tr><td align="center" colspan="3"><input type="submit" name="commit" value="Commit Changes"/></td></tr>
-      </tbody></table>
+      </div></div>
+      <div class="row">
+        <div class="span2"><p class="text-right"><strong>Group</strong></p></div><div class="span1">&nbsp;</div><div class="span9"><strong>Users</strong></div>
+      </div>
+      <!-- Adjust membership of existing groups -->
+      <TMPL_LOOP NAME="LOOP_REPO_GROUPS">
+      <input name="grpname[<TMPL_VAR NAME="L_INDEX"/>]" value="<TMPL_VAR NAME="L_GROUPNAME"/>" type="hidden">
+      <div class="control-group">
+        <label class="control-label" for="users[<TMPL_VAR NAME="L_INDEX"/>]"><TMPL_VAR NAME="L_REPOSITORY"/>-<TMPL_VAR NAME="L_GROUPNAME"/></label>
+        <div class="controls">
+          <input id="users[<TMPL_VAR NAME="L_INDEX"/>]" name="users[<TMPL_VAR NAME="L_INDEX"/>]" value="<TMPL_VAR NAME="L_GROUPUSERS"/>" size="50" type="text">
+          <TMPL_IF NAME="L_CAN_BE_DELETED"><label class="checkbox inline"><input id="deletegrp" name="deletegrp" value="<TMPL_VAR NAME="L_INDEX"/>" type="checkbox"> Delete</label></TMPL_IF>
+        </div>
+      </div>
+      </TMPL_LOOP>
+      <!-- Create a new group -->
+      <input name="numgroups" value="<TMPL_VAR NAME="GROUPCOUNT"/>" type="hidden">
+      <div class="control-group">
+        <label class="control-label" for="l_users[<TMPL_VAR NAME="GROUPCOUNT"/>]"><TMPL_VAR NAME="REPOSITORY"/>-</label><input class="control-label" name="grpname[<TMPL_VAR NAME="GROUPCOUNT"/>]" size="15" type="text">
+        <div class="controls">
+          <select id="l_users[<TMPL_VAR NAME="GROUPCOUNT"/>]" name="l_users[<TMPL_VAR NAME="GROUPCOUNT"/>]" size="5" multiple="multiple">
+            <TMPL_LOOP NAME="LOOP_AVAILABLE_USERS"><option value="<TMPL_VAR NAME="L_USERNAME"/>"><TMPL_VAR NAME="L_DISPLAYNAME"/></option>
+            </TMPL_LOOP>
+          </select>
+          <button class="btn inline" type="submit">Add</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls"><button class="btn" type="submit">Commit Changes</button></div>
+      </div>
+      <div class="row"><div class="span12">
       <h3>Access Control Table</h3>
+      </div></div>
       <table>
         <tr><th>Path</th> <th>User(group)</th><th>Access</th><th></th></tr>
         <!-- Modify or delete the existing access for groups and users. -->
@@ -146,17 +161,15 @@
         </tr>
       </table>
     </form>
-    </div>
 
     <p>You can give read/write or read-only rights to a single user or a user group. A user group is
     denoted by @<TMPL_VAR NAME="REPOSITORY"/>-&lt;groupname&gt;.  The access rights are valid
     for the given path and all sub directories.  For details see the 
-    <a href="http://svnbook.red-bean.com/en/1.7/svn.serverconfig.httpd.html#svn.serverconfig.httpd.authz.perdir">Manual</a>.
+    <a class="external" href="http://svnbook.red-bean.com/en/1.7/svn.serverconfig.httpd.html#svn.serverconfig.httpd.authz.perdir">Manual</a>.
     </p>
     <p><strong>Warning:</strong> the ViewCVS script does not always respect path restrictions.  A
     skilled user with read-only access to one directory of the
     repository can read the whole repository.  Better use different repositories.</p>
-    </TMPL_IF>
 
     <TMPL_IF NAME="BACKUP_ENABLED">
     <TMPL_IF NAME="READ_GPG_KEYS">
@@ -210,64 +223,60 @@
 
     <TMPL_ELSE>
     <!-- Not in a repository, display top level admin tasks. -->
-    <div class="container">
-      <TMPL_IF NAME="CAN_CHANGE_PASSWORD">
-      <h2>Change Passphrase</h2>
-      <p>Please enter your new choice of passphrase below, and then verify by entering it again.</p>
-      <p>You can either use a passphrase (preferably of decent length, include punctuation, etc,) or a password.  Good passwords have these properties:</p>
-      <ul>
-        <li>is not based upon a dictionary word</li>
-        <li>does not have numbers substituted for common letters (ie. 3 for E 1 for I, 0 for O, etc) or numbers used as a suffix/prefix (ie.  4sale, 2by4, etc.)</li>
-        <li>is at least 8 characters long (length of 6 to 80 is required)</li>
-        <li>is made up of a combination of non-repeating upper/lower case letters, numbers, and punctuation.</li>
-        <li>is hard to guess ;)</li>
-      </ul>
-      <p>Also note that the passphrase is case-sensitive.</p>
-      <hr/>
-      <form method="post">
-        <input name="action" value="changepw" type="hidden"/>
-        <table><tbody>
-            <tr><td>Passphrase: </td> <td><input name="passphrase" size="32" maxlength="80" type="password"></td><td>(6-80 chars)</td></tr>
-            <tr><td>Verify: </td> <td><input name="verify" size="32" maxlength="80" type="password"></td><td>(6-80 chars)</td></tr>
-        </tbody></table>
-        <input value="Change Passphrase" type="submit"/>
-      </form>
-      </TMPL_IF>
-      <TMPL_IF NAME="CAN_CREATE_REPOSITORY">
-      <h2>Create a new repository</h2>
-      <form method="POST">
-        <input name="action" value="create" type="hidden"/>
-        <table><tbody>
-            <tr><td>Name of new repository: </td> <td><input name="repos" size="20" type="text"></td></tr>
-          <tr><td>Administrator: </td> <td><input name="reposadmin" value="<TMPL_VAR NAME="USERNAME"/>" size="20" type="text"></td></tr>
-        </tbody></table>
-        <input value="Create" type="submit"/>
-      </form>
-      </TMPL_IF>
-    </div>
-    <div class="container">
-      <div class="span6">
-        <h2>Your access rights</h2>
-        
-        <p>You have <strong>read-write</strong> access to the following repositories:</p>
-        <div class="well">
-          <ul class="nav nav-list">
-            <TMPL_LOOP NAME="LOOP_RW_PATHS"><li>
-              <a href="<TMPL_VAR NAME="L_VIEWVC_URL" ESCAPE="HTML"/>/<TMPL_VAR NAME="L_REPOSITORY"/><TMPL_VAR NAME="L_PATH"/>">
-              <TMPL_VAR NAME="L_REPOSITORY"/></a>
-            </li></TMPL_LOOP>
-          </ul>
-        </div>
-        
-        <p>You have <strong>read-only</strong> access to the following repositories:</p>
-        <div class="well">
-          <ul class="nav nav-list">
-            <TMPL_LOOP NAME="LOOP_RO_PATHS"><li>
-              <a href="<TMPL_VAR NAME="L_VIEWVC_URL" ESCAPE="HTML"/>/<TMPL_VAR NAME="L_REPOSITORY"/><TMPL_VAR NAME="L_PATH"/>">
-              <TMPL_VAR NAME="L_REPOSITORY"/></a>
-            </li></TMPL_LOOP>
-          </ul>
-        </div>
+    <TMPL_IF NAME="CAN_CHANGE_PASSWORD">
+    <h2>Change Passphrase</h2>
+    <p>Please enter your new choice of passphrase below, and then verify by entering it again.</p>
+    <p>You can either use a passphrase (preferably of decent length, include punctuation, etc,) or a password.  Good passwords have these properties:</p>
+    <ul>
+      <li>is not based upon a dictionary word</li>
+      <li>does not have numbers substituted for common letters (ie. 3 for E 1 for I, 0 for O, etc) or numbers used as a suffix/prefix (ie.  4sale, 2by4, etc.)</li>
+      <li>is at least 8 characters long (length of 6 to 80 is required)</li>
+      <li>is made up of a combination of non-repeating upper/lower case letters, numbers, and punctuation.</li>
+      <li>is hard to guess ;)</li>
+    </ul>
+    <p>Also note that the passphrase is case-sensitive.</p>
+    <hr/>
+    <form method="post">
+      <input name="action" value="changepw" type="hidden"/>
+      <table><tbody>
+          <tr><td>Passphrase: </td> <td><input name="passphrase" size="32" maxlength="80" type="password"></td><td>(6-80 chars)</td></tr>
+          <tr><td>Verify: </td> <td><input name="verify" size="32" maxlength="80" type="password"></td><td>(6-80 chars)</td></tr>
+      </tbody></table>
+      <input value="Change Passphrase" type="submit"/>
+    </form>
+    </TMPL_IF>
+    <TMPL_IF NAME="CAN_CREATE_REPOSITORY">
+    <h2>Create a new repository</h2>
+    <form method="POST">
+      <input name="action" value="create" type="hidden"/>
+      <table><tbody>
+          <tr><td>Name of new repository: </td> <td><input name="repos" size="20" type="text"></td></tr>
+        <tr><td>Administrator: </td> <td><input name="reposadmin" value="<TMPL_VAR NAME="USERNAME"/>" size="20" type="text"></td></tr>
+      </tbody></table>
+      <input value="Create" type="submit"/>
+    </form>
+    </TMPL_IF>
+    <div class="span6">
+      <h2>Your access rights</h2>
+      
+      <p>You have <strong>read-write</strong> access to the following repositories:</p>
+      <div class="well">
+        <ul class="nav nav-list">
+          <TMPL_LOOP NAME="LOOP_RW_PATHS"><li>
+            <a href="<TMPL_VAR NAME="L_VIEWVC_URL" ESCAPE="HTML"/>/<TMPL_VAR NAME="L_REPOSITORY"/><TMPL_VAR NAME="L_PATH"/>">
+            <TMPL_VAR NAME="L_REPOSITORY"/></a>
+          </li></TMPL_LOOP>
+        </ul>
+      </div>
+      
+      <p>You have <strong>read-only</strong> access to the following repositories:</p>
+      <div class="well">
+        <ul class="nav nav-list">
+          <TMPL_LOOP NAME="LOOP_RO_PATHS"><li>
+            <a href="<TMPL_VAR NAME="L_VIEWVC_URL" ESCAPE="HTML"/>/<TMPL_VAR NAME="L_REPOSITORY"/><TMPL_VAR NAME="L_PATH"/>">
+            <TMPL_VAR NAME="L_REPOSITORY"/></a>
+          </li></TMPL_LOOP>
+        </ul>
       </div>
     </div>
     </TMPL_IF>
@@ -278,6 +287,6 @@
       </div>
     </div>
 
-  </div>
+  </div> <!-- End main content layout -->
 </body>
 </html>
