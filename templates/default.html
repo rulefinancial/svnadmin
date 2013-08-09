@@ -99,7 +99,7 @@
       <div class="control-group">
         <label class="control-label" for="users[<TMPL_VAR NAME="L_INDEX"/>]"><TMPL_VAR NAME="L_REPOSITORY"/>-<TMPL_VAR NAME="L_GROUPNAME"/></label>
         <div class="controls">
-          <input id="users[<TMPL_VAR NAME="L_INDEX"/>]" name="users[<TMPL_VAR NAME="L_INDEX"/>]" value="<TMPL_VAR NAME="L_GROUPUSERS"/>" size="50" type="text">
+          <input id="users[<TMPL_VAR NAME="L_INDEX"/>]" name="users[<TMPL_VAR NAME="L_INDEX"/>]" value="<TMPL_VAR NAME="L_GROUPUSERS"/>" placeholder="Comma-separated list of users" size="50" type="text">
           <TMPL_IF NAME="L_CAN_BE_DELETED"><label class="checkbox inline"><input id="deletegrp" name="deletegrp" value="<TMPL_VAR NAME="L_INDEX"/>" type="checkbox"> Delete</label></TMPL_IF>
         </div>
       </div>
@@ -277,9 +277,10 @@
       <button class="btn" type="submit">Create</button>
     </form>
     </TMPL_IF>
-    <div class="span6">
+    <div class="row"><div class="span12">
       <h2>Your access rights</h2>
-      
+    </div></div>
+    <div class="row"><div class="span12">
       <p>You have <strong>read-write</strong> access to the following repositories:</p>
       <div class="well">
         <ul class="nav nav-list">
@@ -289,7 +290,9 @@
           </li></TMPL_LOOP>
         </ul>
       </div>
-      
+    </div></div>
+
+    <div class="row"><div class="span12">
       <p>You have <strong>read-only</strong> access to the following repositories:</p>
       <div class="well">
         <ul class="nav nav-list">
@@ -299,7 +302,7 @@
           </li></TMPL_LOOP>
         </ul>
       </div>
-    </div>
+    </div></div>
     </TMPL_IF>
 
     <div class="row">
