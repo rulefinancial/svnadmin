@@ -821,8 +821,7 @@ if (@admgroups) {
 }
 
 if ($repos ne "" && in_group("$repos-admins")) {
-  my @reposgroups = 
-  sort grep /^$repos-[a-zA-Z0-9_]+$/, keys %{$globals->{'groups'}};
+  my @reposgroups = sort grep /^$repos-[a-zA-Z0-9_]+$/, keys %{$globals->{'groups'}};
   my $group;
   my $grpnr = 0;
   my @group_params;
@@ -840,7 +839,7 @@ if ($repos ne "" && in_group("$repos-admins")) {
   $template_params->{LOOP_REPO_GROUPS} = \@group_params;
   $template_params->{GROUPCOUNT} = $grpnr;
 
-  my @user_params;
+  my @user_params = ({L_USERNAME => '@admins', L_DISPLAYNAME => '@admins (SVN Admins)'});
   foreach my $username (sort keys %users) {
     my %user_param;
     $user_param{L_USERNAME} = $username;
