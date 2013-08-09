@@ -909,6 +909,7 @@ if ($repos ne "" && in_group("$repos-admins")) {
           my %rw_path;
           $rw_path{L_REPOSITORY} = $repos;
           $rw_path{L_PATH} = $path;
+          $rw_path{L_VIEWVC_URL} = $config->{viewcvspath};
           push @rw_paths, \%rw_path;
         }
       }
