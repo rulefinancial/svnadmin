@@ -89,9 +89,9 @@
       <div class="row"><div class="span12">
       <h3>Groups</h3>
       </div></div>
-      <div class="row">
-        <div class="span3"><p class="text-right"><strong>Group</strong></p></div>
-        <div class="span9"><strong>Users</strong></div>
+      <div class="control-group">
+        <div class="control-label"><p class="text-right"><strong>Group</strong></p></div>
+        <!-- FIXME: inline style hack to match control-label. --><div class="controls" style="padding-top: 5px;"><strong>Users</strong></div>
       </div>
       <!-- Adjust membership of existing groups -->
       <TMPL_LOOP NAME="LOOP_REPO_GROUPS">
