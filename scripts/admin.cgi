@@ -906,6 +906,11 @@ if ($repos ne "" && in_group("$repos-admins")) {
       $permission{L_HAS_RW_PERM} = $has_rw_perm;
       $permission{L_HAS_RO_PERM} = $has_ro_perm;
       $permission{L_HAS_NO_PERM} = !($has_rw_perm or $has_ro_perm);
+      if (substr($user_or_group, 0, 1) ne '@') {
+        $permission{L_USER_GROUP_INVALID} = not defined $users{$user_or_group};
+      } else {
+        $permission{L_USER_GROUP_INVALID} = not defined $globals->{'groups'}{substr($user_or_group,1)};
+      }
 
       push @permissions, \%permission;
       $aclnr++;

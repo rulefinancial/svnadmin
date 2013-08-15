@@ -137,7 +137,7 @@
       <input type="hidden" name="usergroup[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" value="<TMPL_VAR NAME="L_USER_GROUP"/>"/>
       <tr>
         <td><TMPL_VAR NAME="L_PATH"/></td>
-        <td><TMPL_VAR NAME="L_USER_GROUP"/></td>
+        <td><TMPL_VAR NAME="L_USER_GROUP"/><TMPL_IF "L_USER_GROUP_INVALID"> (INVALID USER)</TMPL_IF></td>
         <td><select name="access[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" >
             <option <TMPL_IF NAME="L_HAS_RW_PERM">selected </TMPL_IF>value="rw">rw</option>
             <option <TMPL_IF NAME="L_HAS_RO_PERM">selected </TMPL_IF>value="r">r</option>
