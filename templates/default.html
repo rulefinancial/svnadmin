@@ -99,8 +99,12 @@
       <div class="control-group">
         <label class="control-label" for="users[<TMPL_VAR NAME="L_INDEX"/>]"><TMPL_VAR NAME="L_REPOSITORY"/>-<TMPL_VAR NAME="L_GROUPNAME"/></label>
         <div class="controls">
-          <input id="users[<TMPL_VAR NAME="L_INDEX"/>]" name="users[<TMPL_VAR NAME="L_INDEX"/>]" value="<TMPL_VAR NAME="L_GROUPUSERS"/>" placeholder="Comma-separated list of users" size="50" type="text">
+          <select class="chosen-select" data-placeholder="Select some users" id="l_users[<TMPL_VAR NAME="L_INDEX"/>]" name="l_users[<TMPL_VAR NAME="L_INDEX"/>]" size="5" multiple="multiple">
+            <TMPL_LOOP NAME="L_LOOP_GROUPUSERS"><option value="<TMPL_VAR NAME="L_USERNAME"/>"<TMPL_IF NAME="L_SELECTED"> selected</TMPL_IF>><TMPL_VAR NAME="L_DISPLAYNAME"/></option>
+            </TMPL_LOOP>
+          </select>
           <TMPL_IF NAME="L_CAN_BE_DELETED"><label class="checkbox inline"><input id="deletegrp" name="deletegrp" value="<TMPL_VAR NAME="L_INDEX"/>" type="checkbox"> Delete</label></TMPL_IF>
+          <TMPL_IF NAME="L_GROUP_WARNING"><span class="text-warning"><TMPL_VAR NAME="L_GROUP_WARNING"/></span></TMPL_IF>
         </div>
       </div>
       </TMPL_LOOP>
@@ -135,9 +139,9 @@
         <td><TMPL_VAR NAME="L_PATH"/></td>
         <td><TMPL_VAR NAME="L_USER_GROUP"/></td>
         <td><select name="access[<TMPL_VAR NAME="L_ACL_NUMBER"/>]" >
-            <option <TMPL_IF NAME="L_HAS_RW_PERM">selected="selected" </TMPL_IF>value="rw">rw</option>
-            <option <TMPL_IF NAME="L_HAS_RO_PERM">selected="selected" </TMPL_IF>value="r">r</option>
-            <option <TMPL_IF NAME="L_HAS_NO_PERM">selected="selected" </TMPL_IF>value="">-</option>
+            <option <TMPL_IF NAME="L_HAS_RW_PERM">selected </TMPL_IF>value="rw">rw</option>
+            <option <TMPL_IF NAME="L_HAS_RO_PERM">selected </TMPL_IF>value="r">r</option>
+            <option <TMPL_IF NAME="L_HAS_NO_PERM">selected </TMPL_IF>value="">-</option>
           </select>
         </td>
         <td>
@@ -150,7 +154,7 @@
       <tr>
         <td><input type="text" name="path[<TMPL_VAR NAME="ACL_NUMBER"/>]" value="/" size="30" /></td>
         <td><select class="chosen-select" data-placeholder="Select group or user" name="usergroup[<TMPL_VAR NAME="ACL_NUMBER"/>]">
-          <option selected="selected" value=""></option>
+          <option selected value=""></option>
           <!-- Groups for this repository. -->
           <optgroup label="Groups">
           <TMPL_LOOP NAME="LOOP_REPO_GROUPS">
@@ -167,7 +171,7 @@
         </select></td>
         <td>
           <select name="access[<TMPL_VAR NAME="ACL_NUMBER"/>]">
-            <option selected="selected" value="rw">rw</option>
+            <option selected value="rw">rw</option>
             <option value="r">r</option>
             <option value="">-</option>
           </select>

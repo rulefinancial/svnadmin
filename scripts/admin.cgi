@@ -160,10 +160,10 @@ sub read_svn_access($) {
 
       if ($repos) {
         $repositories{$repos}{$path}{$key} = \@value;
-    } else {
-      $globals{$path}{$key} = \@value;
-  }
-}
+      } else {
+        $globals{$path}{$key} = \@value;
+      }
+    }
   }
   close(SVNACCESS);
 
@@ -210,7 +210,7 @@ sub write_repos() {
 sub in_group($) {
   my ($group, @dummy) = @_;
   my @expanded = expand_group \%{$globals->{'groups'}}, @{$globals->{'groups'}{$group}};
-return grep(/^$curuser$/, @expanded) == 1;
+  return grep(/^$curuser$/, @expanded) == 1;
 }
 
 sub read_gpg_keys() {
@@ -640,7 +640,7 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
       add_action_message "ACTION_OUTPUT", "Deleting group ${repos}-${grpname}.";
       delete $globals->{'groups'}{"${repos}-${grpname}"};
       $needupdate = 1;
-    } elsif ($users !~ /^\@?[a-z][a-z0-9]*(\s*,\s*[a-z][a-z0-9]*)*$/) {
+    } elsif ($users !~ /^\@?[a-zA-Z][a-zA-Z0-9]*(\s*,\s*[a-zA-Z][a-zA-Z0-9]*)*$/) {
       add_action_message "ACTION_WARNING",
         "The name of the group members of group $repos-$grpname " .
         "must be valid login names.  Please try again.";
@@ -821,32 +821,77 @@ if (@admgroups) {
 }
 
 if ($repos ne "" && in_group("$repos-admins")) {
+  my @user_params;
+  # Add all top-level groups to list of available users.
+  foreach my $groupname (sort keys %{$globals->{'groups'}}) {
+    if ($groupname =~ /^(.*)-[a-zA-Z0-9_]+$/) {
+      # Skip this group if it is prefixed with a repository name other than the current repository.
+      if ($repos ne $1 and (defined $repositories->{$1} or scalar grep(/$1-admins/,keys %{$globals->{'groups'}}))) {
+        next;
+      }
+    }
+    my %user_param;
+    $user_param{L_USERNAME} = '@' . $groupname;
+    $user_param{L_DISPLAYNAME} = '@' . $groupname . ' (@' . $groupname . ' group)';
+    push @user_params, \%user_param;
+  }
+  # Add all users to list of available users.
+  foreach my $username (sort keys %users) {
+    my %user_param;
+    $user_param{L_USERNAME} = $username;
+    $user_param{L_DISPLAYNAME} = "$username (" . $users{$username}->{'displayName'} . ')';
+    push @user_params, \%user_param;
+  }
+  $template_params->{LOOP_AVAILABLE_USERS} = \@user_params;
+
   my @reposgroups = sort grep /^$repos-[a-zA-Z0-9_]+$/, keys %{$globals->{'groups'}};
-  my $group;
   my $grpnr = 0;
   my @group_params;
-  foreach $group (@reposgroups) {
-    my %group_param;
+  foreach my $group (@reposgroups) {
+    my $some_users_invalid = 0;
     $group =~ /^$repos-(.*)$/;
+    my @group_users_param;
+    my @group_users = @{$globals->{'groups'}{$group}};
+    # Add all current users of the group to a template parameter.
+    foreach my $username (@group_users) {
+      my %group_user_param;
+      $group_user_param{L_SELECTED} = 1;
+      $group_user_param{L_USERNAME} = $username;
+      my $displayname;
+      if (defined $users{$username}) {
+        $displayname = $users{$username}->{'displayName'};
+      } elsif (substr($username,0,1) eq '@' and defined $globals->{'groups'}{substr($username,1)}) {
+        $displayname = "$username group";
+      } else {
+        $displayname = 'INVALID USER';
+        $some_users_invalid = 1;
+      }
+      $group_user_param{L_DISPLAYNAME} = "$username ($displayname)";
+      push @group_users_param, \%group_user_param;
+    }
+    # Add all other available users as un-selected options.
+    foreach my $user_param_ref (@user_params) {
+      if (not scalar grep($user_param_ref->{L_USERNAME} eq $_->{L_USERNAME}, @group_users_param)) {
+        my %group_user_param;
+        $group_user_param{L_USERNAME} = $user_param_ref->{L_USERNAME};
+        $group_user_param{L_DISPLAYNAME} = $user_param_ref->{L_DISPLAYNAME};
+        push @group_users_param, \%group_user_param;
+      }
+    }
+    my %group_param;
     $group_param{L_REPOSITORY} = $repos;
     $group_param{L_GROUPNAME} = $1;
-    $group_param{L_GROUPUSERS} = join(",", @{$globals->{'groups'}{$group}});
+    $group_param{L_LOOP_GROUPUSERS} = \@group_users_param;
     $group_param{L_INDEX} = $grpnr;
-    $group_param{L_CAN_BE_DELETED} = $group_param{L_GROUPNAME} ne 'admins';
+    $group_param{L_CAN_BE_DELETED} = $1 ne 'admins';
+    if ($some_users_invalid) {
+      $group_param{L_GROUP_WARNING} = 'Warning: group contains invalid users.';
+    }
     push @group_params, \%group_param;
     $grpnr++;
   }
   $template_params->{LOOP_REPO_GROUPS} = \@group_params;
   $template_params->{GROUPCOUNT} = $grpnr;
-
-  my @user_params = ({L_USERNAME => '@admins', L_DISPLAYNAME => '@admins (SVN Admins)'});
-  foreach my $username (sort keys %users) {
-    my %user_param;
-    $user_param{L_USERNAME} = $username;
-    $user_param{L_DISPLAYNAME} = "$username (" . $users{$username}->{'displayName'} . ') ';
-    push @user_params, \%user_param;
-  }
-  $template_params->{LOOP_AVAILABLE_USERS} = \@user_params;
 
   my $aclnr = 0;
   my @permissions;
