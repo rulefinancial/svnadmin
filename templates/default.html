@@ -48,10 +48,10 @@
     <div class="row"><div class="span12">
       <TMPL_LOOP NAME="LOOP_ADMIN_REPOS">
         <TMPL_IF NAME="L_CURRENT">
-        <span class="label label-success"><TMPL_VAR NAME="L_REPOSITORY"/></span>
-        <TMPL_ELSE/>
-          <a class="label label-info" href="<TMPL_VAR NAME="L_REPOSITORY"/>"><TMPL_VAR NAME="L_REPOSITORY"/></a>
-        </TMPL_IF>
+        <span title="Repository: <TMPL_VAR NAME="L_REPOSITORY"/>, Admins: <TMPL_VAR NAME="L_ADMINS"/>" class="label label-success"><TMPL_VAR NAME="L_REPOSITORY"/></span>
+        <TMPL_ELSE/><TMPL_IF NAME="L_CAN_ADMIN">
+          <a title="Repository: <TMPL_VAR NAME="L_REPOSITORY"/>, Admins: <TMPL_VAR NAME="L_ADMINS"/>" class="label label-info" href="<TMPL_VAR NAME="L_REPOSITORY"/>"><TMPL_VAR NAME="L_REPOSITORY"/></a>
+          <TMPL_ELSE><span title="Repository: <TMPL_VAR NAME="L_REPOSITORY"/>, Admins: <TMPL_VAR NAME="L_ADMINS"/>" class="label"><TMPL_VAR NAME="L_REPOSITORY"/></span></TMPL_IF></TMPL_IF>
       </TMPL_LOOP>
     </div></div></TMPL_IF>
 

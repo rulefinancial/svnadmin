@@ -879,24 +879,20 @@ if ($action eq "load" && in_group("$repos-admins")) {
   }
 }
 
-my @admgroups;
-my $admgroup;
-foreach $admgroup (sort grep /-admins$/, keys %{$globals->{'groups'}}) {
+my @admgroups = sort grep /-admins$/, keys %{$globals->{'groups'}};
+my @adminrepos;
+foreach my $admgroup (@admgroups) {
+  my %adminrepo;
+  $adminrepo{L_ADMINS} = join(',',@{$globals->{'groups'}{$admgroup}});
   if (in_group($admgroup)) {
-    push @admgroups, $admgroup;
+    $adminrepo{L_CAN_ADMIN} = 1;
   }
+  $admgroup =~ /(.*)-admins$/;
+  $adminrepo{L_REPOSITORY} = $1;
+  $adminrepo{L_CURRENT} = $repos eq $adminrepo{L_REPOSITORY};
+  push @adminrepos, \%adminrepo;
 }
-if (@admgroups) {
-  my @adminrepos;
-  foreach $admgroup (@admgroups) {
-    my %adminrepo;
-    $admgroup =~ /(.*)-admins$/;
-    $adminrepo{L_REPOSITORY} = $1;
-    $adminrepo{L_CURRENT} = $repos eq $adminrepo{L_REPOSITORY};
-    push @adminrepos, \%adminrepo;
-  }
-  $template_params->{LOOP_ADMIN_REPOS} = \@adminrepos;
-}
+$template_params->{LOOP_ADMIN_REPOS} = \@adminrepos;
 
 if ($repos ne "" && in_group("$repos-admins")) {
   my @user_params;
