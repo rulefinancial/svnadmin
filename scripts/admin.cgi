@@ -665,6 +665,9 @@ if ($action eq "adduser" && in_group("admins")) {
       'source' => 'HTPASSWD',
       'displayName' => $newUser,
     }
+
+    # Update the user cache.
+    save_cached_users(\%users);
   }
 }
 
