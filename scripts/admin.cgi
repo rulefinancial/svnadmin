@@ -9,6 +9,8 @@ use Net::LDAP;
 use Net::LDAP::Control::Paged;
 use Net::LDAP::Constant qw( LDAP_CONTROL_PAGED ); 
 use File::Basename;
+use File::Spec;
+use File::stat;
 use HTML::Template;
 use CGI::Carp;
 use CGI::Carp qw(cluck);
@@ -344,6 +346,127 @@ sub make_backup($$$$) {
   }
 }
 
+sub save_cached_users($) {
+  my ($users_ref) = @_;
+
+  if (not defined $config->{user_cache_file} or !open(CACHE, ">$config->{user_cache_file}")) {
+    error_exit('500 Internal Server Error', 'Internal Error',
+      "Cannot write user cache file [$config->{user_cache_file}].");
+  }
+  foreach my $username (keys %{$users_ref}) {
+    print CACHE $users_ref->{$username}{username} . ':' . $users_ref->{$username}{source} . ':' . $users_ref->{$username}{displayName} . "\n";
+  }
+  close(CACHE);
+}
+
+sub load_cached_users($) {
+  my ($users_ref) = @_;
+  my $cache_valid = 0;
+  my $stat = stat($config->{user_cache_file});
+  if ($stat && time - $stat->mtime < $config->{user_cache_timeout}) {
+    # Cache file exists and is more recent that the cache timeout.
+    if (open(CACHE, "<$config->{user_cache_file}")) {
+      my ($username, $source, $displayName);
+      while (<CACHE>) {
+        chomp;
+        next if /^\s*#/;  # Skip comments;
+        next if /^\s*$/;  # Skip blank lines;
+        ($username, $source, $displayName, @_) = split ':';
+        $users_ref->{$username} = {
+          'username' => $username,
+          'source' => $source,
+          'displayName' => $displayName,
+        } if (defined $username and defined $source and defined $displayName);
+      }
+      close(CACHE);
+      $cache_valid = 1;
+    }
+  }
+  return $cache_valid;
+}
+
+# Get users from .htpasswd file
+sub load_htpasswd_users($) {
+  my ($users_ref) = @_;
+  if (!open(HTPASSWD, "<$config->{htpasswd_file}")) {
+    error_exit('500 Internal Server Error', 'Internal Error',
+      "Cannot find configuration file [$config->{htpasswd_file}].");
+  }
+  while (<HTPASSWD>) {
+    s/\#.*$//;
+    next unless /\S/;
+    chomp;
+    s/\s+/ /g;
+
+    my $htpasswd_user;
+    ($htpasswd_user, @_) = split ':', $_;
+    if (defined $users_ref->{$htpasswd_user}) {
+      warn "HTPASSWD entry overwriting existing user: $htpasswd_user";
+    }
+    $users_ref->{$htpasswd_user} = {
+      'username' => $htpasswd_user,
+      'source' => 'HTPASSWD',
+      'displayName' => $htpasswd_user,
+    };
+  }
+  close(HTPASSWD);
+  return $users_ref;
+}
+
+# Get users from LDAP / Active Directory
+sub load_ldap_users($) {
+  my ($users_ref) = @_;
+  my $ldap = Net::LDAP->new($config->{ldap_server},
+    inet4 => 1,
+    onerror => sub {
+      my ($message) = @_;
+      cluck "LDAP error code: " . $message->code . ", error: " . $message->error;
+      error_exit('500 Internal Server Error', 'Internal Error',
+        'LDAP server error: ' . $message->error);
+    });
+  my $page = Net::LDAP::Control::Paged->new( size => 100 );
+  if (not defined $ldap) {
+    error_exit('500 Internal Server Error', 'Internal Error',
+      "Cannot connect to LDAP server '$config->{ldap_server}'.");
+  }
+  my $ldap_mesg;
+  $ldap_mesg = $ldap->bind($config->{ldap_bind_dn}, password => $config->{ldap_bind_password});
+  my @args = (
+    base    => $config->{ldap_base_dn},
+    filter  => $config->{ldap_filter},
+    control => [ $page ],
+  );
+  my $cookie;
+  while(1) {
+    $ldap_mesg = $ldap->search(@args);
+    my $ldap_entry;
+    foreach $ldap_entry ($ldap_mesg->entries) {
+      my $ldap_username = $ldap_entry->get_value('sAMAccountName');
+      my $ldap_cn = $ldap_entry->get_value('cn');
+      if ($ldap_username) {
+        if (defined $users_ref->{$ldap_username}) {
+          warn "LDAP entry overwriting existing user: $ldap_username";
+        }
+        $users_ref->{$ldap_username} = {
+          'username' => $ldap_username,
+          'source' => 'LDAP',
+          'displayName' => $ldap_cn,
+        };
+      }
+    }
+    my ($resp) = $ldap_mesg->control( LDAP_CONTROL_PAGED ) or last;
+    $cookie = $resp->cookie or last;
+    $page->cookie($cookie);
+  }
+  if ($cookie)    {
+    $page->cookie($cookie);
+    $page->size(0);
+    $ldap->search(@args);
+  }
+  $ldap_mesg = $ldap->unbind;
+  return $users_ref;
+}
+
 
 #######################################################################
 #######################################################################
@@ -377,81 +500,18 @@ unless (defined $curuser) {
 
 $action = param('action') || '';
 ($repositories, $globals) = read_svn_access($config->{svnaccess_conf});
-if ($config->{htpasswd_users}) {
-  # Get users from .htpasswd file
-  if (!open(HTPASSWD, "<$config->{htpasswd_file}")) {
-    error_exit('500 Internal Server Error', 'Internal Error',
-      "Cannot find configuration file [$config->{htpasswd_file}].");
+if ($action eq 'refresh_user_cache' or !load_cached_users(\%users)) {
+  if ($config->{htpasswd_users}) {
+    load_htpasswd_users(\%users);
   }
-  while (<HTPASSWD>) {
-    s/\#.*$//;
-    next unless /\S/;
-    chomp;
-    s/\s+/ /g;
 
-    my $htpasswd_user;
-    ($htpasswd_user, @_) = split ':', $_;
-    if (defined $users{$htpasswd_user}) {
-      warn "HTPASSWD entry overwriting existing user: $htpasswd_user";
-    }
-    $users{$htpasswd_user} = {
-      'username' => $htpasswd_user,
-      'source' => 'HTPASSWD',
-      'displayName' => $htpasswd_user,
-    }
+  if ($config->{ldap_users}) {
+    load_ldap_users(\%users);
   }
-  close(HTPASSWD);
+
+  save_cached_users(\%users);
 }
 
-if ($config->{ldap_users}) {
-  # Get users from LDAP / Active Directory
-  my $ldap = Net::LDAP->new($config->{ldap_server},
-    inet4 => 1,
-    onerror => sub {
-      my ($message) = @_;
-      cluck "LDAP error code: " . $message->code . ", error: " . $message->error;
-      error_exit('500 Internal Server Error', 'Internal Error',
-        'LDAP server error: ' . $message->error);
-    });
-  my $page = Net::LDAP::Control::Paged->new( size => 100 );
-  if (not defined $ldap) {
-    error_exit('500 Internal Server Error', 'Internal Error',
-      "Cannot connect to LDAP server '$config->{ldap_server}'.");
-  }
-  my $ldap_mesg;
-  $ldap_mesg = $ldap->bind($config->{ldap_bind_dn}, password => $config->{ldap_bind_password});
-  my @args = (      base    => $config->{ldap_base_dn},
-    filter  => $config->{ldap_filter},
-    control => [ $page ], );
-  my $cookie;
-  while(1) {
-    $ldap_mesg = $ldap->search(@args);
-    my $ldap_entry;
-    foreach $ldap_entry ($ldap_mesg->entries) {
-      my $ldap_username = $ldap_entry->get_value('sAMAccountName');
-      my $ldap_cn = $ldap_entry->get_value('cn');
-      if ($ldap_username) {
-        if (defined $users{$ldap_username}) {
-          warn "LDAP entry overwriting existing user: $ldap_username";
-        }
-        $users{$ldap_username} = {
-          'username' => $ldap_username,
-          'source' => 'LDAP',
-          'displayName' => $ldap_cn,
-        }
-      }
-    }
-    my ($resp) = $ldap_mesg->control( LDAP_CONTROL_PAGED ) or last;
-    $cookie = $resp->cookie or last;
-    $page->cookie($cookie);
-  }
-  if ($cookie)    {
-    $page->cookie($cookie);
-    $page->size(0);
-    $ldap->search(@args);
-  }
-  $ldap_mesg = $ldap->unbind;
-}
 
 # Add parameters used in the default template.
 $template_params->{USERNAME} = $curuser;

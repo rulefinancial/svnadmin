@@ -9,6 +9,10 @@
   websvn => 0,
   viewcvspath => "/viewvc",
   svnpath => "/svn",
+  # user cache settings
+  user_cache_file => "/path/to/svnadmin_user_cache",
+  # user_cache_timeout in seconds.
+  user_cache_timeout => 300,
   # Set htpasswd_users to 0 to disable or 1 to enable .htpassword user authentication
   htpasswd_users => 1,
   htpasswd_file => "/path/to/htpasswd",
