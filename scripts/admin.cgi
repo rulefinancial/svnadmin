@@ -467,6 +467,17 @@ sub load_ldap_users($) {
   return $users_ref;
 }
 
+# Check that a user exists.
+sub is_user($) {
+  my ($username) = @_;
+  return defined $users{$username};
+}
+
+# Check that a group exists.
+sub is_group {
+  my ($username) = @_;
+  return substr($username,0,1) eq '@' and defined $globals->{'groups'}{substr($username,1)};
+}
 
 #######################################################################
 #######################################################################
@@ -664,7 +675,7 @@ if ($action eq "adduser" && in_group("admins")) {
       'username' => $newUser,
       'source' => 'HTPASSWD',
       'displayName' => $newUser,
-    }
+    };
 
     # Update the user cache.
     save_cached_users(\%users);
@@ -683,8 +694,8 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
   groups:
   for ($i = 0; $i < $numgroups + 1; $i++) {
     my $grpname = param("grpname[$i]")||'';
-    my $users = param("users[$i]") ||
-    join(',', param("l_users[$i]")) || '';
+    my @newusers = split ',', param("users[$i]");
+    push @newusers, param("l_users[$i]");
     if ($grpname eq "") {
       # ignore added entry
     } elsif ($grpname !~ /^[a-zA-Z0-9_]+$/) {
@@ -703,34 +714,38 @@ if ($action eq "chgroupacl" && in_group("$repos-admins")) {
       add_action_message "ACTION_OUTPUT", "Deleting group ${repos}-${grpname}.";
       delete $globals->{'groups'}{"${repos}-${grpname}"};
       $needupdate = 1;
-    } elsif ($users !~ /^\@?[a-zA-Z][a-zA-Z0-9]*(\s*,\s*[a-zA-Z][a-zA-Z0-9]*)*$/) {
-      add_action_message "ACTION_WARNING",
-        "The name of the group members of group $repos-$grpname " .
-        "must be valid login names.  Please try again.";
     } else {
-      my @value = split(/\s*,\s*/, $users);
-      my $origvalue = $globals->{'groups'}{"${repos}-${grpname}"};
-      if (!defined $origvalue) {
-        add_action_message "ACTION_OUTPUT", "Added group ${repos}-${grpname} with users $users";
-        $globals->{'groups'}{"${repos}-${grpname}"} = \@value;
-      $needupdate = 1;
-      } elsif ($i == $numgroups) {
-        # The expected behaviour is to add users to an
-        # existing group.
-        my @newvalue = @{$origvalue};
-        my $user;
-        foreach $user (@value) {
-          if (! grep {$_ eq $user} @newvalue) {
-            add_action_message "ACTION_OUTPUT", "Added user $user to group ${repos}-${grpname}\n";
-            push @newvalue, $user;
-            $needupdate = 1;
-          }
+      # Check user / group names
+      my $users_ok = 1;
+      foreach my $newuser (@newusers) {
+        if (not is_user($newuser) and not is_group($newuser)) {
+          add_action_message "ACTION_WARNING",
+            "User [$newuser] of group [$repos-$grpname] is not a valid user.";
+          $users_ok = 0;
         }
-        $globals->{'groups'}{"${repos}-${grpname}"} = \@newvalue;
-      } elsif (join(",", @{$origvalue}) ne join(",", @value)) {
-        add_action_message "ACTION_OUTPUT", "Changed group ${repos}-${grpname} to $users";
-        $globals->{'groups'}{"${repos}-${grpname}"} = \@value;
-        $needupdate = 1;
+      }
+      if ($users_ok) {
+        my $origusers_ref = $globals->{'groups'}{"${repos}-${grpname}"};
+        if (!defined $origusers_ref) {
+          add_action_message "ACTION_OUTPUT", "Added group ${repos}-${grpname} with users " . join(',',@newusers);
+          $globals->{'groups'}{"${repos}-${grpname}"} = \@newusers;
+          $needupdate = 1;
+        } elsif ($i == $numgroups) {
+          # The expected behaviour is to add users to an
+          # existing group.
+          foreach my $newuser (@newusers) {
+            if (! grep {$_ eq $newuser} @{$origusers_ref}) {
+              add_action_message "ACTION_OUTPUT", "Added user $newuser to group ${repos}-${grpname}\n";
+              push @{$origusers_ref}, $newuser;
+              $needupdate = 1;
+            }
+          }
+          $globals->{'groups'}{"${repos}-${grpname}"} = \@{$origusers_ref};
+        } elsif (join(",", @{$origusers_ref}) ne join(",", @newusers)) {
+          add_action_message "ACTION_OUTPUT", "Changed group ${repos}-${grpname} to " . join(',',@newusers);
+          $globals->{'groups'}{"${repos}-${grpname}"} = \@newusers;
+          $needupdate = 1;
+        }
       }
     }
   }
@@ -921,9 +936,10 @@ if ($repos ne "" && in_group("$repos-admins")) {
       $group_user_param{L_SELECTED} = 1;
       $group_user_param{L_USERNAME} = $username;
       my $displayname;
-      if (defined $users{$username}) {
+
+      if (is_user($username)) {
         $displayname = $users{$username}->{'displayName'};
-      } elsif (substr($username,0,1) eq '@' and defined $globals->{'groups'}{substr($username,1)}) {
+      } elsif (is_group($username)) {
         $displayname = "$username group";
       } else {
         $displayname = 'INVALID USER';
@@ -969,10 +985,8 @@ if ($repos ne "" && in_group("$repos-admins")) {
       $permission{L_HAS_RW_PERM} = $has_rw_perm;
       $permission{L_HAS_RO_PERM} = $has_ro_perm;
       $permission{L_HAS_NO_PERM} = !($has_rw_perm or $has_ro_perm);
-      if (substr($user_or_group, 0, 1) ne '@') {
-        $permission{L_USER_GROUP_INVALID} = not defined $users{$user_or_group};
-      } else {
-        $permission{L_USER_GROUP_INVALID} = not defined $globals->{'groups'}{substr($user_or_group,1)};
+      if (not is_user($user_or_group) and not is_group($user_or_group)) {
+        $permission{L_USER_GROUP_INVALID} = 1;
       }
 
       push @permissions, \%permission;
