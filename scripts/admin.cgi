@@ -1058,6 +1058,22 @@ if ($repos ne "" && in_group("$repos-admins")) {
   }
   $template_params->{LOOP_RO_PATHS} = \@ro_paths;
 }
+
+# Print action messages to log file.
+if (defined $template_params->{ACTION_TITLE}) {
+  for my $log_item (@{$template_params->{LOOP_ACTION_MSGS}}) {
+    my $log_message = '';
+    for my $msgtype ('WARNING', 'OUTPUT', 'RAW_OUTPUT') {
+      my $key = "ACTION_$msgtype";
+      $log_message .= "[$msgtype] $log_item->{$key}\n" if defined $log_item->{$key} and length $log_item->{$key} > 0; 
+    }
+    if (length $log_message > 0) {
+      print STDERR "SVNAdmin (user=$curuser): $template_params->{ACTION_TITLE}\n";
+      print STDERR "SVNAdmin (user=$curuser): $log_message\n";
+    }
+  }
+}
+
 print header(),
   populate_template('default.html', $template_params);
 
