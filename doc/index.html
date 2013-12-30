@@ -62,16 +62,25 @@ functionality.</p>
   </ul>
 </p>
 <p>
-Now you're ready to go.  Put your browser to the URL
+Now you're ready to go.  Point your browser to the URL
 <code>http://your.svn.server/svnadmin/</code>, enter the
 credentials for an administrator login, and create repositories.
 You can add new users at the configuration page of the repository.
 </p>
-            <img src="img/nogo.gif" alt=" " class="secnav" height="15" width="15">
+<a href="#sec-5" class="noprint"><img src="img/gonext.gif" alt="go next" class="secnav" title="go next" height="15" width="15"></a>
 <a href="#up" class="noprint"><img src="img/gotop.gif" alt="top of page" class="secnav" title="top of page" height="15" width="15"></a>
 <a href="#sec-3" class="noprint"><img src="img/goback.gif" alt="go back" class="secnav" title="go back" height="15" width="15"></a>
+  <h2><a name="sec-4"></a>Debugging</h2>
+  <p>To test this script from the command line, set the environment variable REMOTE_USER to the desired login, then run</p>
+  <code>
+    perl -w scripts/admin.cgi /?
+  </code>
+  <p>To debug a running installation, look for error messages in the Apache error log.</p>
 <hr/>
-<p>Copyright &copy; 2007-2008 Jochen Hoenicke, Michael M&ouml;ller</p>
+            <img src="img/nogo.gif" alt=" " class="secnav" height="15" width="15">
+<a href="#up" class="noprint"><img src="img/gotop.gif" alt="top of page" class="secnav" title="top of page" height="15" width="15"></a>
+<a href="#sec-4" class="noprint"><img src="img/goback.gif" alt="go back" class="secnav" title="go back" height="15" width="15"></a>
+<a name="sec-5"></a><p>Copyright &copy; 2007-2008 Jochen Hoenicke, Michael M&ouml;ller</p>
 <p> This program is free software; you can redistribute it and/or
 modify it under the terms of the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public
 License</a> as published by the Free Software Foundation; either
